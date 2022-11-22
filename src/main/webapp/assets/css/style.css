@@ -1,0 +1,609 @@
+/* 
+ *
+ * Theme : Vincent Applications
+ * Author : Vincent Fily
+ *
+ */
+/* 
+ *
+ * Init Font
+ *
+ */
+@font-face {
+  font-family: 'HelveticaNeue';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/HelveticaNeue.woff2') format('woff2'), url('../fonts/HelveticaNeue.woff') format('woff'), url('../fonts/HelveticaNeue.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'HelveticaNeue';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/HelveticaNeue-Medium.woff2') format('woff2'), url('../fonts/HelveticaNeue-Medium.woff') format('woff'), url('../fonts/HelveticaNeue-Medium.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'HelveticaNeue';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/HelveticaNeue-Bold.woff2') format('woff2'), url('../fonts/HelveticaNeue-Bold.woff') format('woff'), url('../fonts/HelveticaNeue-Bold.ttf') format('truetype');
+  font-display: swap;
+}
+:root {
+  font-size: 10px;
+}
+@media (max-width: 1399px) {
+  :root {
+    font-size: 9px;
+  }
+}
+body {
+  font-size: 1.8rem;
+  font-family: "HelveticaNeue", sans-serif;
+  color: black;
+  font-weight: normal;
+  line-height: 1.5em;
+  font-size: 2.3rem;
+  line-height: 1.1em;
+}
+/* 
+ *
+ * RESET
+ *
+ */
+body {
+  margin: 0;
+}
+::-moz-selection {
+  background-color: lightblue;
+  color: white;
+}
+::selection {
+  background-color: lightblue;
+  color: white;
+}
+/* FORM RESET */
+textarea:focus,
+input:focus {
+  outline: 0;
+}
+/* ELEMENTS RESET */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  padding: 0;
+}
+img[alt] {
+  position: relative;
+  display: inline-block;
+  font-family: 'Courier';
+  font-size: 9px!important;
+  line-height: 0.8em;
+  color: #999 !important;
+  text-align: center;
+  vertical-align: middle;
+}
+button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border-radius: none;
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+button:focus {
+  outline: none;
+  text-decoration: none;
+}
+/* TEXT RESET */
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: 400;
+}
+p {
+  margin: 0;
+  font-size: inherit;
+}
+blockquote {
+  padding: 0;
+  border: none;
+  margin: 0;
+}
+a:visited,
+a:active,
+a {
+  color: black;
+  text-decoration: none;
+}
+a:hover {
+  color: #999;
+  text-decoration: underline;
+}
+a:focus {
+  outline: none;
+  text-decoration: none;
+}
+figure {
+  margin: 0;
+}
+.std {
+  font-weight: 400;
+}
+strong,
+.bold {
+  font-weight: 700;
+}
+.italic {
+  font-style: italic;
+}
+.upper {
+  text-transform: uppercase;
+}
+.antialias {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.not_antialias {
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+}
+.alerte {
+  border: 1px red solid;
+  background-color: white;
+  padding: 10px;
+}
+.clear {
+  clear: both;
+  position: relative;
+  display: block;
+  width: 100%;
+}
+.t1 {
+  font-size: 7rem;
+  line-height: 1.1em;
+}
+/* XL */
+.t2 {
+  font-size: 3.2rem;
+  line-height: 1.1em;
+}
+/* L */
+.t3 {
+  font-size: 2.3rem;
+  line-height: 1.1em;
+}
+/* M */
+.t4 {
+  font-size: 2rem;
+  line-height: 1.1em;
+}
+/* M */
+.t5 {
+  font-size: 1.5rem;
+  line-height: 1.1em;
+}
+/* S */
+/* 
+ *
+ * Header
+ *
+ */
+body > header {
+  position: relative;
+  padding-left: 70px;
+  padding-right: 70px;
+}
+@media (max-width: 991px) {
+  body > header {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+body > header > div {
+  border-bottom: 2px solid #000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 90px;
+}
+@media (max-width: 575px) {
+  body > header > div {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    height: auto;
+    padding: 30px 0;
+  }
+}
+body > header > div h1 {
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 1.1em;
+}
+@media (max-width: 575px) {
+  body > header > div h1 {
+    margin-bottom: 20px;
+  }
+}
+body > header > div nav ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+@media (max-width: 575px) {
+  body > header > div nav ul {
+    height: auto;
+    white-space: nowrap;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+body > header > div nav ul li:after {
+  content: "|";
+  padding: 0 10px;
+  font-size: 2rem;
+  line-height: 1.1em;
+}
+@media (max-width: 575px) {
+  body > header > div nav ul li:after {
+    display: none;
+  }
+}
+body > header > div nav ul li:last-child:after {
+  display: none;
+}
+body > header > div nav ul li a {
+  font-size: 2rem;
+  line-height: 1.1em;
+}
+/* 
+*
+* Main
+*
+*/
+body > main .row {
+  padding-left: 70px;
+  padding-right: 70px;
+}
+@media (max-width: 991px) {
+  body > main .row {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+body > main > header {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+body > main > header h1 {
+  font-size: 7rem;
+  line-height: 1.1em;
+  text-align: center;
+}
+@media (max-width: 575px) {
+  body > main > header h1 {
+    font-size: 5rem;
+  }
+}
+body > main > header h2 {
+  font-size: 3.2rem;
+  line-height: 1.1em;
+  text-align: center;
+}
+body > main > #error {
+  margin-top: -20px;
+}
+body > main > #error p {
+  background-color: lightgrey;
+  color: black;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 2.3rem;
+  line-height: 1.1em;
+  /*  border: 2px solid black; */
+}
+@media (max-width: 575px) {
+  body > main > #error p {
+    font-size: 2rem;
+    line-height: 1.1em;
+  }
+}
+body > main #filter {
+  margin-bottom: 50px;
+}
+body > main #filter > form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+@media (max-width: 575px) {
+  body > main #filter > form {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+body > main #filter > form input[type=text] {
+  width: 100%;
+}
+body > main #filter > form select {
+  margin: 0px 50px;
+}
+@media (max-width: 575px) {
+  body > main #filter > form select {
+    margin: 20px 0px;
+  }
+}
+body > main #filter > form > * {
+  margin-bottom: 0;
+}
+body > main #index {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 50px 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 50px;
+  padding-bottom: 70px;
+}
+@media (max-width: 991px) {
+  body > main #index {
+    -ms-grid-columns: 1fr;
+    grid-template-columns: 1fr;
+  }
+}
+body > main #index .card {
+  position: relative;
+  border: 2px solid black;
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+}
+body > main #index .card:before {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  content: "";
+  height: 100%;
+  width: 100%;
+  display: block;
+  border-radius: 20px;
+  background-color: black;
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  transition: -webkit-transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+  border: 2px solid black;
+}
+body > main #index .card:hover:before {
+  -webkit-transform: translate(15px, 15px);
+          transform: translate(15px, 15px);
+}
+body > main #index .card img {
+  height: 150px;
+  width: 150px;
+  margin-right: 20px;
+  border: 2px solid black;
+  border-radius: 15px;
+  background-color: lightgray;
+}
+body > main #index .card .detail h3 {
+  display: block;
+  font-size: 2.3rem;
+  line-height: 1.1em;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+body > main #index .card .detail a:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: "";
+  /* background-color: rgba(0, 0, 0, .2); */
+  z-index: 0;
+}
+body > main #index .card .detail a:hover {
+  text-decoration: none;
+  color: black;
+}
+body > main #connexion {
+  text-align: center;
+  padding-bottom: 50px;
+}
+@media (max-width: 575px) {
+  body > main #connexion {
+    text-align: left;
+  }
+}
+body > main #connexion h1 {
+  font-size: 7rem;
+  line-height: 1.1em;
+  text-align: center;
+  margin-bottom: 50px;
+}
+body > main #connexion hr {
+  margin: 50px 0;
+}
+body > main #user {
+  text-align: center;
+  padding-bottom: 50px;
+}
+body > main .col_2 {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 50px 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px 50px;
+  text-align: left;
+  margin-bottom: 50px;
+}
+@media (max-width: 767px) {
+  body > main .col_2 {
+    -ms-grid-columns: 1fr;
+    grid-template-columns: 1fr;
+  }
+}
+body > main .col_2 fieldset {
+  margin-bottom: 0;
+}
+body > main .col_2 fieldset input {
+  width: 100%;
+}
+body > main .col_2 p:nth-child(odd) {
+  text-align: right;
+}
+body > main form.row {
+  text-align: center;
+}
+body > main form > * {
+  margin-bottom: 15px;
+}
+body > main form > *:last-child {
+  margin-bottom: 0;
+}
+body > main form label {
+  min-width: 180px;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  text-align: left;
+}
+@media (max-width: 575px) {
+  body > main form label {
+    text-align: left;
+  }
+}
+body > main form fieldset {
+  position: relative;
+  border: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 15px;
+}
+body > main form fieldset#checkbox_wrapper label {
+  max-width: none;
+  font-size: 2rem;
+  line-height: 1.1em;
+}
+body > main form input[type=text],
+body > main form input[type=tel],
+body > main form input[type=email],
+body > main form input[type=password] {
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 2rem;
+  line-height: 1.1em;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+@media (max-width: 575px) {
+  body > main form input[type=text],
+  body > main form input[type=tel],
+  body > main form input[type=email],
+  body > main form input[type=password] {
+    width: 100%;
+    max-width: none;
+  }
+}
+body > main form input[type=checkbox] {
+  vertical-align: top;
+}
+body > main form select {
+  /* .t4(); */
+}
+/* 
+*
+* BTN
+*
+*/
+.btn {
+  border-radius: 30px;
+  padding: 10px 20px;
+  background-color: black;
+  color: white;
+  border: 2px solid black;
+  font-size: 2rem;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.btn:hover {
+  background-color: lightgrey;
+  border-color: lightgrey;
+  color: black;
+}
+.btn.outline {
+  background-color: transparent;
+  color: black;
+}
+/* 
+*
+* Footer
+*
+*/
+body > footer {
+  /* background-color: #333; color: white; */
+  padding-left: 70px;
+  padding-right: 70px;
+}
+@media (max-width: 991px) {
+  body > footer {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+body > footer > div {
+  padding-top: 70px;
+  padding-bottom: 70px;
+  border-top: 2px solid #000;
+}
+body > footer > div p {
+  text-align: center;
+  font-size: 2rem;
+  line-height: 1.1em;
+}

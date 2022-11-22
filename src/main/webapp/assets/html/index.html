@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<title>Mes listes</title>
+		<meta name="description" content="Mes listes">
+		<meta name="author" content="Vincent Fily">
+		
+		<link href="../css/style.css" rel="stylesheet">
+
+	</head>
+
+	<body>
+
+		<header>
+			<div>
+				<h1><a href="index.html">ENI - Enchères</a></h1>
+
+				<nav id="disconneted_nav" class="main_nav">
+					<ul>
+						<li><a href="connexion.html">Connexion</a></li>
+						<li><a href="compte.html">Créer un compte</a></li>
+					</ul>
+				</nav>
+
+				<!-- <nav id="connected_nav" class="main_nav">
+					<ul>
+						<li><a href="vendre-article.html">Vendre un article</a></li>
+						<li><a href="mon-profil.html">Créer un compte</a></li>
+						<li><a href="connexion.html">Deconnexion</a></li>
+						
+					</ul>
+				</nav>
+ 				-->
+			</div>
+		</header>
+
+		<main>
+			<header class="row">
+				<h1>Les enchères</h1>
+			</header>
+
+			<div id="filter" class="row">
+				<form  method="post" action="">
+					<div id="search_filter">
+						<input type="text" placeholder="Rechercher" list="products_list">
+						<datalist id="products_list">
+							<option value="Aspirateur">
+							<option value="Vélo">
+							<option value="Appareil photo">
+						</datalist>
+						<select id="categories">
+							<option value="informatique">Informatique</option>
+							<option value="ameublement">Ameublement</option>
+							<option value="vetement">Vêtement</option>
+							<option value="sport_loisirs">Sports & Loisirs</option>
+						</select>
+						<button type="submit" class="btn">Rechercher</button>
+					</div>
+					<hr>
+					<div id="categorie_filter">
+						<div>
+							<h4>Achats</h4>
+							<fieldset>
+								<input type="checkbox" name="touteEncheres" id="">
+								<label for="touteEnchères">enchères ouvertes</label>
+							</fieldset>
+
+							<fieldset>
+								<input type="checkbox" name="mesEncheresEnCours" id="">
+								<label for="mesEnchèresEnCours">mes enchères en cours</label>
+							</fieldset>
+
+							<fieldset>
+								<input type="checkbox" name="mesEncheresRemportees" id="">
+								<label for="mesEnchèresRemportees">mes enchères remportées</label>
+							</fieldset>
+						</div>
+
+						<div>
+							<h4>Mes ventes</h4>
+							<fieldset>
+								<input type="checkbox" name="ventesEnCours" id="">
+								<label for="ventesEnCours">mes ventes en cours</label>
+							</fieldset>
+
+							<fieldset>
+								<input type="checkbox" name="ventesNonDebutees" id="">
+								<label for="mesEnchèresEnCours">ventes non débutées</label>
+							</fieldset>
+
+							<fieldset>
+								<input type="checkbox" name="ventesTerminees" id="">
+								<label for="ventesTerminees">ventes terminées</label>
+							</fieldset>
+						</div>
+					</div>
+					
+				</form>
+			</div>
+
+			<div id="error" class="row">
+				<p>Affichage des messages d'erreur</p>
+			</div>
+
+			<ul id="index" class="row">
+				<li class="card">
+					<img src="" alt="">
+					<div class="detail">
+						<h3><a href="objet.html">Objet 1</a></h3>
+						<p class="price">Prix 200 points</p>
+						<p class="end_date">21/11/2022</p>
+						<p class="seller">Pseudo</p>
+					</div>
+				</li>
+
+				<li class="card">
+					<img src="" alt="">
+					<div class="detail">
+						<h3><a href="objet.html">Objet 2</a></h3>
+						<p class="price">Prix 200 points</p>
+						<p class="end_date">21/11/2022</p>
+						<p class="seller">Pseudo</p>
+					</div>
+				</li>
+
+				<li class="card">
+					<img src="" alt="">
+					<div class="detail">
+						<h3><a href="objet.html">Objet 3</a></h3>
+						<p class="price">Prix 200 points</p>
+						<p class="end_date">21/11/2022</p>
+						<p class="seller">Pseudo</p>
+					</div>
+				</li>
+			</ul>
+		</main>
+		
+		<footer>
+			<div>
+				<p>© 2022 - POV</p>
+			</div>
+		</footer>
+
+	</body>
+
+</html>

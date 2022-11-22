@@ -1,0 +1,247 @@
+/* 
+ *
+ * Theme : Vincent Applications
+ * Author : Vincent Fily
+ *
+ */
+
+/* 
+ *
+ * Init Font
+ *
+ */
+ 
+@import './config/fonts.less';
+
+@yellow : yellow;
+@beige : #FDFCF9;
+
+:root 
+	{ 
+	font-size: 10px; 
+	@media (max-width:1399px) 	{ font-size: 9px; }
+	}
+body { 	font-size: 1.8rem; font-family: "HelveticaNeue", sans-serif; color: black; font-weight: normal; line-height: 1.5em; .t3();} 
+
+@import './config/reset.less';
+@import './config/functions.less';
+
+
+.t1 { font-size: 7rem; line-height: 1.1em; } /* XL */
+.t2 { font-size: 3.2rem; line-height: 1.1em; } /* L */  
+.t3 { font-size: 2.3rem; line-height: 1.1em; } /* M */
+.t4 { font-size: 2rem; line-height: 1.1em; } /* M */
+.t5 { font-size: 1.5rem; line-height: 1.1em; } /* S */ 
+
+@page_padding: 70px;
+@page_padding_mobile: 30px;
+
+ /* 
+ *
+ * Header
+ *
+ */
+
+body > header
+	{
+	position: relative; padding-left: @page_padding; padding-right: @page_padding;
+	@media (max-width:991px) 	{ padding-left: @page_padding_mobile; padding-right: @page_padding_mobile;}
+	& > div 
+		{ 
+		border-bottom: 2px solid #000; display: flex; justify-content: space-between; align-items: center; height: 90px;
+		@media (max-width: 575px) 	{ flex-direction: column;  height: auto; padding: 30px 0;}
+		h1 
+			{ 
+			.bold(); .t2(); 
+			@media (max-width: 575px) 	{  margin-bottom: 20px;}
+			}
+		nav 
+			{
+			ul 
+				{
+				display: flex; height: 100%; align-items: center; 
+				@media (max-width: 575px) 	{ height: auto; white-space: nowrap; flex-direction: column;}
+				li 
+					{
+					&:after 
+						{
+						content: "|"; padding: 0 10px; .t4();
+						@media (max-width: 575px) 	{ display: none; }
+						}
+					&:last-child 
+						{ 
+						&:after { 	display: none;	}
+						}
+					a { .t4();}
+					}
+				}
+			}
+		}
+	}
+
+
+/* 
+*
+* Main
+*
+*/
+
+body > main
+	{
+	.row 
+		{
+		padding-left: @page_padding; padding-right: @page_padding;
+		@media (max-width:991px) 	{ padding-left: @page_padding_mobile; padding-right: @page_padding_mobile;}
+		}
+	& > header 
+		{
+		padding-top: 70px; padding-bottom: 70px;
+		h1 
+			{
+			.t1(); text-align: center; 
+			@media (max-width: 575px) 	{ font-size: 5rem; }
+			}
+		h2 {	.t2(); text-align: center; }
+		}
+	
+	& > #error 	
+		{
+		margin-top: -20px;
+		p 
+			{
+			background-color: lightgrey; color: black; border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 50px; .t3();/*  border: 2px solid black; */ 
+			@media (max-width: 575px) 	{ .t4(); }
+			} 
+		}
+
+	#filter 
+		{ 
+		margin-bottom: 50px;
+		& > form 
+			{
+			display: flex; justify-content: space-between; border-top: 2px solid black; border-bottom: 2px solid black; padding-top: 20px; padding-bottom: 20px;
+			@media (max-width: 575px) 	{ flex-direction: column; }
+			input[type=text] { width: 100%;}
+			select 
+				{ 
+				margin: 0px 50px;
+				@media (max-width: 575px) 	{ margin: 20px 0px; }
+				}
+			& > * { margin-bottom: 0; }
+			}
+		}
+
+	#index 
+		{
+		display: grid; grid-template-columns: 1fr 1fr; grid-gap: 50px; padding-bottom: 70px;
+		@media (max-width:991px) 	{ grid-template-columns: 1fr; }
+		.card 
+			{
+			position: relative; border: 2px solid black; background-color: white; border-radius: 20px; padding: 30px; box-sizing: border-box;
+			display: flex; flex-wrap: nowrap;
+			&:before 
+				{
+				position: absolute; z-index: -1; top: 0; left: 0; content: ""; height: 100%; width: 100%; display: block; 
+				border-radius: 20px; background-color: black; transition: transform .3s ease-out; border: 2px solid black;
+				}
+			&:hover
+				{
+				&:before {	transform: translate(15px, 15px);}	
+				}
+			img {  height: 150px; width: 150px; margin-right: 20px; border: 2px solid black; border-radius: 15px; background-color: lightgray;	}
+			.detail 
+				{
+				h3 	{	display: block; .t3(); margin-bottom: 5px; .bold();}
+				a 
+					{ 
+					&:before { position: absolute; top: 0; left: 0; width: 100%; height: 100%; content: ""; /* background-color: rgba(0, 0, 0, .2); */ z-index: 0; }
+					&:hover {	text-decoration: none; color: black; }
+					}
+				}
+			}
+		}
+
+	#connexion
+		{
+		text-align: center; padding-bottom: 50px;
+		@media (max-width:575px) 	{ text-align: left;}
+		h1 {	.t1(); text-align: center; margin-bottom: 50px; }
+		hr {	margin: 50px 0; }
+		}
+
+	#user 
+		{
+		text-align: center; padding-bottom: 50px;
+		}
+
+	.col_2 
+		{ 
+		display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px 50px; text-align: left; margin-bottom: 50px;
+		@media (max-width:767px) 	{ grid-template-columns: 1fr;}
+		fieldset 
+			{
+			margin-bottom: 0;
+			input { width: 100%;}
+			}
+		p:nth-child(odd) { text-align: right;}
+		}
+
+	form 	
+		{ 
+		&.row { text-align: center; }
+		& > * 
+			{ 
+			margin-bottom: 15px; 
+			&:last-child { margin-bottom: 0;}
+			}
+		label 	
+			{ 
+			min-width: 180px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-align: left;	
+			@media (max-width:575px) 	{ text-align: left;}
+			} 
+		fieldset 	
+			{ 	
+			position: relative; border: none; padding: 0; margin: 0; margin-bottom: 15px;
+			&#checkbox_wrapper label {	max-width: none; .t4(); }
+			}
+		input[type=text],
+		input[type=tel],
+		input[type=email],
+		input[type=password]	
+			{
+			border: 2px solid black; border-radius: 20px; padding: 10px 20px; .t4(); box-sizing: border-box;
+			@media (max-width: 575px) 	{ width: 100%; max-width: none;}
+			}
+		input[type=checkbox]	{ 	vertical-align: top;}
+		select { /* .t4(); */}
+		}
+	}
+
+/* 
+*
+* BTN
+*
+*/
+.btn 
+	{
+	border-radius: 30px; padding: 10px 20px; background-color: black; color: white; border: 2px solid black; font-size: 2rem; display: inline-block; box-sizing: border-box;
+	&:hover {	background-color: lightgrey; border-color: lightgrey; color: black;}
+	&.outline {	background-color: transparent; color: black; }
+	}
+
+/* 
+*
+* Footer
+*
+*/
+body > footer
+	{
+	/* background-color: #333; color: white; */
+	padding-left: @page_padding; padding-right: @page_padding;
+	@media (max-width:991px) 	{ padding-left: @page_padding_mobile; padding-right: @page_padding_mobile;}
+	& >div 
+		{
+		padding-top: 70px; padding-bottom: 70px; border-top: 2px solid #000;
+		p { text-align: center; .t4();}
+		}
+	}

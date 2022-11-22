@@ -1,0 +1,39 @@
+@import './functions.less';
+
+/* 
+ *
+ * RESET
+ *
+ */
+ 
+body 	{ 	margin: 0;}
+
+::selection 	{	background-color: lightblue; color: white; }
+
+/* FORM RESET */
+textarea:focus,
+input:focus 	{	outline: 0; }
+
+/* ELEMENTS RESET */
+ul 				{	list-style: none; padding: 0; margin: 0; }
+li 				{	padding: 0; }
+img[alt]		{ 	position: relative; display:inline-block; font-family: 'Courier'; font-size: 9px!important; line-height:.8em; color: #999!important; text-align: center; vertical-align: middle;  }
+
+button 			
+	{ 	
+	appearance: none; box-shadow: none; border-radius: none; border: none; cursor: pointer; background: none;
+	&:focus 		{	outline: none; text-decoration: none; }
+	}
+
+/* TEXT RESET */
+h1, h2, h3, h4 	{ 	margin: 0; font-size: inherit; font-weight: 400; }
+p 				{ 	margin: 0; font-size: inherit; }
+blockquote 		{ 	padding: 0; border: none; margin: 0; }
+
+a:visited,
+a:active,
+a 				{	color: black; text-decoration: none;}
+a:hover 		{	color: #999; text-decoration: underline; }
+a:focus 		{	outline: none; text-decoration: none; }
+
+figure 			{	margin: 0}
