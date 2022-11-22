@@ -371,6 +371,24 @@ body > main #filter > form select {
 body > main #filter > form > * {
   margin-bottom: 0;
 }
+body > main #filter #categorie_filter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+          justify-content: stretch;
+  padding: 20px 0;
+}
+body > main #filter #categorie_filter > div {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 0px;
+          flex: 1 0 0 ;
+}
+body > main #filter #categorie_filter fieldset {
+  padding: 0;
+  border: none;
+}
 body > main #index {
   display: -ms-grid;
   display: grid;
