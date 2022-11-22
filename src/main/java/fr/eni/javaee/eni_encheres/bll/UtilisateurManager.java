@@ -30,7 +30,7 @@ public class UtilisateurManager {
 	 * Récupération de l'instance du singleton
 	 * @return le singleton
 	 */
-	public UtilisateurManager getInstance() {
+	public static UtilisateurManager getInstance() {
 		if (instance==null) {
 			instance = new UtilisateurManager();
 		}
