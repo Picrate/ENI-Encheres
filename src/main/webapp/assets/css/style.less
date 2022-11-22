@@ -121,6 +121,7 @@ body > main
 			{
 			display: flex; justify-content: space-between; border-top: 2px solid black; border-bottom: 2px solid black; padding-top: 20px; padding-bottom: 20px;
 			@media (max-width: 575px) 	{ flex-direction: column; }
+			
 			input[type=text] { width: 100%;}
 			select 
 				{ 
@@ -128,6 +129,12 @@ body > main
 				@media (max-width: 575px) 	{ margin: 20px 0px; }
 				}
 			& > * { margin-bottom: 0; }
+			}
+		#categorie_filter
+			{
+			display: flex; justify-content: stretch;  padding: 20px 0;
+			& > div { 	flex: 1 0 0 ;}
+			fieldset { padding: 0; border: none;}
 			}
 		}
 

@@ -45,62 +45,61 @@
 			</header>
 
 			<div id="filter" class="row">
-				<form  method="post" action="">
-					<div id="search_filter">
-						<input type="text" placeholder="Rechercher" list="products_list">
-						<datalist id="products_list">
-							<option value="Aspirateur">
-							<option value="Vélo">
-							<option value="Appareil photo">
-						</datalist>
-						<select id="categories">
-							<option value="informatique">Informatique</option>
-							<option value="ameublement">Ameublement</option>
-							<option value="vetement">Vêtement</option>
-							<option value="sport_loisirs">Sports & Loisirs</option>
-						</select>
-						<button type="submit" class="btn">Rechercher</button>
-					</div>
-					<hr>
-					<div id="categorie_filter">
-						<div>
-							<h4>Achats</h4>
-							<fieldset>
-								<input type="checkbox" name="touteEncheres" id="">
-								<label for="touteEnchères">enchères ouvertes</label>
-							</fieldset>
-
-							<fieldset>
-								<input type="checkbox" name="mesEncheresEnCours" id="">
-								<label for="mesEnchèresEnCours">mes enchères en cours</label>
-							</fieldset>
-
-							<fieldset>
-								<input type="checkbox" name="mesEncheresRemportees" id="">
-								<label for="mesEnchèresRemportees">mes enchères remportées</label>
-							</fieldset>
-						</div>
-
-						<div>
-							<h4>Mes ventes</h4>
-							<fieldset>
-								<input type="checkbox" name="ventesEnCours" id="">
-								<label for="ventesEnCours">mes ventes en cours</label>
-							</fieldset>
-
-							<fieldset>
-								<input type="checkbox" name="ventesNonDebutees" id="">
-								<label for="mesEnchèresEnCours">ventes non débutées</label>
-							</fieldset>
-
-							<fieldset>
-								<input type="checkbox" name="ventesTerminees" id="">
-								<label for="ventesTerminees">ventes terminées</label>
-							</fieldset>
-						</div>
-					</div>
-					
+				<form id="search_filter" method="post" action="">
+					<input type="text" placeholder="Rechercher" list="products_list">
+					<datalist id="products_list">
+						<option value="Aspirateur">
+						<option value="Vélo">
+						<option value="Appareil photo">
+					</datalist>
+					<select id="categories">
+						<option value="informatique">Informatique</option>
+						<option value="ameublement">Ameublement</option>
+						<option value="vetement">Vêtement</option>
+						<option value="sport_loisirs">Sports & Loisirs</option>
+					</select>
+					<button type="submit" class="btn">Rechercher</button>
 				</form>
+
+				<div id="categorie_filter">
+					<div>
+						<h4>Achats</h4>
+						<fieldset>
+							<input type="checkbox" name="touteEncheres" id="">
+							<label for="touteEnchères">enchères ouvertes</label>
+						</fieldset>
+
+						<fieldset>
+							<input type="checkbox" name="mesEncheresEnCours" id="">
+							<label for="mesEnchèresEnCours">mes enchères en cours</label>
+						</fieldset>
+
+						<fieldset>
+							<input type="checkbox" name="mesEncheresRemportees" id="">
+							<label for="mesEnchèresRemportees">mes enchères remportées</label>
+						</fieldset>
+					</div>
+
+					<div>
+						<h4>Mes ventes</h4>
+						<fieldset>
+							<input type="checkbox" name="ventesEnCours" id="">
+							<label for="ventesEnCours">mes ventes en cours</label>
+						</fieldset>
+
+						<fieldset>
+							<input type="checkbox" name="ventesNonDebutees" id="">
+							<label for="mesEnchèresEnCours">ventes non débutées</label>
+						</fieldset>
+
+						<fieldset>
+							<input type="checkbox" name="ventesTerminees" id="">
+							<label for="ventesTerminees">ventes terminées</label>
+						</fieldset>
+					</div>
+				</div>
+					
+				
 			</div>
 
 			<div id="error" class="row">
