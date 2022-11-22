@@ -12,7 +12,7 @@ public abstract class CodesResultatBLL {
 	/**
 	 * Echec quand la description de l'avis ne repsecte pas les règles définies
 	 */
-	public static final int REGLE_AVIS_NOTE_ERREUR=20001;
+	public static final int PASSWORD_IS_NUL=20001;
 	
 	
 }
