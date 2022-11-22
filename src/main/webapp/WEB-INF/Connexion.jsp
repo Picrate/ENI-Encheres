@@ -55,7 +55,7 @@ String pageAuthor = "POV - ENI";
 			
 			<!-- CONNEXION FORM -->
 			<div id="connexion" class="row">
-				<form>
+				<form method="post">
 					<fieldset>
 						<label for="identifiant">Identifiant :</label>
 						<input type="text" name="identifiant" id="">
