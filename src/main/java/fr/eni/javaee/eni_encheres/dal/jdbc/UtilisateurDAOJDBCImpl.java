@@ -93,7 +93,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 				if(rs.next())
 				{
 					utilisateur = new Utilisateur(
-							rs.getInt("no_utilsateur"),
+							rs.getInt("no_utilisateur"),
 							rs.getString("pseudo"),
 							rs.getString("nom"),
 							rs.getString("prenom"),
