@@ -8,7 +8,7 @@ public abstract class CodesResultatServlets {
 	/**
 	 * Format Avis.note incorrect
 	 */
-	public static final int FORMAT_AVIS_NOTE_ERREUR=30000;
+	public static final int USERNAME_OR_PASSWORD_INVALID=30000;
 	
 	
 }
