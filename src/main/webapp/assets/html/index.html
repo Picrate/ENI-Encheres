@@ -12,6 +12,8 @@
 		
 		<link href="../css/style.css" rel="stylesheet">
 
+		
+
 	</head>
 
 	<body>
@@ -61,21 +63,21 @@
 					<button type="submit" class="btn">Rechercher</button>
 				</form>
 
-				<div id="categorie_filter">
+				<form action="index.html" method="post" id="categorie_filter">
 					<div>
 						<h4>Achats</h4>
 						<fieldset>
-							<input type="checkbox" name="touteEncheres" id="">
+							<input type="checkbox" name="touteEncheres" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
 							<label for="touteEnchères">enchères ouvertes</label>
 						</fieldset>
 
 						<fieldset>
-							<input type="checkbox" name="mesEncheresEnCours" id="">
+							<input type="checkbox" name="mesEncheresEnCours" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
 							<label for="mesEnchèresEnCours">mes enchères en cours</label>
 						</fieldset>
 
 						<fieldset>
-							<input type="checkbox" name="mesEncheresRemportees" id="">
+							<input type="checkbox" name="mesEncheresRemportees" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
 							<label for="mesEnchèresRemportees">mes enchères remportées</label>
 						</fieldset>
 					</div>
@@ -83,22 +85,21 @@
 					<div>
 						<h4>Mes ventes</h4>
 						<fieldset>
-							<input type="checkbox" name="ventesEnCours" id="">
+							<input type="checkbox" name="ventesEnCours" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
 							<label for="ventesEnCours">mes ventes en cours</label>
 						</fieldset>
 
 						<fieldset>
-							<input type="checkbox" name="ventesNonDebutees" id="">
+							<input type="checkbox" name="ventesNonDebutees" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
 							<label for="mesEnchèresEnCours">ventes non débutées</label>
 						</fieldset>
 
 						<fieldset>
-							<input type="checkbox" name="ventesTerminees" id="">
+							<input type="checkbox" name="ventesTerminees" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
 							<label for="ventesTerminees">ventes terminées</label>
 						</fieldset>
 					</div>
-				</div>
-					
+				</form>
 				
 			</div>
 
@@ -145,6 +146,8 @@
 			</div>
 		</footer>
 
+
+		<script src="../js/script-dist.js"></script>
 	</body>
 
 </html>

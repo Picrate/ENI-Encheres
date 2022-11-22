@@ -132,9 +132,11 @@ body > main
 			}
 		#categorie_filter
 			{
-			display: flex; justify-content: stretch;  padding: 20px 0;
+			display: flex; justify-content: stretch;  padding: 20px 0; border-top: none;
 			& > div { 	flex: 1 0 0 ;}
-			fieldset { padding: 0; border: none;}
+			h4 { margin-bottom: 5px;}
+			fieldset { padding: 0; border: none; margin-bottom: 0;}
+			label { max-width: none; vertical-align: middle;}
 			}
 		}
 
@@ -219,7 +221,7 @@ body > main
 			border: 2px solid black; border-radius: 20px; padding: 10px 20px; .t4(); box-sizing: border-box;
 			@media (max-width: 575px) 	{ width: 100%; max-width: none;}
 			}
-		input[type=checkbox]	{ 	vertical-align: top;}
+		input[type=checkbox]	{ 	margin: 0; vertical-align: baseline;}
 		select { /* .t4(); */}
 		}
 	}
