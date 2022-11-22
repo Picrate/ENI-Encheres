@@ -8,7 +8,7 @@ public abstract class CodesResultatBLL {
 	/**
 	 * Echec quand la description de l'avis ne repsecte pas les règles définies
 	 */
-	public static final int REGLE_AVIS_DESCRIPTION_ERREUR=20000;
+	public static final int PSEUDO_OR_EMAIL_NULL=20000;
 	/**
 	 * Echec quand la description de l'avis ne repsecte pas les règles définies
 	 */
