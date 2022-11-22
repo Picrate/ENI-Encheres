@@ -24,50 +24,69 @@ public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Méthode de connexion via le formulaire
+	 * Fait appel au LoginManager pour Verifier l'authentification de l'utilsateur
+	 * Si auth = KO, On redirige vers la page de connexion avec Mersage d'erreur
+	 * Si Auth OK, on vérifie l'existence du cookie authCookie et sa valeur
+	 * 	Si authCookie n'existe pas, on le créé et on place sa valeur à true. On l'ajoute aux cookies présents.
+	 * 	Si authCookie existe et que valeur = true alors on redirige vers la page d'accueil
+	 * 	Si la valeur de authCookie est différente, on désactive le cookie et on redirige vers la page de connexion 
+	 * 
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		String identifiant = request.getParameter("identifiant");
 		String password = request.getParameter("password");
 		Cookie authCookie = null;
-		
+
 		Cookie[] cookies = request.getCookies();
-		for(int i = 0; i < cookies.length; i++) {
-			if( cookies[i].getName().equalsIgnoreCase("authenticated")){
+		for (int i = 0; i < cookies.length; i++) {
+			if (cookies[i].getName().equalsIgnoreCase("authenticated")) {
 				authCookie = cookies[i];
 			}
 		}
-		
+
 		try {
 			boolean authStatus = LoginManager.getInstance().authenticateUser(identifiant, password);
-			if(authStatus) {
-				if(authCookie !=  null) {
-					this.getServletContext().getRequestDispatcher("/WEB-INF/Home.jsp").forward(request, response);
+			if (authStatus) {
+				if (authCookie != null) {
+					if (authCookie.getValue().equalsIgnoreCase("true")){
+						this.getServletContext().getRequestDispatcher("/WEB-INF/Home.jsp").forward(request, response);
+					} else {
+						authCookie.setMaxAge(0); // Efface le cookie
+					}
+					
 				} else {
 					authCookie = new Cookie("authenticated", "true");
+					authCookie.setHttpOnly(true);
+					authCookie.setMaxAge(604800); // 7 jours
 					response.addCookie(authCookie);
 					this.getServletContext().getRequestDispatcher("/WEB-INF/Home.jsp").forward(request, response);
 				}
-				
+
 			} else {
-				request.setAttribute("errorMessage", LecteurMessage.getMessageErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID));
+				request.setAttribute("errorMessage",
+						LecteurMessage.getMessageErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID));
 				this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
 
 			}
 		} catch (BusinessException e) {
-			
-			e.printStackTrace();			
+
+			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 }
