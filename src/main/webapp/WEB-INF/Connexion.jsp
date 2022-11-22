@@ -50,7 +50,7 @@ String pageAuthor = "POV - ENI";
 			
 			<!-- ERROR -->
 	        <jsp:include page="/WEB-INF/template-parts/error.jsp">
-				<jsp:param value="" name="errorMessage"/>
+				<jsp:param value="${errorMessage}" name="errorMessage"/>
 			</jsp:include>
 			
 			<!-- CONNEXION FORM -->
