@@ -20,5 +20,14 @@ public abstract class CodesResultatDAL {
 	 */
 	public static final int INSERT_AVIS_NOTE_ECHEC=10002;
 	
+	/**
+	 * Attribut de selection fournit à la méthode est NULL
+	 */
+	public static final int NULL_ATTRIBUTE_IN_QUERY=10003;
+	
+	/**
+	 * Echec général quand erreur non gérée à la selection 
+	 */
+	public static final int SELECT_OBJET_ECHEC=10004;
 	
 }
