@@ -29,28 +29,23 @@ String pageAuthor = "POV - ENI";
 		</jsp:include>
 		
 		<!-- CSS -->
-		<link href="../css/style.css" rel="stylesheet">
+		<link href="<%=request.getContextPath()%>/assets/css/style.css" rel="stylesheet">
 	
 		<!-- JS -->
-		<script src="../js/script-dist.js"></script>
+		<!-- <script src="../js/script-dist.js"></script> -->
 
 	</head>
 
 	<body>
 	
 		<!-- HEADER -->
-		<jsp:include page="/WEB-INF/template-parts/header.jsp">
-		</jsp:include>
+		<jsp:include page="/WEB-INF/template-parts/header.jsp"/>
 
 		<main>
 		
 			<!-- HEADING -->
 			<jsp:include page="/WEB-INF/template-parts/heading.jsp">
 				<jsp:param value="<%= pageTitle %>" name="title"/>
-			</jsp:include>
-			
-			<!-- FILTERS -->
-			<jsp:include page="/WEB-INF/template-parts/filters.jsp">
 			</jsp:include>
 			
 			<!-- ERROR -->

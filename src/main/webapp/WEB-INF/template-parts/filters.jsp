@@ -1,5 +1,5 @@
 <div id="filter" class="row">
-	<form id="search_filter" method="post" action="">
+	<form id="search_filter" method="post" action="<%=request.getContextPath()%>">
 		<input type="text" placeholder="Rechercher" list="products_list">
 		<datalist id="products_list">
 			<option value="Aspirateur">
@@ -15,7 +15,7 @@
 		<button type="submit" class="btn">Rechercher</button>
 	</form>
 
-	<form action="index.html" method="post" id="categorie_filter">
+	<form action="<%=request.getContextPath()%>" method="post" id="categorie_filter">
 		<div>
 			<h4>Achats</h4>
 			<fieldset>

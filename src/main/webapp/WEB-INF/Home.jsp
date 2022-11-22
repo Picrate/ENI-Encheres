@@ -13,7 +13,7 @@ pageEncoding="UTF-8"
 
 <%-- Variable page --%>
 <%! 
-String pageTitle = "Enchères ENI";
+String pageTitle = "Les enchères";
 String pageAuthor = "POV - ENI";
 %>
 
@@ -29,18 +29,17 @@ String pageAuthor = "POV - ENI";
 		</jsp:include>
 		
 		<!-- CSS -->
-		<link href="../css/style.css" rel="stylesheet">
+		<link href="<%=request.getContextPath()%>/assets/css/style.css" rel="stylesheet">
 	
 		<!-- JS -->
-		<script src="../js/script-dist.js"></script>
+		<!-- <script src="../js/script-dist.js"></script> -->
 
 	</head>
 
 	<body>
 	
 		<!-- HEADER -->
-		<jsp:include page="/WEB-INF/template-parts/header.jsp">
-		</jsp:include>
+		<jsp:include page="/WEB-INF/template-parts/header.jsp"/>
 
 		<main>
 		
@@ -50,8 +49,7 @@ String pageAuthor = "POV - ENI";
 			</jsp:include>
 			
 			<!-- FILTERS -->
-			<jsp:include page="/WEB-INF/template-parts/filters.jsp">
-			</jsp:include>
+			<jsp:include page="/WEB-INF/template-parts/filters.jsp"/>
 
 			
 			<!-- ERROR -->

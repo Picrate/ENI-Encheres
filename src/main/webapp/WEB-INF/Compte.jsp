@@ -29,18 +29,17 @@ String pageAuthor = "POV - ENI";
 		</jsp:include>
 		
 		<!-- CSS -->
-		<link href="../css/style.css" rel="stylesheet">
+		<link href="<%=request.getContextPath()%>/assets/css/style.css" rel="stylesheet">
 	
 		<!-- JS -->
-		<script src="../js/script-dist.js"></script>
+		<!-- <script src="../js/script-dist.js"></script> -->
 
 	</head>
 
 	<body>
 	
 		<!-- HEADER -->
-		<jsp:include page="/WEB-INF/template-parts/header.jsp">
-		</jsp:include>
+		<jsp:include page="/WEB-INF/template-parts/header.jsp"/>
 
 		<main>
 		
@@ -49,15 +48,11 @@ String pageAuthor = "POV - ENI";
 				<jsp:param value="<%= pageTitle %>" name="title"/>
 			</jsp:include>
 			
-			<!-- FILTERS -->
-			<jsp:include page="/WEB-INF/template-parts/filters.jsp">
-			</jsp:include>
-			
 			<!-- ERROR -->
 	        <jsp:include page="/WEB-INF/template-parts/error.jsp">
 				<jsp:param value="" name="errorMessage"/>
 			</jsp:include>
-			
+			 
 			<!-- COMPTE-->
 			<div id="connexion" class="row">
 				<form>
@@ -114,8 +109,8 @@ String pageAuthor = "POV - ENI";
 					</div>
 
 					<!-- <input type="submit" value="Créer" class="btn"> -->
-					<a class="btn" href="fiche-utilisateur.html">Créer</a>
-					<a class="btn outline" href="index.html">Annuler</a>
+					<a class="btn" href="<%=request.getContextPath()%>/profil-utilisateur">Créer</a>
+					<a class="btn outline" href="<%=request.getContextPath()%>">Annuler</a>
 				</form>
 			</div>
 			
