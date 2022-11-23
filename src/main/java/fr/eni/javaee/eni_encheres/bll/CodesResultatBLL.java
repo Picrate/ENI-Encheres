@@ -6,11 +6,11 @@ package fr.eni.javaee.eni_encheres.bll;
 public abstract class CodesResultatBLL {
 	
 	/**
-	 * Echec quand la description de l'avis ne repsecte pas les règles définies
+	 * Echec quand l'identifiant est null
 	 */
 	public static final int PSEUDO_OR_EMAIL_NULL=20000;
 	/**
-	 * Echec quand la description de l'avis ne repsecte pas les règles définies
+	 * Echec quand le mot de passe est null
 	 */
 	public static final int PASSWORD_IS_NULL=20001;
 	
