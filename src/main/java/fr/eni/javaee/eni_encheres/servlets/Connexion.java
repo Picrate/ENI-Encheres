@@ -1,6 +1,9 @@
 package fr.eni.javaee.eni_encheres.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -91,14 +94,19 @@ public class Connexion extends HttpServlet {
 				}
 
 			} else {
-				request.setAttribute("errorMessage",
-						LecteurMessage.getMessageErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID));
-				this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
-
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
+				throw be;				
 			}
 		} catch (BusinessException e) {
-
 			e.printStackTrace();
+			List<Integer> listeCodeErreurs = e.getListeCodesErreur();
+			List<String> listeErreurs = new ArrayList<>();
+			for (Integer codeErreur : listeCodeErreurs) {
+				listeErreurs.add(LecteurMessage.getMessageErreur(codeErreur));
+			}
+			request.setAttribute("listeErreurs", listeErreurs);
+			this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
 		}
 
 	}
