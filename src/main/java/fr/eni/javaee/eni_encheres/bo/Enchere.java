@@ -4,7 +4,7 @@
 package fr.eni.javaee.eni_encheres.bo;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * @author Orel
@@ -15,7 +15,7 @@ public class Enchere implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	LocalDate dateEnchere;
+	Date dateEnchere;
 	int montantEnchere;
 
 	/**
@@ -28,7 +28,7 @@ public class Enchere implements Serializable {
 	 * @param dateEnchere
 	 * @param montantEnchere
 	 */
-	public Enchere(LocalDate dateEnchere, int montantEnchere) {
+	public Enchere(Date dateEnchere, int montantEnchere) {
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
 	}
@@ -36,14 +36,14 @@ public class Enchere implements Serializable {
 	/**
 	 * @return the dateEnchere
 	 */
-	public LocalDate getDateEnchere() {
+	public Date getDateEnchere() {
 		return dateEnchere;
 	}
 
 	/**
 	 * @param dateEnchere the dateEnchere to set
 	 */
-	public void setDateEnchere(LocalDate dateEnchere) {
+	public void setDateEnchere(Date dateEnchere) {
 		this.dateEnchere = dateEnchere;
 	}
 

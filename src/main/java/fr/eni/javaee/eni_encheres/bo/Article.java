@@ -4,7 +4,7 @@
 package fr.eni.javaee.eni_encheres.bo;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * @author Orel
@@ -18,8 +18,8 @@ public class Article implements Serializable {
 	int noArticle;
 	String nomArticle;
 	String description;
-	LocalDate dateDebutEncheres;
-	LocalDate dateFinEncheres;
+	Date dateDebutEncheres;
+	Date dateFinEncheres;
 	int miseAPrix;
 	int prixVente;
 	Boolean etatVente;
@@ -43,8 +43,8 @@ public class Article implements Serializable {
 	 * @param utilisateur
 	 * @param lieuRetrait
 	 */
-	public Article(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Boolean etatVente, Boolean etatRetrait,
+	public Article(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int miseAPrix, int prixVente, Boolean etatVente, Boolean etatRetrait,
 			Utilisateur utilisateur, Retrait lieuRetrait) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -104,28 +104,28 @@ public class Article implements Serializable {
 	/**
 	 * @return the dateDebutEncheres
 	 */
-	public LocalDate getDateDebutEncheres() {
+	public Date getDateDebutEncheres() {
 		return dateDebutEncheres;
 	}
 
 	/**
 	 * @param dateDebutEncheres the dateDebutEncheres to set
 	 */
-	public void setDateDebutEncheres(LocalDate dateDebutEncheres) {
+	public void setDateDebutEncheres(Date dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
 	}
 
 	/**
 	 * @return the dateFinEncheres
 	 */
-	public LocalDate getDateFinEncheres() {
+	public Date getDateFinEncheres() {
 		return dateFinEncheres;
 	}
 
 	/**
 	 * @param dateFinEncheres the dateFinEncheres to set
 	 */
-	public void setDateFinEncheres(LocalDate dateFinEncheres) {
+	public void setDateFinEncheres(Date dateFinEncheres) {
 		this.dateFinEncheres = dateFinEncheres;
 	}
 
