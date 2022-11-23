@@ -22,9 +22,11 @@ public class Article implements Serializable {
 	Date dateFinEncheres;
 	int miseAPrix;
 	int prixVente;
+	int noUtilisateur;
+	int noCategorie;
 	Boolean etatVente;
 	Boolean etatRetrait;
-	Utilisateur utilisateur;
+	
 
 	public Article() {
 	}
@@ -44,7 +46,7 @@ public class Article implements Serializable {
 	 */
 	public Article(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
 			Date dateFinEncheres, int miseAPrix, int prixVente, Boolean etatVente, Boolean etatRetrait,
-			Utilisateur utilisateur) {
+			int utilisateurId) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -54,7 +56,34 @@ public class Article implements Serializable {
 		this.prixVente = prixVente;
 		this.etatVente = etatVente;
 		this.etatRetrait = etatRetrait;
-		this.utilisateur = utilisateur;
+		this.noUtilisateur = utilisateurId;
+	}
+	
+	
+	
+	
+
+	/**
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param miseAPrix
+	 * @param prixVente
+	 * @param noUtilisateur
+	 * @param noCategorie
+	 */
+	public Article(int noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int miseAPrix,
+			int prixVente, int noUtilisateur, int noCategorie) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.noUtilisateur = noUtilisateur;
+		this.noCategorie = noCategorie;
 	}
 
 	/**
@@ -186,24 +215,38 @@ public class Article implements Serializable {
 	/**
 	 * @return the utilisateur
 	 */
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
+	public int getNoUtilisateur() {
+		return noUtilisateur;
 	}
 
 	/**
 	 * @param utilisateur the utilisateur to set
 	 */
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
+	public void setNoUtilisateur(int utilisateurId) {
+		this.noUtilisateur = utilisateurId;
+	}
+	
+
+	/**
+	 * @return the noCategorie
+	 */
+	public int getNoCategorie() {
+		return this.noCategorie;
 	}
 
+	/**
+	 * @param noCategorie the noCategorie to set
+	 */
+	public void setNoCategorie(int noCategorie) {
+		this.noCategorie = noCategorie;
+	}
 
 	@Override
 	public String toString() {
 		return "Article [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
 				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
 				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", etatRetrait=" + etatRetrait
-				+ ", utilisateur=" + utilisateur +"]";
+				+ ", utilisateur=" + noUtilisateur +"]";
 	}
 
 }
