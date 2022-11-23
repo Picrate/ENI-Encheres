@@ -1,5 +1,5 @@
 /**
- * 
+ * Gestionnaire d'authentification utilisateur
  */
 package fr.eni.javaee.eni_encheres.bll;
 
@@ -27,6 +27,13 @@ public class LoginManager {
 		return instance;
 	}
 	
+	/**
+	 * Authentifie un compte en fonction de l'email ou du pseudo
+	 * @param username l'email ou le login de l'utilsateur
+	 * @param password le mot de passe fournit dans le formulaire d'authentification
+	 * @return true si le mot de passe correspond / false sinon
+	 * @throws BusinessException
+	 */
 	public boolean authenticateUser(String username, String password) throws BusinessException {
 		boolean authenticate = false;
 		if (username == null) {
