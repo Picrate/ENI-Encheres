@@ -46,4 +46,10 @@ public abstract class CodesResultatDAL {
 	public static final int DELETE_OBJET_ECHEC=10007;
 	
 	
+	/**
+	 * Articles
+	 */
+	public static final int SELECT_ARTICLE_ECHEC=20000;
+	public static final int SELECT_ALL_ARTICLES_ECHEC=20001;
+	
 }
