@@ -178,7 +178,7 @@ public class Utilisateur implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Utilisateur - [ no_utilsateur: "+this.no_utilisateur+",pseudo: "+this.pseudo+",nom: "+this.nom+",prenom: "+this.prenom+", email: "+this.email+",telephone: "+this.telephone+",rue: "+",code_postal: "+",ville: "+",password: "+this.password+",credit: "+this.credit+",administrateur:"+this.administrateur+"]";
+		return "Utilisateur - [ no_utilisateur: "+this.no_utilisateur+",pseudo: "+this.pseudo+",nom: "+this.nom+",prenom: "+this.prenom+", email: "+this.email+",telephone: "+this.telephone+",rue: "+",code_postal: "+",ville: "+",password: "+this.password+",credit: "+this.credit+",administrateur:"+this.administrateur+"]";
 	}
 	
 	

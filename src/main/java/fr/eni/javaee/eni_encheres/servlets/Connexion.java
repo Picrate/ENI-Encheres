@@ -69,9 +69,9 @@ public class Connexion extends HttpServlet {
 			// si utilisateur authentifié avec succes
 			if (authStatus) {
 				// Déclaration Attributs Session
-				session.setAttribute("authenticated", true);
-				session.setAttribute("pseudo", UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(identifiant).getPseudo());
-				session.setAttribute("userId", UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(identifiant).getNo_utilisateur());
+				session.setAttribute("connecte", true);
+				session.setAttribute("utilisateur", UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(identifiant));
+				
 				// recherche cookie
 				if(cookieExists("authenticated", request))
 				{
@@ -82,7 +82,9 @@ public class Connexion extends HttpServlet {
 						this.getServletContext().getRequestDispatcher("/WEB-INF/Home.jsp").forward(request, response);
 					} else {
 						authCookie.setMaxAge(0); // Efface le cookie
+						response.addCookie(authCookie);
 						session.invalidate();
+						this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
 					}
 					
 				} else {
@@ -106,9 +108,9 @@ public class Connexion extends HttpServlet {
 				listeErreurs.add(LecteurMessage.getMessageErreur(codeErreur));
 			}
 			request.setAttribute("listeErreurs", listeErreurs);
+			
 			this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
 		}
-
 	}
 
 	/**

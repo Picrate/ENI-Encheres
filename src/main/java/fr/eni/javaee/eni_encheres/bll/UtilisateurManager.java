@@ -56,7 +56,6 @@ public class UtilisateurManager {
 
 			} else {
 				utilisateur = this.utilisateurDAO.selectElementBy("pseudo",pseudoOrEmail);
-				System.out.println(utilisateur.toString());
 			}
 			
 		}
