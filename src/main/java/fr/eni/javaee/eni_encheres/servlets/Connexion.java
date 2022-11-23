@@ -25,29 +25,30 @@ public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Renvoie à la page de connexion
+	 * Renvoie Ã  la page de connexion
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
 	}
 
 	/**
-	 * Méthode de connexion via le formulaire
+	 * MÃ©thode de connexion via le formulaire
 	 * Fait appel au LoginManager pour Verifier l'authentification de l'utilsateur
 	 * Si auth = KO, On redirige vers la page de connexion avec Mersage d'erreur
 	 * Si Auth OK:
-	 * 	On définit trois variables de session:
-	 * 		- authenticated: boolean / l'authentification de l'utilisateur a réussi
+	 * 	On dÃ©finit trois variables de session:
+	 * 		- authenticated: boolean / l'authentification de l'utilisateur a rï¿½ussi
 	 * 		- userId: l'identifiant unique de l'utilisateur.
 	 * 		- pseudo: String / le pseudo de l'utilisateur
-	 *  On vérifie l'existence du cookie authCookie et sa valeur:
-	 *  	- Si authCookie n'existe pas, on le créé et on place sa valeur à true. On l'ajoute aux cookies présents.
+	 *  On vÃ©rifie l'existence du cookie authCookie et sa valeur:
+	 *  	- Si authCookie n'existe pas, on le crÃ©Ã© et on place sa valeur Ã  true. On l'ajoute aux cookies prÃ©sents.
 	 *  	- Si authCookie existe et que valeur = true alors on redirige vers la page d'accueil
-	 *  	- Si la valeur de authCookie est différente:
-	 *  		- on désactive le cookie
+	 *  	- Si la valeur de authCookie est diffÃ©rente:
+	 *  		- on dÃ©sactive le cookie
 	 *  		- on invalide la session
 	 *  		- on redirige vers la page de connexion 
 	 * 
@@ -56,19 +57,18 @@ public class Connexion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		request.setCharacterEncoding("UTF-8");
 		String identifiant = request.getParameter("identifiant");
 		String password = request.getParameter("password");
 		Cookie authCookie = null;
 		
-		HttpSession session = request.getSession();
-			
+		HttpSession session = request.getSession();			
 
 		try {
 			boolean authStatus = LoginManager.getInstance().authenticateUser(identifiant, password);
-			// si utilsateur authentifié avec succes
+			// si utilisateur authentifiÃ© avec succes
 			if (authStatus) {
-				// Déclaration Attributs Session
+				// DÃ©claration Attributs Session
 				session.setAttribute("authenticated", true);
 				session.setAttribute("pseudo", UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(identifiant).getPseudo());
 				session.setAttribute("userId", UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(identifiant).getNo_utilisateur());
@@ -112,9 +112,9 @@ public class Connexion extends HttpServlet {
 	}
 
 	/**
-	 * Méthode de vérification de l'existence d'un cookie
+	 * MÃ©thode de vÃ©rification de l'existence d'un cookie
 	 * 
-	 * @param cookieName le nom du cookie à rechercher dans la requete
+	 * @param cookieName le nom du cookie Ã  rechercher dans la requete
 	 * @param request    la requete ou chercher le cookie
 	 * @return true si le cookie existe / false sinon
 	 */
@@ -133,9 +133,9 @@ public class Connexion extends HttpServlet {
 	}
 
 	/**
-	 * Méthode de récupération d'un cookie par son nom
+	 * Mï¿½thode de rÃ©cupÃ©ration d'un cookie par son nom
 	 * 
-	 * @param cookieName le nom du cookie à récupérer
+	 * @param cookieName le nom du cookie Ã  rÃ©cupÃ©rer
 	 * @param request    la requete ou chercher le cookie
 	 * @return Le cookie si il existe / NULL sinon
 	 */
