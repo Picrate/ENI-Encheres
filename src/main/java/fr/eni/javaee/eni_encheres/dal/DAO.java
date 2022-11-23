@@ -26,6 +26,15 @@ public interface DAO<T> {
 	 */
 	public T selectElementById(int id)  throws BusinessException;
 	
+	
+	/**
+	 * Méthode de récupération générique d'un element dans la datasource
+	 * @param nomAttribut le nom de l'attribut sur lequel rechercher
+	 * @param valeurAttribut la valeur de l'attribut à rechercher
+	 * @return L'element correspondant.
+	 */
+	public T selectElementBy(String nomAttribut, String valeurAttribut) throws BusinessException;
+	
 	/**
 	 * Met à jour un élément dans la datasource.
 	 * @param element l'élément à ajouter.
