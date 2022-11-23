@@ -2,8 +2,8 @@ package fr.eni.javaee.eni_encheres.bll;
 
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bo.Utilisateur;
+import fr.eni.javaee.eni_encheres.dal.DAO;
 import fr.eni.javaee.eni_encheres.dal.DAOFactory;
-import fr.eni.javaee.eni_encheres.dal.UtilisateurDAO;
 
 
 /**
@@ -15,7 +15,7 @@ import fr.eni.javaee.eni_encheres.dal.UtilisateurDAO;
 public class UtilisateurManager {
 	
 	private static UtilisateurManager instance = null;;
-	private UtilisateurDAO utilisateurDAO;
+	private DAO<Utilisateur> utilisateurDAO;
 	
 	
 	/**
@@ -38,14 +38,13 @@ public class UtilisateurManager {
 	}
 	
 	/**
-	 * Récupération d'un utilsateur par son email ou son pseudo
+	 * Récupération d'un utilisateur par son email ou son pseudo
 	 * @param pseudoOrEmail le pseudo ou l'email de l'utilsateur
 	 * @return L'utilisateur
 	 * @throws BusinessException
 	 */
 	public Utilisateur getUtilisateurByPseudoOrEmail(String pseudoOrEmail) throws BusinessException {
 		Utilisateur utilisateur = null;
-		
 		if(pseudoOrEmail == null) {
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_OR_EMAIL_NULL);
@@ -53,9 +52,11 @@ public class UtilisateurManager {
 		}
 		else {
 			if (pseudoOrEmail.contains("@")) {
-				utilisateur = this.utilisateurDAO.getUtilisateurByMail(pseudoOrEmail);
+				utilisateur = this.utilisateurDAO.selectElementBy("email", pseudoOrEmail);
+
 			} else {
-				utilisateur = this.utilisateurDAO.getUtilisateurByPseudo(pseudoOrEmail);
+				utilisateur = this.utilisateurDAO.selectElementBy("pseudo",pseudoOrEmail);
+				System.out.println(utilisateur.toString());
 			}
 			
 		}
