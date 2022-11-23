@@ -25,7 +25,6 @@ public class Article implements Serializable {
 	Boolean etatVente;
 	Boolean etatRetrait;
 	Utilisateur utilisateur;
-	Retrait lieuRetrait;
 
 	public Article() {
 	}
@@ -45,7 +44,7 @@ public class Article implements Serializable {
 	 */
 	public Article(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
 			Date dateFinEncheres, int miseAPrix, int prixVente, Boolean etatVente, Boolean etatRetrait,
-			Utilisateur utilisateur, Retrait lieuRetrait) {
+			Utilisateur utilisateur) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -56,7 +55,6 @@ public class Article implements Serializable {
 		this.etatVente = etatVente;
 		this.etatRetrait = etatRetrait;
 		this.utilisateur = utilisateur;
-		this.lieuRetrait = lieuRetrait;
 	}
 
 	/**
@@ -199,26 +197,13 @@ public class Article implements Serializable {
 		this.utilisateur = utilisateur;
 	}
 
-	/**
-	 * @return the lieuRetrait
-	 */
-	public Retrait getLieuRetrait() {
-		return lieuRetrait;
-	}
-
-	/**
-	 * @param lieuRetrait the lieuRetrait to set
-	 */
-	public void setLieuRetrait(Retrait lieuRetrait) {
-		this.lieuRetrait = lieuRetrait;
-	}
 
 	@Override
 	public String toString() {
 		return "Article [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
 				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
 				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", etatRetrait=" + etatRetrait
-				+ ", utilisateur=" + utilisateur + ", lieuRetrait=" + lieuRetrait + "]";
+				+ ", utilisateur=" + utilisateur +"]";
 	}
 
 }
