@@ -1,8 +1,10 @@
 <%-- Imports --%>
-<%-- <%@ page import="java.util.List" %> --%>
+<%@ page import="java.util.List" %>
+<%@ page import="fr.eni.javaee.eni_encheres.bo.Article"%>
 
 <%-- Librairies --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%-- Config de la page --%>
 <%@ page 
@@ -59,35 +61,27 @@ String pageAuthor = "POV - ENI";
 			
 			<!-- LISTE OBJETS -->
 			<ul id="index" class="row">
-				<li class="card">
-					<img src="" alt="">
-					<div class="detail">
-						<h3><a href="objet.html">Objet 1</a></h3>
-						<p class="price">Prix 200 points</p>
-						<p class="end_date">21/11/2022</p>
-						<p class="seller">Pseudo</p>
-					</div>
-				</li>
-
-				<li class="card">
-					<img src="" alt="">
-					<div class="detail">
-						<h3><a href="objet.html">Objet 2</a></h3>
-						<p class="price">Prix 200 points</p>
-						<p class="end_date">21/11/2022</p>
-						<p class="seller">Pseudo</p>
-					</div>
-				</li>
-
-				<li class="card">
-					<img src="" alt="">
-					<div class="detail">
-						<h3><a href="objet.html">Objet 3</a></h3>
-						<p class="price">Prix 200 points</p>
-						<p class="end_date">21/11/2022</p>
-						<p class="seller">Pseudo</p>
-					</div>
-				</li>
+			
+				<%
+	        	List<Article> listeArticles = (List<Article>)request.getAttribute("listeArticle");
+	        	%>
+	        	
+	        	<%-- <c:if test="${! empty listeArticles}"> --%>
+					<%= listeArticles %>
+		        	<c:forEach var="article" items="${listeArticles}">
+		        	<li class="card">
+			        	<img src="" alt="">
+						<div class="detail">
+							<h3><a href="<%=request.getContextPath()%>/objet?articleID=${article.noArticle}">${article.nomArticle}</a></h3>
+							<p class="price">Prix ${article.prixVente} points</p>
+							<p class="end_date">${article.dateFinEncheres}</p>
+							<p class="seller">Pseudo</p>
+						</div>
+		            </li>
+		        	</c:forEach>
+		        	
+		        <%-- </c:if> --%>
+				
 			</ul>
 			
 		</main>
