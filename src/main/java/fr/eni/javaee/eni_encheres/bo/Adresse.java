@@ -20,13 +20,13 @@ public class Adresse implements Serializable {
 	private int codePostal;
 	private String ville;
 
+	public Adresse() {
+	}
+
 	public Adresse(String rue, int codePostal, String ville) {
 		this.rue = rue.toLowerCase();
 		this.codePostal = codePostal;
 		this.ville = ville.toUpperCase();
-	}
-
-	public Adresse() {
 	}
 
 	/**
@@ -73,6 +73,7 @@ public class Adresse implements Serializable {
 
 	@Override
 	public String toString() {
-		return super.toString();
+		return "Adresse [rue=" + rue + ", codePostal=" + codePostal + ", ville=" + ville + "]";
 	}
+
 }
