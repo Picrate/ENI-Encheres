@@ -26,8 +26,24 @@ public abstract class CodesResultatDAL {
 	public static final int NULL_ATTRIBUTE_IN_QUERY=10003;
 	
 	/**
+	 * Attribut de selection fournit à la méthode est NULL
+	 */
+	public static final int NULL_VALUE_IN_QUERY=10004;
+	
+	/**
 	 * Echec général quand erreur non gérée à la selection 
 	 */
-	public static final int SELECT_OBJET_ECHEC=10004;
+	public static final int SELECT_OBJET_ECHEC=10005;
+	
+	/**
+	 * Echec général quand erreur non gérée à la mise à jour des informations
+	 */
+	public static final int UPDATE_OBJET_ECHEC=10006;
+	
+	/**
+	 * Echec général quand erreur non gérée à la mise à jour des informations
+	 */
+	public static final int DELETE_OBJET_ECHEC=10007;
+	
 	
 }
