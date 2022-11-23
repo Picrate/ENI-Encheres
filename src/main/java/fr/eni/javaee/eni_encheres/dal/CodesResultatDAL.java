@@ -45,5 +45,10 @@ public abstract class CodesResultatDAL {
 	 */
 	public static final int DELETE_OBJET_ECHEC=10007;
 	
+	/**
+	 * REquete non implémentée
+	 */
+	public static final int UNIMPLEMENTED_REQUEST=10008;
+	
 	
 }
