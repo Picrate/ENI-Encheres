@@ -1,9 +1,10 @@
 package fr.eni.javaee.eni_encheres.bll;
 
 import fr.eni.javaee.eni_encheres.BusinessException;
+import fr.eni.javaee.eni_encheres.bo.Adresse;
 import fr.eni.javaee.eni_encheres.bo.Utilisateur;
-import fr.eni.javaee.eni_encheres.dal.DAO;
 import fr.eni.javaee.eni_encheres.dal.DAOFactory;
+import fr.eni.javaee.eni_encheres.dal.UtilisateurDAO;
 
 
 /**
@@ -15,7 +16,7 @@ import fr.eni.javaee.eni_encheres.dal.DAOFactory;
 public class UtilisateurManager {
 	
 	private static UtilisateurManager instance = null;;
-	private DAO<Utilisateur> utilisateurDAO;
+	private UtilisateurDAO utilisateurDAO;
 	
 	
 	/**
@@ -45,6 +46,8 @@ public class UtilisateurManager {
 	 */
 	public Utilisateur getUtilisateurByPseudoOrEmail(String pseudoOrEmail) throws BusinessException {
 		Utilisateur utilisateur = null;
+		Adresse adresse = null;
+		
 		if(pseudoOrEmail == null) {
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_OR_EMAIL_NULL);
@@ -52,10 +55,14 @@ public class UtilisateurManager {
 		}
 		else {
 			if (pseudoOrEmail.contains("@")) {
-				utilisateur = this.utilisateurDAO.selectElementBy("email", pseudoOrEmail);
+				utilisateur = this.utilisateurDAO.getUtilisateurByMail(pseudoOrEmail);
+				adresse = AdresseManager.getInstance().getAdresseById(this.utilisateurDAO.getUtilisateurAdresseId(utilisateur.getNo_utilisateur()));
+				utilisateur.setAdresse(adresse);
 
 			} else {
-				utilisateur = this.utilisateurDAO.selectElementBy("pseudo",pseudoOrEmail);
+				utilisateur = this.utilisateurDAO.getUtilisateurByPseudo(pseudoOrEmail);
+				adresse = AdresseManager.getInstance().getAdresseById(this.utilisateurDAO.getUtilisateurAdresseId(utilisateur.getNo_utilisateur()));
+				utilisateur.setAdresse(adresse);
 			}
 			
 		}
@@ -69,7 +76,10 @@ public class UtilisateurManager {
 	 * @throws BusinessException
 	 */
 	public Utilisateur getUtilisateurById(int id) throws BusinessException {
-		return this.utilisateurDAO.selectElementById(id);
+		Utilisateur utilisateur = this.utilisateurDAO.selectElementById(id);
+		Adresse adresse = AdresseManager.getInstance().getAdresseById(id);
+		utilisateur.setAdresse(adresse);
+		return utilisateur;
 	}
 
 }

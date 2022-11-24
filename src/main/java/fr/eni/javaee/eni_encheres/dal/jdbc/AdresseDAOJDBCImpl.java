@@ -55,12 +55,18 @@ public class AdresseDAOJDBCImpl implements DAO<Adresse> {
 
 	@Override
 	public Adresse selectElementById(int id) throws BusinessException {
+		System.out.println("selectElementById("+String.valueOf(id)+")");
 		return selectElementBy("id", String.valueOf(id));
 	}
 
+	
+	/**
+	 * "SELECT id, rue, code_postal, ville FROM ADRESSES WHERE ? = ?;";
+	 */
 	@Override
 	public Adresse selectElementBy(String nomAttribut, String valeurAttribut) throws BusinessException {
 		Adresse adresse = null;
+
 		// Check si les valeurs entrées en parametre sont null;
 		if (nomAttribut == null) {
 			BusinessException be = new BusinessException();
@@ -84,7 +90,7 @@ public class AdresseDAOJDBCImpl implements DAO<Adresse> {
 				case "id":
 					pstmt = cnx.prepareStatement(SELECT_ADRESSE_BY);
 					pstmt.setString(1, nomAttribut);
-					pstmt.setInt(2, Integer.valueOf(valeurAttribut));
+					pstmt.setString(2, valeurAttribut);
 					break;
 				default:
 					BusinessException businessException = new BusinessException();

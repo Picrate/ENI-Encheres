@@ -14,7 +14,7 @@ import fr.eni.javaee.eni_encheres.dal.DAOFactory;
  */
 public class AdresseManager {
 	
-	private AdresseManager instance = null;
+	private static AdresseManager instance = null;
 	private DAO<Adresse> adresseDAO;
 	
 	private AdresseManager () {
@@ -27,7 +27,7 @@ public class AdresseManager {
 	 * 
 	 * @return le singleton
 	 */
-	public AdresseManager getInstance() {
+	public static AdresseManager getInstance() {
 		if(instance == null) {
 			instance = new AdresseManager();
 		}

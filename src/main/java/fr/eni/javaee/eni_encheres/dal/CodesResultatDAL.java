@@ -18,7 +18,7 @@ public abstract class CodesResultatDAL {
 	/**
 	 * Echec de l'insertion d'un avis à cause de la note
 	 */
-	public static final int INSERT_AVIS_NOTE_ECHEC=10002;
+	public static final int QUERY_ATTRIBUTE_OUT_OF_BOUNDS=10002;
 	
 	/**
 	 * Attribut de selection fournit à la méthode est NULL
@@ -51,17 +51,20 @@ public abstract class CodesResultatDAL {
 	public static final int UNIMPLEMENTED_REQUEST=10008;
 	
 	
+	
 	/**
-	 * Articles
+	 * Articles 10100
 	 */
 	public static final int SELECT_ARTICLE_ECHEC=10100;
 	public static final int SELECT_ALL_ARTICLES_ECHEC=10101;
 	
 	
 	/**
-	 * Categories
+	 * Categories 10200
 	 */
 	public static final int SELECT_ALL_CATEGORIES_ECHEC=10201;
 	
-	
+	/**
+	 * Adresses 10300
+	 */
 }
