@@ -69,7 +69,7 @@ public class UtilisateurManager {
 	 * @throws BusinessException
 	 */
 	public Utilisateur getUtilisateurById(int id) throws BusinessException {
-		return this.utilisateurDAO.selectElementBy("id", String.valueOf(id));
+		return this.utilisateurDAO.selectElementById(id);
 	}
 
 }

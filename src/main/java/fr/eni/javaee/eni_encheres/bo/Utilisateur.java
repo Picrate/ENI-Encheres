@@ -19,6 +19,7 @@ public class Utilisateur implements Serializable{
 	private String email;
 	private String telephone;
 	private String password;
+	private Adresse adresse;
 	private int credit;
 	private boolean administrateur;
 	
@@ -28,13 +29,14 @@ public class Utilisateur implements Serializable{
 	}
 	
 	/**
-	 * Constructeur sans paramètres optionnels ni id.
-	 * L'Utilsateur n'est pas administrateur, ne possède aucun crédit et n'a pas de téléphone.
+	 * Constructeur sans paramètres optionnels ni id ni adresse.
+	 * L'Utilisateur n'est pas administrateur, ne possède aucun crédit et n'a pas de téléphone.
 	 * @param pseudo
 	 * @param nom
 	 * @param prenom
 	 * @param email
 	 * @param password
+	 * @param adresse
 	 */
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String password) {
 		this.pseudo = pseudo;
@@ -45,6 +47,56 @@ public class Utilisateur implements Serializable{
 		this.credit = 0;
 		this.telephone = null;
 		this.administrateur = false;
+		this.setAdresse(adresse);
+	}
+	
+	
+	/**
+	 * Constructeur sans paramètres optionnels ni id.
+	 * L'Utilisateur n'est pas administrateur, ne possède aucun crédit et n'a pas de téléphone.
+	 * @param pseudo
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param password
+	 * @param adresse
+	 */
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String password, Adresse adresse) {
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.password = password;
+		this.credit = 0;
+		this.telephone = null;
+		this.administrateur = false;
+		this.setAdresse(adresse);
+	}
+	
+	/**
+	 * Constructeur sans adresse
+	 * @param no_utilisateur
+	 * @param pseudo
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param telephone
+	 * @param password
+	 * @param credit
+	 * @param administrateur
+	 * @param adresse
+	 */
+	public Utilisateur(int no_utilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+			String password, int credit, boolean administrateur) {
+		this.no_utilisateur = no_utilisateur;
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.password = password;
+		this.credit = credit;
+		this.administrateur = administrateur;
 	}
 	
 	/**
@@ -58,9 +110,10 @@ public class Utilisateur implements Serializable{
 	 * @param password
 	 * @param credit
 	 * @param administrateur
+	 * @param adresse
 	 */
 	public Utilisateur(int no_utilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String password, int credit, boolean administrateur) {
+			String password, int credit, boolean administrateur, Adresse adresse) {
 		this.no_utilisateur = no_utilisateur;
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -176,9 +229,17 @@ public class Utilisateur implements Serializable{
 	}
 
 
+	public Adresse getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(Adresse adresse) {
+		this.adresse = adresse;
+	}
+
 	@Override
 	public String toString() {
-		return "Utilisateur - [ no_utilisateur: "+this.no_utilisateur+",pseudo: "+this.pseudo+",nom: "+this.nom+",prenom: "+this.prenom+", email: "+this.email+",telephone: "+this.telephone+",rue: "+",code_postal: "+",ville: "+",password: "+this.password+",credit: "+this.credit+",administrateur:"+this.administrateur+"]";
+		return "Utilisateur - [ no_utilisateur: "+this.no_utilisateur+",pseudo: "+this.pseudo+",nom: "+this.nom+",prenom: "+this.prenom+", email: "+this.email+",telephone: "+this.telephone+",rue: "+",code_postal: "+",ville: "+",password: "+this.password+",credit: "+this.credit+",administrateur:"+this.administrateur+" Adresse: "+adresse.toString()+"]";
 	}
 	
 	

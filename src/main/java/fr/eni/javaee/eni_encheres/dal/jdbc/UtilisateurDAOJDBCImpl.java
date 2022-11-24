@@ -87,9 +87,8 @@ public class UtilisateurDAOJDBCImpl implements DAO<Utilisateur> {
 
 
 	@Override
-	public Utilisateur selectElementById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Utilisateur selectElementById(int id) throws BusinessException {
+		return selectElementBy("id", String.valueOf(id));
 	}
 
 	@Override
