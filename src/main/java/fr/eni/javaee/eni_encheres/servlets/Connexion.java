@@ -80,8 +80,7 @@ public class Connexion extends HttpServlet {
 					}
 					if (authCookie != null) {
 						if (authCookie.getValue().equalsIgnoreCase("true")) {
-							this.getServletContext().getRequestDispatcher("/WEB-INF/Home.jsp").forward(request,
-									response);
+							response.sendRedirect(request.getContextPath()+"/home");
 						} else {
 							authCookie.setMaxAge(0); // Efface le cookie
 							response.addCookie(authCookie);
@@ -95,7 +94,7 @@ public class Connexion extends HttpServlet {
 						authCookie.setHttpOnly(true);
 						authCookie.setMaxAge(604800); // 7 jours
 						response.addCookie(authCookie);
-						this.getServletContext().getRequestDispatcher("/WEB-INF/Home.jsp").forward(request, response);
+						response.sendRedirect(request.getContextPath()+"/home");
 					}
 
 				} else {
