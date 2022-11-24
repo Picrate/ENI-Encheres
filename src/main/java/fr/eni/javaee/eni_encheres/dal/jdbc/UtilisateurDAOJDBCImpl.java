@@ -23,14 +23,68 @@ public class UtilisateurDAOJDBCImpl implements DAO<Utilisateur> {
 
 	private static final String SELECT_USER_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ?;";
 	private static final String SELECT_USER_BY_EMAIL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email LIKE ?;";
+	private static final String INSERT = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur ) VALUES (?,?,?,?,?,?,?,?,?,?,?);"; 			
+	
 	// TODO Voir si Constante  requête utile garder sinon supprimer
-	// private static final String SELECT_USER_BY = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE ? LIKE ?;";
+	// private static final String SELECT_USER_BY = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE ? = ?;";
 
+	
+	/* INSERT = "INSERT INTO UTILISATEURS ( 
+	 * 	pseudo,
+	 *  nom,
+	 *  prenom,
+	 *  email,
+	 *  telephone,
+	 *  rue,
+	 *  code_postal,
+	 *  ville,
+	 *  mot_de_passe,
+	 *  credit,
+	 *  administrateur ) VALUES (?,?,?,?,?,?,?,?,?,?,?);" 
+	*/
 	@Override
-	public void createElement(Utilisateur element) {
-		// TODO Auto-generated method stub
-
+	public void createElement(Utilisateur element) throws BusinessException {
+		
+		if (element == null) {
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
+			throw businessException;
+		}		
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			
+			PreparedStatement pstmt=null;
+			pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS );
+			pstmt.setString(1, element.getPseudo());
+			pstmt.setString(2, element.getNom());
+			pstmt.setString(3, element.getPrenom());
+			pstmt.setString(4, element.getEmail());
+			pstmt.setString(5, element.getTelephone());
+			pstmt.setString(6, element.getAdresse().getRue());
+			pstmt.setInt(7, element.getAdresse().getCodePostal());
+			pstmt.setString(8, element.getAdresse().getVille());
+			pstmt.setString(9, element.getPassword());
+			pstmt.setInt(10, element.getCredit());
+			pstmt.setBoolean(11, element.isAdministrateur());			
+			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();			
+			if(rs.next())
+			{
+				element.setNo_utilisateur(rs.getInt(1));
+			}
+			pstmt.close();
+			cnx.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+			throw businessException;
+		} 
 	}
+
+	
+
 
 	@Override
 	public Utilisateur selectElementById(int id) {
