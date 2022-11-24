@@ -29,6 +29,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	private static String SELECT_ALL_CATEGORIES = "SELECT no_categorie, libelle FROM CATEGORIES;";
 	private static String GET_ARTICLE_CATEGORIE = "SELECT c.no_categorie, c.libelle FROM CATEGORIES AS c INNER JOIN ARTICLES_VENDUS AS av ON av.no_categorie = c.no_categorie WHERE av.no_article = ?;";
 	
+	
 	@Override
 	public Categorie selectElementById(int id) throws BusinessException {
 		// TODO Auto-generated method stub

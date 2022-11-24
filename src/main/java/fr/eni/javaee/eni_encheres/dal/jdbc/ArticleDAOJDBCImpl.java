@@ -14,6 +14,7 @@ import java.util.List;
 
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bo.Article;
+import fr.eni.javaee.eni_encheres.bo.Categorie;
 import fr.eni.javaee.eni_encheres.dal.ArticleDAO;
 import fr.eni.javaee.eni_encheres.dal.CodesResultatDAL;
 import fr.eni.javaee.eni_encheres.dal.ConnectionProvider;
@@ -27,7 +28,8 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 
 	private static String SELECT_ALL_ARTICLES = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS;";
 	private static String SELECT_ARTICLE_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_article = ?;";
-	private static String GET_ARTICLE_CATEGORIE = "SELECT no_categorie, libelle FROM CATEGORIES WHERE no_article = ?;";
+	private static String GET_ARTICLES_IN_CATEGORIE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_categorie = ?;";
+
 	
 	@Override
 	public Article selectElementById(int id) throws BusinessException {
@@ -94,6 +96,41 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	}
 	
 	@Override
+	public List<Article> getArticlesInCategorie(int idCategorie) throws BusinessException {
+		List<Article> listArticles = null;
+
+		try (Connection connexion = ConnectionProvider.getConnection()) {
+			PreparedStatement query = connexion.prepareStatement(GET_ARTICLES_IN_CATEGORIE);
+			query.setInt(1, idCategorie);
+			ResultSet resultSet = query.executeQuery();  
+			listArticles = new ArrayList<>();
+			
+			while(resultSet.next()) { 
+				int idArticle = resultSet.getInt("no_article");
+				String nomArticle = resultSet.getString("nom_article");
+				String descriptionArticle = resultSet.getString("description");
+				Date dateDebutEnchere = resultSet.getDate("date_debut_encheres");
+				Date dateFinEnchere = resultSet.getDate("date_fin_encheres");
+				int prixInitialArticle = resultSet.getInt("prix_initial");
+				int prixVenteArticle = resultSet.getInt("prix_vente");
+				int userArticle = resultSet.getInt("no_utilisateur");
+				int categorieArticle = resultSet.getInt("no_categorie");
+				Article article = new Article(idArticle, nomArticle, descriptionArticle, dateDebutEnchere, dateFinEnchere, prixInitialArticle, prixVenteArticle, userArticle, categorieArticle);
+				listArticles.add(article);
+			}
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_ALL_ARTICLES_ECHEC);
+			throw businessException;
+		}
+		
+		return listArticles;
+	}
+	
+	@Override
 	public void createElement(Article element) throws BusinessException {
 		
 	}
@@ -114,4 +151,6 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 }
