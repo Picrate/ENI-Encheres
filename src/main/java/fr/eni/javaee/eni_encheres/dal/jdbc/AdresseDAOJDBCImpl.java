@@ -55,7 +55,6 @@ public class AdresseDAOJDBCImpl implements DAO<Adresse> {
 
 	@Override
 	public Adresse selectElementById(int id) throws BusinessException {
-		System.out.println("selectElementById("+String.valueOf(id)+")");
 		return selectElementBy("id", String.valueOf(id));
 	}
 
@@ -66,7 +65,6 @@ public class AdresseDAOJDBCImpl implements DAO<Adresse> {
 	@Override
 	public Adresse selectElementBy(String nomAttribut, String valeurAttribut) throws BusinessException {
 		Adresse adresse = null;
-
 		// Check si les valeurs entrées en parametre sont null;
 		if (nomAttribut == null) {
 			BusinessException be = new BusinessException();
