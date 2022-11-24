@@ -39,10 +39,12 @@ public class Home extends HttpServlet {
 			//System.out.println("session");
 			HttpSession session = request.getSession();
 			// if user connected
-			if ((boolean)session.getAttribute("connecte")) {
-				//System.out.println("Utilisateur connecté : " + session.getAttribute("connecte"));
-				request.setAttribute("userConnected", session.getAttribute("connecte"));
-			}		
+			if (session.getAttribute("connecte") != null) {
+				if ((boolean)session.getAttribute("connecte")) {
+					//System.out.println("Utilisateur connecté : " + session.getAttribute("connecte"));
+					request.setAttribute("userConnected", session.getAttribute("connecte"));
+				}
+			} 
 		}
 		
 		/*
@@ -77,10 +79,44 @@ public class Home extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
+		/* 
+		 * get liste categories 
+		 */
+		CategorieManager categorieManager = new CategorieManager();
+		try {
+			List<Categorie> listeCategories = categorieManager.getAllCategories();
+			request.setAttribute("listeCategories", listeCategories);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+				
 		// get articles in categorie
+		if (request.getParameter("selectedCategorie") != "" && request.getParameter("selectedCategorie") != null) {
+			try {
+				int selectedCategorieId = Integer.parseInt(request.getParameter("selectedCategorie"));
+				request.setAttribute("selectedCategorieId", selectedCategorieId);
+				ArticleManager articleManager = new ArticleManager();
+				try {
+					List<Article> listeArticle = articleManager.getArticlesbyCategorie(selectedCategorieId);
+					request.setAttribute("listeArticles", listeArticle);
+				} catch (BusinessException e) {
+					e.printStackTrace();
+				}
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		}		
 		
 		// get article with keyword
+		//request.getParameter("searchPattern");
 		
+		// get articles en cours d'enchere
+		// get articles encheris
+		// get articles remportés
+		
+		// get article vendus
+		// get article ventes non débutées
+		// get article ventes en cours
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/Home.jsp");
 		requestDispatcher.forward(request, response);

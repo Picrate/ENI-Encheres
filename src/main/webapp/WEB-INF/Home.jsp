@@ -51,8 +51,10 @@ pageEncoding="UTF-8"
 			
 			<!-- FILTERS -->
 			<jsp:include page="/WEB-INF/template-parts/filters.jsp">
-				<jsp:param value="${listeCategories}" name="categoriesList"/>
 				<jsp:param value="${userConnected}" name="userConnected"/>
+				<jsp:param value="${listeCategories}" name="categoriesList"/>
+				<jsp:param value="${selectedCategorieId}" name="selectedCategorieId"/>
+				
 			</jsp:include>
 			
 			<!-- ERROR -->

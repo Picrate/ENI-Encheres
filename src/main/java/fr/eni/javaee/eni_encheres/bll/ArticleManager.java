@@ -58,7 +58,7 @@ public class ArticleManager {
 	
 	/**
 	 * 
-	 * Get all art
+	 * Get all articles
 	 * 
 	 * @return
 	 * @throws BusinessException
@@ -66,6 +66,19 @@ public class ArticleManager {
 	public List<Article> getAllArticles () throws BusinessException {
 		List<Article> listArticles = null;
 		listArticles = this.articleDAO.getAllElements();
+		return listArticles;
+	}
+	
+	/**
+	 * 
+	 * Get articles by categorie
+	 * 
+	 * @return
+	 * @throws BusinessException
+	 */
+	public List<Article> getArticlesbyCategorie (int idCategorie) throws BusinessException {
+		List<Article> listArticles = null;
+		listArticles = this.articleDAO.getArticlesInCategorie(idCategorie);
 		return listArticles;
 	}
 
