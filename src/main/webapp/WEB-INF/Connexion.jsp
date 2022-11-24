@@ -59,12 +59,12 @@ String pageAuthor = "POV - ENI";
 				<form method="post">
 					<fieldset>
 						<label for="identifiant">Identifiant :</label>
-						<input type="text" name="identifiant" id="">
+						<input type="text" name="identifiant" id="" required="required">
 					</fieldset>
 					
 					<fieldset>
 						<label for="password">Mot de passe : </label>
-						<input type="password" name="password" id="">
+						<input type="password" name="password" id="" required="required">
 					</fieldset>
 	
 					<fieldset id="checkbox_wrapper">
