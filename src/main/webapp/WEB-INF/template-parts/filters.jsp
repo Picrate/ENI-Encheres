@@ -17,7 +17,7 @@
 		</datalist>
 		
 		<select id="categories" name="selectedCategorie">
-			<option value="" ${selectedCategorieId == "" ? "selected" : ""}>Toutes les catégories</option>
+			<option value="0" ${selectedCategorieId == "" ? "selected" : ""}>Toutes les catégories</option>
 			<c:if test="${! empty listeCategories}">
 				<c:forEach var="categorie" items="${listeCategories}">
 					<option value="${categorie.noCategorie}" ${selectedCategorieId == categorie.noCategorie ? "selected" : ""}>${categorie.libelle}</option>

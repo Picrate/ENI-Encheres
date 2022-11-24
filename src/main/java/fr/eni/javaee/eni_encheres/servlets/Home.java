@@ -49,9 +49,9 @@ public class Home extends HttpServlet {
 		
 		/*
 		 * get liste d'objets
-		 */		
-		ArticleManager articleManager = new ArticleManager();
+		 */	
 		try {
+			ArticleManager articleManager = new ArticleManager();
 			List<Article> listeArticle = articleManager.getAllArticles();
 			request.setAttribute("listeArticles", listeArticle);
 		} catch (BusinessException e) {
@@ -95,10 +95,17 @@ public class Home extends HttpServlet {
 			try {
 				int selectedCategorieId = Integer.parseInt(request.getParameter("selectedCategorie"));
 				request.setAttribute("selectedCategorieId", selectedCategorieId);
-				ArticleManager articleManager = new ArticleManager();
 				try {
-					List<Article> listeArticle = articleManager.getArticlesbyCategorie(selectedCategorieId);
-					request.setAttribute("listeArticles", listeArticle);
+					List<Article> listeArticles = null;
+					// all categories
+					if (selectedCategorieId == 0) {
+						ArticleManager articleManager = new ArticleManager();
+						listeArticles = articleManager.getAllArticles();
+					} else {
+						ArticleManager articleManager = new ArticleManager();
+						listeArticles = articleManager.getArticlesbyCategorie(selectedCategorieId);
+					}
+					request.setAttribute("listeArticles", listeArticles);
 				} catch (BusinessException e) {
 					e.printStackTrace();
 				}
