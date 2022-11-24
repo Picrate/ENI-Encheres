@@ -62,5 +62,14 @@ public class UtilisateurManager {
 		return utilisateur;
 
 	}
+	/**
+	 * Recupère un utilisateur par son id
+	 * @param id
+	 * @return
+	 * @throws BusinessException
+	 */
+	public Utilisateur getUtilisateurById(int id) throws BusinessException {
+		return this.utilisateurDAO.selectElementBy("id", String.valueOf(id));
+	}
 
 }

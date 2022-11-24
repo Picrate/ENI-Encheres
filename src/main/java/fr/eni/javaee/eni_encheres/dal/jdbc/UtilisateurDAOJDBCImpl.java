@@ -21,12 +21,12 @@ import fr.eni.javaee.eni_encheres.dal.DAO;
  */
 public class UtilisateurDAOJDBCImpl implements DAO<Utilisateur> {
 
+	private static final String SELECT_USER_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE id = ?;";
 	private static final String SELECT_USER_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ?;";
 	private static final String SELECT_USER_BY_EMAIL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email LIKE ?;";
 	private static final String INSERT = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur ) VALUES (?,?,?,?,?,?,?,?,?,?,?);"; 			
 	
-	// TODO Voir si Constante  requête utile garder sinon supprimer
-	// private static final String SELECT_USER_BY = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE ? = ?;";
+	private static final String SELECT_USER_BY = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE ? = ?;";
 
 	
 	/* INSERT = "INSERT INTO UTILISATEURS ( 
@@ -136,16 +136,21 @@ public class UtilisateurDAOJDBCImpl implements DAO<Utilisateur> {
 				switch (nomAttribut) {
 				case "pseudo":
 					pstmt = cnx.prepareStatement(SELECT_USER_BY_PSEUDO);
+					pstmt.setString(1, valeurAttribut);
 					break;
 				case "email":
 					pstmt = cnx.prepareStatement(SELECT_USER_BY_EMAIL);
+					pstmt.setString(1, valeurAttribut);
 					break;
+				case "id":
+					pstmt = cnx.prepareStatement(SELECT_USER_BY_ID);
+					pstmt.setInt(1, Integer.valueOf(valeurAttribut));
+					break;				
 				default:
 					BusinessException businessException = new BusinessException();
 					businessException.ajouterErreur(CodesResultatDAL.UNIMPLEMENTED_REQUEST);
 					throw businessException;
 				}
-				pstmt.setString(1, valeurAttribut);
 				
 				ResultSet rs = pstmt.executeQuery();
 
