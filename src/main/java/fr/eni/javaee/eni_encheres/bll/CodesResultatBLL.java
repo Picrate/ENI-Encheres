@@ -9,10 +9,15 @@ public abstract class CodesResultatBLL {
 	 * Echec quand l'identifiant est null
 	 */
 	public static final int PSEUDO_OR_EMAIL_NULL=20000;
+
 	/**
 	 * Echec quand le mot de passe est null
 	 */
 	public static final int PASSWORD_IS_NULL=20001;
 	
+	/**
+	 * Echec de récupération de l'utilsateur
+	 */
+	public static final int REQUESTED_USER_IS_NULL=20002;
 	
 }

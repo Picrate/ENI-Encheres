@@ -3,6 +3,8 @@
  */
 package fr.eni.javaee.eni_encheres.bll;
 
+import java.util.Objects;
+
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bo.Utilisateur;
 
@@ -36,6 +38,7 @@ public class LoginManager {
 	 */
 	public boolean authenticateUser(String username, String password) throws BusinessException {
 		boolean authenticate = false;
+		
 		if (username == null) {
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_OR_EMAIL_NULL);
@@ -46,9 +49,16 @@ public class LoginManager {
 			throw businessException;
 		}		
 		Utilisateur utilisateur = UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(username);
-		if (utilisateur.getPassword().contentEquals(password)) {
-			authenticate=true;
+		if (Objects.nonNull(utilisateur)) {
+			if (utilisateur.getPassword().contentEquals(password)) {
+				authenticate=true;
+			}
+		} else {
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatBLL.REQUESTED_USER_IS_NULL);
+			throw be;
 		}
+		
 		return authenticate;		
 	}
 	
