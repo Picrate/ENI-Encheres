@@ -60,48 +60,49 @@ public class Connexion extends HttpServlet {
 		String password = request.getParameter("password");
 		Cookie authCookie = null;
 
+		System.out.println("identifiant:" + identifiant.isBlank() + " password: " + password.isBlank());
+
 		HttpSession session = request.getSession();
 
 		try {
+			// Si identifiant ou mot de passe vide
+			if (identifiant.isBlank() || password.isBlank()) {
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
+				throw be;
+			}
 
-			if (!identifiant.contentEquals("") || !password.contentEquals("") || Objects.nonNull(identifiant) || Objects.nonNull(password)) {
+			boolean authStatus = LoginManager.getInstance().authenticateUser(identifiant, password);
+			// si utilisateur authentifié avec succes
+			if (authStatus) {
+				// Déclaration Attributs Session
+				session.setAttribute("connecte", true);
+				session.setAttribute("utilisateur",
+						UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(identifiant));
 
-				boolean authStatus = LoginManager.getInstance().authenticateUser(identifiant, password);
-				// si utilisateur authentifié avec succes
-				if (authStatus) {
-					// Déclaration Attributs Session
-					session.setAttribute("connecte", true);
-					session.setAttribute("utilisateur",
-							UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(identifiant));
-
-					// recherche cookie
-					if (cookieExists("authenticated", request)) {
-						authCookie = getCookie("authenticated", request);
-					}
-					if (authCookie != null) {
-						if (authCookie.getValue().equalsIgnoreCase("true")) {
-							response.sendRedirect(request.getContextPath()+"/home");
-						} else {
-							authCookie.setMaxAge(0); // Efface le cookie
-							response.addCookie(authCookie);
-							session.invalidate();
-							this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request,
-									response);
-						}
-
+				// recherche cookie
+				if (cookieExists("authenticated", request)) {
+					authCookie = getCookie("authenticated", request);
+				}
+				if (authCookie != null) {
+					if (authCookie.getValue().equalsIgnoreCase("true")) {
+						response.sendRedirect(request.getContextPath() + "/home");
 					} else {
-						authCookie = new Cookie("authenticated", "true");
-						authCookie.setHttpOnly(true);
-						authCookie.setMaxAge(604800); // 7 jours
+						authCookie.setMaxAge(0); // Efface le cookie
 						response.addCookie(authCookie);
-						response.sendRedirect(request.getContextPath()+"/home");
+						session.invalidate();
+						this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request,
+								response);
 					}
 
 				} else {
-					BusinessException be = new BusinessException();
-					be.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
-					throw be;
+					authCookie = new Cookie("authenticated", "true");
+					authCookie.setHttpOnly(true);
+					authCookie.setMaxAge(604800); // 7 jours
+					response.addCookie(authCookie);
+					response.sendRedirect(request.getContextPath() + "/home");
 				}
+
 			} else {
 				BusinessException usernameOrPasswordNullException = new BusinessException();
 				usernameOrPasswordNullException.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
