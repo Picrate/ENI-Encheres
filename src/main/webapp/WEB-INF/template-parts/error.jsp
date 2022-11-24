@@ -1,3 +1,5 @@
 <div id="error" class="row">
-	<p>Message d'erreur</p>
+	<c:if test="${ !empty listeErreurs }">
+		<p>${listeErreurs}</p>
+	</c:if>
 </div>

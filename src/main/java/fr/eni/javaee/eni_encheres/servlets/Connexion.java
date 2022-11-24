@@ -60,9 +60,6 @@ public class Connexion extends HttpServlet {
 		String password = request.getParameter("password");
 		Cookie authCookie = null;
 
-		System.out.println(identifiant);
-		System.out.println(password);
-		
 		HttpSession session = request.getSession();
 
 		try {
@@ -116,7 +113,6 @@ public class Connexion extends HttpServlet {
 			List<String> listeErreurs = new ArrayList<String>();
 			for (Integer codeErreur : listeCodeErreurs) {
 				listeErreurs.add(LecteurMessage.getMessageErreur(codeErreur));
-				System.out.println("Erreurs: " + listeErreurs.toString());
 				request.setAttribute("listeErreurs", listeErreurs);
 				this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
 			}
