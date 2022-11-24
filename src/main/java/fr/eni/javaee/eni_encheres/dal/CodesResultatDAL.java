@@ -54,7 +54,14 @@ public abstract class CodesResultatDAL {
 	/**
 	 * Articles
 	 */
-	public static final int SELECT_ARTICLE_ECHEC=20000;
-	public static final int SELECT_ALL_ARTICLES_ECHEC=20001;
+	public static final int SELECT_ARTICLE_ECHEC=10100;
+	public static final int SELECT_ALL_ARTICLES_ECHEC=10101;
+	
+	
+	/**
+	 * Categories
+	 */
+	public static final int SELECT_ALL_CATEGORIES_ECHEC=10201;
+	
 	
 }

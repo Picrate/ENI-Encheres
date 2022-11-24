@@ -1,21 +1,37 @@
-<div id="filter" class="row">
-	<form id="search_filter" method="post" action="<%=request.getContextPath()%>">
-		<input type="text" placeholder="Rechercher" list="products_list">
-		<datalist id="products_list">
-			<option value="Aspirateur">
-			<option value="Vélo">
-			<option value="Appareil photo">
-		</datalist>
-		<select id="categories">
-			<option value="informatique">Informatique</option>
-			<option value="ameublement">Ameublement</option>
-			<option value="vetement">Vêtement</option>
-			<option value="sport_loisirs">Sports & Loisirs</option>
-		</select>
-		<button type="submit" class="btn">Rechercher</button>
-	</form>
+<%-- Librairies --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-	<form action="<%=request.getContextPath()%>" method="post" id="categorie_filter">
+<%-- Variables --%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
+<div id="filter" class="row">
+	
+	
+	<form id="search_filter" method="post" action="${contextPath}">
+		
+		<input type="text" placeholder="Rechercher" list="products_list">
+		
+		<datalist id="products_list">
+			<option value="Casquette">
+			<option value="Vélo">
+			<option value="Pantalon">
+		</datalist>
+		
+		<select id="categories" name="selectedCategorie">
+			<c:if test="${! empty listeCategories}">
+				<c:forEach var="categorie" items="${listeCategories}">
+					<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+				</c:forEach>
+			</c:if>
+		</select>
+		
+		<button type="submit" class="btn">Rechercher</button>
+		
+	</form>
+	
+	<c:if test="${userConnected}">
+	<form action="${contextPath}" method="post" id="categorie_filter">
+	
 		<div>
 			<h4>Achats</h4>
 			<fieldset>
@@ -51,6 +67,8 @@
 				<label for="ventesTerminees">ventes terminées</label>
 			</fieldset>
 		</div>
+		
 	</form>
+	</c:if>
 	
 </div>

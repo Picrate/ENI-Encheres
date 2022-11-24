@@ -27,6 +27,7 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 
 	private static String SELECT_ALL_ARTICLES = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS;";
 	private static String SELECT_ARTICLE_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_article = ?;";
+	private static String GET_ARTICLE_CATEGORIE = "SELECT no_categorie, libelle FROM CATEGORIES WHERE no_article = ?;";
 	
 	@Override
 	public Article selectElementById(int id) throws BusinessException {
@@ -97,7 +98,6 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 		
 	}
 
-
 	@Override
 	public void deleteElementById(int id) throws BusinessException {		
 	}
@@ -114,8 +114,4 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
-
-
 }

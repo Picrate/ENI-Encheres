@@ -13,11 +13,11 @@ contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"
 %>
 
-<%-- Variable page --%>
-<%! 
-String pageTitle = "Les enchères";
-String pageAuthor = "POV - ENI";
-%>
+<%-- Variables page --%>
+<c:set var="pageTitle" value="Les enchères" />
+<c:set var="pageAuthor" value="POV - ENI" />
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
 
 <!DOCTYPE html>
 <html>
@@ -26,12 +26,12 @@ String pageAuthor = "POV - ENI";
 		
 		<!-- HEAD -->
 		<jsp:include page="/WEB-INF/template-parts/head.jsp">
-			<jsp:param value="<%= pageTitle %>" name="pageTitle"/>
-			<jsp:param value="<%= pageAuthor %>" name="pageAuthor"/>
+			<jsp:param value="${pageTitle}" name="pageTitle"/>
+			<jsp:param value="${pageAuthor}" name="pageAuthor"/>
 		</jsp:include>
 		
 		<!-- CSS -->
-		<link href="<%=request.getContextPath()%>/assets/css/style.css" rel="stylesheet">
+		<link href="${contextPath}/assets/css/style.css" rel="stylesheet">
 	
 		<!-- JS -->
 		<!-- <script src="../js/script-dist.js"></script> -->
@@ -42,17 +42,18 @@ String pageAuthor = "POV - ENI";
 	
 		<!-- HEADER -->
 		<jsp:include page="/WEB-INF/template-parts/header.jsp"/>
-
+	
 		<main>
-		
 			<!-- HEADING -->
 			<jsp:include page="/WEB-INF/template-parts/heading.jsp">
-				<jsp:param value="Les enchères" name="title"/>
+				<jsp:param value="${pageTitle}" name="title"/>
 			</jsp:include>
 			
 			<!-- FILTERS -->
-			<jsp:include page="/WEB-INF/template-parts/filters.jsp"/>
-
+			<jsp:include page="/WEB-INF/template-parts/filters.jsp">
+				<jsp:param value="${listeCategories}" name="categoriesList"/>
+				<jsp:param value="${userConnected}" name="userConnected"/>
+			</jsp:include>
 			
 			<!-- ERROR -->
 	        <jsp:include page="/WEB-INF/template-parts/error.jsp">
@@ -61,26 +62,22 @@ String pageAuthor = "POV - ENI";
 			
 			<!-- LISTE OBJETS -->
 			<ul id="index" class="row">
-			
-				<%
-	        	List<Article> listeArticles = (List<Article>)request.getAttribute("listeArticle");
-	        	%>
-	        	
-	        	<%-- <c:if test="${! empty listeArticles}"> --%>
-					<%= listeArticles %>
+				
+	        	<c:if test="${! empty listeArticles}">
+					
 		        	<c:forEach var="article" items="${listeArticles}">
 		        	<li class="card">
 			        	<img src="" alt="">
 						<div class="detail">
 							<h3><a href="<%=request.getContextPath()%>/objet?articleID=${article.noArticle}">${article.nomArticle}</a></h3>
-							<p class="price">Prix ${article.prixVente} points</p>
+							<p class="price">Prix ${article.miseAPrix} points</p>
 							<p class="end_date">${article.dateFinEncheres}</p>
 							<p class="seller">Pseudo</p>
 						</div>
 		            </li>
 		        	</c:forEach>
 		        	
-		        <%-- </c:if> --%>
+		        </c:if>
 				
 			</ul>
 			
@@ -88,7 +85,7 @@ String pageAuthor = "POV - ENI";
 		
 		 <!-- FOOTER -->
 	    <jsp:include page="/WEB-INF/template-parts/footer.jsp">
-	    	<jsp:param value="<%= pageAuthor %>" name="pageAuthor"/>
+	    	<jsp:param value="${pageAuthor}" name="pageAuthor"/>
 	    </jsp:include>
     
 
