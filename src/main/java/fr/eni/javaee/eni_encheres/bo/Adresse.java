@@ -16,6 +16,7 @@ public class Adresse implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	// on mettrait pas le numero de rue?
+	private int id;
 	private String rue;
 	private int codePostal;
 	private String ville;
@@ -24,6 +25,12 @@ public class Adresse implements Serializable {
 	}
 
 	public Adresse(String rue, int codePostal, String ville) {
+		this.rue = rue.toLowerCase();
+		this.codePostal = codePostal;
+		this.ville = ville.toUpperCase();
+	}
+	
+	public Adresse(int id, String rue, int codePostal, String ville) {
 		this.rue = rue.toLowerCase();
 		this.codePostal = codePostal;
 		this.ville = ville.toUpperCase();
@@ -69,6 +76,14 @@ public class Adresse implements Serializable {
 	 */
 	public void setVille(String ville) {
 		this.ville = ville;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int noAdresse) {
+		this.id = noAdresse;
 	}
 
 	@Override

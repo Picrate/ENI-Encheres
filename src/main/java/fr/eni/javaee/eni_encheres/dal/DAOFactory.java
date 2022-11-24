@@ -1,14 +1,15 @@
 package fr.eni.javaee.eni_encheres.dal;
 
+import fr.eni.javaee.eni_encheres.bo.Adresse;
 import fr.eni.javaee.eni_encheres.bo.Utilisateur;
+import fr.eni.javaee.eni_encheres.dal.jdbc.AdresseDAOJDBCImpl;
 import fr.eni.javaee.eni_encheres.dal.jdbc.ArticleDAOJDBCImpl;
 import fr.eni.javaee.eni_encheres.dal.jdbc.CategorieDAOJDBCImpl;
 import fr.eni.javaee.eni_encheres.dal.jdbc.UtilisateurDAOJDBCImpl;
 
 public abstract class DAOFactory {
 	
-	public static DAO<Utilisateur> getUtilisateurDAO()
-	{
+	public static DAO<Utilisateur> getUtilisateurDAO(){
 		return new UtilisateurDAOJDBCImpl();
 	}
 	
@@ -18,6 +19,10 @@ public abstract class DAOFactory {
 	
 	public static CategorieDAO getCategorieDAO() {
 		return new CategorieDAOJDBCImpl();
+	}
+	
+	public static DAO<Adresse> getAdresseDAO(){
+		return new AdresseDAOJDBCImpl();
 	}
 	
 }
