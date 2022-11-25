@@ -76,7 +76,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 
 	@Override
 	public Utilisateur selectElementById(int id) throws BusinessException {
-		return selectElementById(id);
+		return selectElementBy("id", String.valueOf(id));
 	}
 
 	@Override
