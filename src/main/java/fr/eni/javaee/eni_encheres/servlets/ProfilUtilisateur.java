@@ -28,7 +28,6 @@ public class ProfilUtilisateur extends HttpServlet {
 		String userId = request.getParameter("userId");
 		try {
 			Utilisateur utilisateur = UtilisateurManager.getInstance().getUtilisateurById(Integer.valueOf(userId));
-			System.out.println(utilisateur.toString());
 			request.setAttribute("utilisateur", utilisateur);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

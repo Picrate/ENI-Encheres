@@ -14,7 +14,7 @@ import fr.eni.javaee.eni_encheres.dal.DAO;
 public class AdresseDAOJDBCImpl implements DAO<Adresse> {
 
 	private static final String INSERT_ADRESSE = "INSERT INTO ADRESSES (nom, code_postal, ville)  VALUES (?,?,?);";
-	private static final String SELECT_ADRESSE_BY = "SELECT id, rue, code_postal, ville FROM ADRESSES WHERE ? = ?;";
+	private static final String SELECT_ADRESSE_BY_ID = "SELECT id, rue, code_postal, ville FROM ADRESSES WHERE id = ?;";
 	private static final String UPDATE_ADRESSE = "UPDATE ADRESSES SET id=?, rue=?, code_postal=?, ville=? WHERE id = ?;";
 	
 
@@ -79,16 +79,15 @@ public class AdresseDAOJDBCImpl implements DAO<Adresse> {
 			try (Connection cnx = ConnectionProvider.getConnection()) {
 
 				PreparedStatement pstmt = null;
-
+				
 				/*
 				 * On différencie les types de données de la valeur en fonction du nom de
 				 * l'attribut On configure le PreparedStatement en fonction
 				 */
 				switch (nomAttribut) {
 				case "id":
-					pstmt = cnx.prepareStatement(SELECT_ADRESSE_BY);
-					pstmt.setString(1, nomAttribut);
-					pstmt.setString(2, valeurAttribut);
+					pstmt = cnx.prepareStatement(SELECT_ADRESSE_BY_ID);
+					pstmt.setString(1, valeurAttribut);
 					break;
 				default:
 					BusinessException businessException = new BusinessException();

@@ -35,7 +35,8 @@ public class AdresseManager {
 	}
 	
 	public Adresse getAdresseById(int id) throws BusinessException {
-		return this.adresseDAO.selectElementById(id);
+		Adresse adresse = this.adresseDAO.selectElementById(id);
+		return adresse;
 	}
 
 }
