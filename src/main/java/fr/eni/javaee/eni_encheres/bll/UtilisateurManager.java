@@ -1,5 +1,7 @@
 package fr.eni.javaee.eni_encheres.bll;
 
+import java.util.Objects;
+
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bo.Adresse;
 import fr.eni.javaee.eni_encheres.bo.Utilisateur;
@@ -56,15 +58,18 @@ public class UtilisateurManager {
 		else {
 			if (pseudoOrEmail.contains("@")) {
 				utilisateur = this.utilisateurDAO.getUtilisateurByMail(pseudoOrEmail);
-				adresse = AdresseManager.getInstance().getAdresseById(this.utilisateurDAO.getUtilisateurAdresseId(utilisateur.getNo_utilisateur()));
-				utilisateur.setAdresse(adresse);
+				if (Objects.nonNull(utilisateur)) {
+					adresse = AdresseManager.getInstance().getAdresseById(this.utilisateurDAO.getUtilisateurAdresseId(utilisateur.getNo_utilisateur()));
+					utilisateur.setAdresse(adresse);
+				}
 
 			} else {
 				utilisateur = this.utilisateurDAO.getUtilisateurByPseudo(pseudoOrEmail);
-				adresse = AdresseManager.getInstance().getAdresseById(this.utilisateurDAO.getUtilisateurAdresseId(utilisateur.getNo_utilisateur()));
-				utilisateur.setAdresse(adresse);
-			}
-			
+				if (Objects.nonNull(utilisateur)) {
+					adresse = AdresseManager.getInstance().getAdresseById(this.utilisateurDAO.getUtilisateurAdresseId(utilisateur.getNo_utilisateur()));
+					utilisateur.setAdresse(adresse);
+				}				
+			}			
 		}
 		return utilisateur;
 
@@ -77,8 +82,10 @@ public class UtilisateurManager {
 	 */
 	public Utilisateur getUtilisateurById(int id) throws BusinessException {
 		Utilisateur utilisateur = this.utilisateurDAO.selectElementById(id);
-		Adresse adresse = AdresseManager.getInstance().getAdresseById(id);
-		utilisateur.setAdresse(adresse);
+		if (Objects.nonNull(utilisateur)) {
+			Adresse adresse = AdresseManager.getInstance().getAdresseById(this.utilisateurDAO.getUtilisateurAdresseId(utilisateur.getNo_utilisateur()));
+			utilisateur.setAdresse(adresse);
+		}
 		return utilisateur;
 	}
 
