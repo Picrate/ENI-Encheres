@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.javaee.eni_encheres.BusinessException;
+import fr.eni.javaee.eni_encheres.bll.UtilisateurManager;
+import fr.eni.javaee.eni_encheres.bo.Utilisateur;
+
 /**
  * Servlet implementation class FicheUtilisateur
  */
@@ -21,6 +25,15 @@ public class ProfilUtilisateur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		String userId = request.getParameter("userId");
+		try {
+			Utilisateur utilisateur = UtilisateurManager.getInstance().getUtilisateurById(Integer.valueOf(userId));
+			request.setAttribute("utilisateur", utilisateur);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/ProfilUtilisateur.jsp");
 		requestDispatcher.forward(request, response);
 	}
