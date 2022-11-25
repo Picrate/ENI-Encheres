@@ -60,7 +60,6 @@ public class Connexion extends HttpServlet {
 		String password = request.getParameter("password");
 		Cookie authCookie = null;
 
-		System.out.println("identifiant:" + identifiant.isBlank() + " password: " + password.isBlank());
 
 		HttpSession session = request.getSession();
 
@@ -77,7 +76,7 @@ public class Connexion extends HttpServlet {
 			if (authStatus) {
 				// Déclaration Attributs Session
 				session.setAttribute("connecte", true);
-				session.setAttribute("utilisateur",
+				session.setAttribute("utilisateurConnecte",
 						UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(identifiant));
 
 				// recherche cookie
