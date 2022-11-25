@@ -8,7 +8,7 @@
 	
 	<form id="search_filter" method="post" action="${contextPath}">
 		
-		<input type="text" placeholder="Rechercher" list="products_list" name="searchPattern">
+		<input type="text" name="searchPattern" value="${! empty searchPattern ? searchPattern : ''}" placeholder="Rechercher" list="products_list" >
 		
 		<datalist id="products_list">
 			<option value="Casquette">
@@ -29,23 +29,23 @@
 		
 	</form>
 	
-	<c:if test="${userConnected}">
+	<c:if test="${connecte}">
 	<form action="${contextPath}" method="post" id="categorie_filter">
 	
 		<div>
 			<h4>Achats</h4>
 			<fieldset>
-				<input type="radio" name="achatsFilter" value="openEncheres" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
+				<input type="radio" name="userFilter" value="openEncheres" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
 				<label for="touteEnchères">enchères ouvertes</label>
 			</fieldset>
 
 			<fieldset>
-				<input type="radio" name="achatsFilter" value="currentEncheres" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
+				<input type="radio" name="userFilter" value="currentEncheres" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
 				<label for="mesEnchèresEnCours">mes enchères en cours</label>
 			</fieldset>
 
 			<fieldset>
-				<input type="radio" name="achatsFilter" value="winEncheres" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
+				<input type="radio" name="userFilter" value="winEncheres" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
 				<label for="mesEnchèresRemportees">mes enchères remportées</label>
 			</fieldset>
 		</div>
@@ -53,17 +53,17 @@
 		<div>
 			<h4>Mes ventes</h4>
 			<fieldset>
-				<input type="radio" name="venteFilter" value="currentSells" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
+				<input type="radio" name="userFilter" value="currentSells" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
 				<label for="ventesEnCours">mes ventes en cours</label>
 			</fieldset>
 
 			<fieldset>
-				<input type="radio" name="venteFilter" value="notStartSells" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
+				<input type="radio" name="userFilter" value="notStartSells" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
 				<label for="mesEnchèresEnCours">ventes non débutées</label>
 			</fieldset>
 
 			<fieldset>
-				<input type="radio" name="venteFilter" value="endingSells" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
+				<input type="radio" name="userFilter" value="endingSells" class="categorie_checkboxes" onclick="document.getElementById('categorie_filter').submit();">
 				<label for="ventesTerminees">ventes terminées</label>
 			</fieldset>
 		</div>

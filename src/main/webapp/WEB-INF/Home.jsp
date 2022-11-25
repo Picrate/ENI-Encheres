@@ -54,7 +54,6 @@ pageEncoding="UTF-8"
 				<jsp:param value="${userConnected}" name="userConnected"/>
 				<jsp:param value="${listeCategories}" name="categoriesList"/>
 				<jsp:param value="${selectedCategorieId}" name="selectedCategorieId"/>
-				
 			</jsp:include>
 			
 			<!-- ERROR -->
@@ -62,27 +61,31 @@ pageEncoding="UTF-8"
 				<jsp:param value="" name="errorMessage"/>
 			</jsp:include>
 			
-			<!-- LISTE OBJETS -->
-			<ul id="index" class="row">
-				
-	        	<c:if test="${! empty listeArticles}">
-					
-		        	<c:forEach var="article" items="${listeArticles}">
-		        	<li class="card">
-			        	<img src="" alt="">
-						<div class="detail">
-							<h3><a href="<%=request.getContextPath()%>/objet?articleID=${article.noArticle}">${article.nomArticle}</a></h3>
-							<p class="price">Prix ${article.miseAPrix} points</p>
-							<p class="end_date">${article.dateFinEncheres}</p>
-							<p class="seller">Pseudo</p>
-						</div>
-		            </li>
-		        	</c:forEach>
-		        	
-		        </c:if>
-				
-			</ul>
+			<c:choose> 
 			
+				<c:when test="${! empty listeArticles}"> 
+					<!-- LISTE OBJETS -->
+					<ul id="index" class="row">
+						<c:forEach var="keyValue" items="${listeArticles}">
+			        	<li class="card">
+				        	<img src="" alt="">
+							<div class="detail">
+								<h3><a href="<%=request.getContextPath()%>/objet?articleID=${keyValue.key.noArticle}">${keyValue.key.nomArticle}</a></h3>
+								<p class="price">Prix ${keyValue.key.miseAPrix} points</p>
+								<p class="end_date">${keyValue.key.dateFinEncheres}</p>
+								<p class="seller">${keyValue.value.pseudo}</p>
+							</div>
+			            </li>
+			        	</c:forEach>
+			        </ul>
+        		</c:when> 
+				
+	        	<c:otherwise> 
+					<p class="row no_content">Aucun objet ne correspond à la recherche.</p>
+				</c:otherwise> 
+	        	
+	        </c:choose>
+	        			
 		</main>
 		
 		 <!-- FOOTER -->
