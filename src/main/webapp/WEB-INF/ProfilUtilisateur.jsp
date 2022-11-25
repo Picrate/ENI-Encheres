@@ -58,28 +58,28 @@ String pageAuthor = "POV - ENI";
 				<div class="col_2">
 
 					<p>Pseudo :</p>
-					<p>---</p>
+					<p>${utilisateur.pseudo}</p>
 
 					<p>Nom :</p>
-					<p>---</p>
+					<p>${utilisateur.nom}</p>
 
 					<p>Prénom :</p>
-					<p>---</p>
+					<p>${utilisateur.prenom}</p>
 
 					<p>Email :</p>
-					<p>---</p>
+					<p>${utilisateur.email}</p>
 
 					<p>Téléphone :</p>
-					<p>---</p>
+					<p>${utilisateur.telephone}</p>
 
 					<p>Rue :</p>
-					<p>---</p>
+					<p>${utilisateur.adresse.rue}</p>
 
 					<p>Code postal :</p>
-					<p>---</p>
+					<p>${utilisateur.adresse.codePostal}</p>
 
 					<p>Ville :</p>
-					<p>---</p>
+					<p>${utilisateur.adresse.ville}</p>
 
 				</div>
 
