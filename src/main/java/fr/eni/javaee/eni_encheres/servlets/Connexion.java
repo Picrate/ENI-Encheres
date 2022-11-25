@@ -60,8 +60,6 @@ public class Connexion extends HttpServlet {
 		String password = request.getParameter("password");
 		Cookie authCookie = null;
 
-		System.out.println("identifiant:" + identifiant.isBlank() + " password: " + password.isBlank());
-
 		HttpSession session = request.getSession();
 
 		try {
