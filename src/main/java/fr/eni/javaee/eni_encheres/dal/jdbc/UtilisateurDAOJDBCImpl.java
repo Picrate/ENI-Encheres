@@ -129,7 +129,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 					pstmt = cnx.prepareStatement(SELECT_USER_BY_EMAIL);
 					pstmt.setString(1, valeurAttribut);
 					break;
-				case "id":
+				case "no_utilisateur":
 					pstmt = cnx.prepareStatement(SELECT_USER_BY_ID);
 					pstmt.setInt(1, Integer.valueOf(valeurAttribut));
 					break;
