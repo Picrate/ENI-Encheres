@@ -16,8 +16,19 @@ public abstract class CodesResultatBLL {
 	public static final int PASSWORD_IS_NULL=20001;
 	
 	/**
-	 * Echec de récupération de l'utilsateur
+	 * Echec de récupération de l'utilisateur
 	 */
 	public static final int REQUESTED_USER_IS_NULL=20002;
+	
+	// -> Creation Compte 20100
+	/**
+	 * Le pseudo existe déjà
+	 */
+	public static final int PSEUDO_ALREADY_EXISTS=20100;
+	
+	/**
+	 * L'EMAIL existe déjà
+	 */
+	public static final int EMAIL_ALREADY_EXISTS=20101;
 	
 }
