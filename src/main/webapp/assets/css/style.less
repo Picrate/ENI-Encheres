@@ -92,6 +92,7 @@ body > main
 		{
 		padding-left: @page_padding; padding-right: @page_padding;
 		@media (max-width:991px) 	{ padding-left: @page_padding_mobile; padding-right: @page_padding_mobile;}
+		&.no_content { text-align: center; padding: 70px 0; }
 		}
 	& > header 
 		{
@@ -190,7 +191,11 @@ body > main
 			margin-bottom: 0;
 			input { width: 100%;}
 			}
-		p:nth-child(odd) { text-align: right;}
+		p:nth-child(odd) 
+			{ 
+			text-align: right;
+			@media (max-width:767px) 	{ text-align: left;}
+			}
 		}
 
 	form 	
