@@ -73,7 +73,7 @@ String pageAuthor = "POV - ENI";
 					<p>${utilisateur.telephone}</p>
 
 					<p>Rue :</p>
-					<p>${utilisateur.adresse.rue}</p>
+					<p>${empty utilisateur.adresse.rue ? "Adresse inconnue" : utilisateur.adresse.rue}</p>
 
 					<p>Code postal :</p>
 					<p>${utilisateur.adresse.codePostal}</p>
