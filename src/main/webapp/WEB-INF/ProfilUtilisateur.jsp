@@ -73,13 +73,13 @@ String pageAuthor = "POV - ENI";
 					<p>${utilisateur.telephone}</p>
 
 					<p>Rue :</p>
-					<p>${empty utilisateur.adresse.rue ? "Adresse inconnue" : utilisateur.adresse.rue}</p>
+					<p><c:out value="${utilisateur.adresse.rue}" default="Inconnu" /></p>
 
 					<p>Code postal :</p>
-					<p>${utilisateur.adresse.codePostal}</p>
+					<p><c:out value="${utilisateur.adresse.codePostal}" default="Inconnu" /></p>
 
 					<p>Ville :</p>
-					<p>${utilisateur.adresse.ville}</p>
+					<p><c:out value="${utilisateur.adresse.ville}" default="Inconnu" /></p>
 
 				</div>
 

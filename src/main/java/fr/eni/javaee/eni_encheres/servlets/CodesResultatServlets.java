@@ -25,6 +25,10 @@ public abstract class CodesResultatServlets {
 	 */
 	public static final int PSEUDO_ALREADY_EXISTS=30202;
 	
+	/**
+	 * Le pseudo existe déjà
+	 */
+	public static final int PASSWORD_MISMATCH=30203;
 	
 	
 	

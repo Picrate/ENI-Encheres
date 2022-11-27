@@ -57,14 +57,14 @@ public class Connexion extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String identifiant = request.getParameter("identifiant");
-		String password = request.getParameter("password");
+		char[] password = request.getParameter("password").toCharArray();
 		Cookie authCookie = null;
 
 		HttpSession session = request.getSession();
 
 		try {
 			// Si identifiant ou mot de passe vide
-			if (identifiant.isBlank() || password.isBlank()) {
+			if (identifiant.isBlank() || password.length == 0) {
 				BusinessException be = new BusinessException();
 				be.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
 				throw be;
