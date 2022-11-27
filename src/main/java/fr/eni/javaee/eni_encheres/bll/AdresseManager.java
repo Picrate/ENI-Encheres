@@ -38,5 +38,9 @@ public class AdresseManager {
 		Adresse adresse = this.adresseDAO.selectElementById(id);
 		return adresse;
 	}
+	
+	public void createNewAdresse(Adresse adresse) throws BusinessException {
+		this.adresseDAO.createElement(adresse);
+	}
 
 }
