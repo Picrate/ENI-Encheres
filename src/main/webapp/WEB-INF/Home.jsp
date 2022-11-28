@@ -75,7 +75,8 @@ pageEncoding="UTF-8"
 									</a>
 								</h3>
 								<p class="price">${keyValue.key.miseAPrix} points</p>
-								<%-- <p class="date">Début : ${keyValue.key.dateDebutEncheres}</p>--%>
+								<fmt:parseDate value="${keyValue.key.dateDebutEncheres}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedStartDateTime" type="both" />
+								<p class="date end_date">Début de l'enchère :<br><span><fmt:formatDate pattern="EEEEE dd MMMM 'à' HH'h'mm" value="${parsedStartDateTime}" type="both"/></span></p>
 								<fmt:parseDate value="${keyValue.key.dateFinEncheres}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
 								<p class="date end_date">Fin de l'enchère :<br><span><fmt:formatDate pattern="EEEEE dd MMMM 'à' HH'h'mm" value="${parsedDateTime}" type="both"/></span></p>
 								<p class="seller">Mis en vente par : <a href="${contextPath}/profil-utilisateur?userId=${keyValue.value.no_utilisateur}"><strong>${keyValue.value.pseudo}</strong></a></p>

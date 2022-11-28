@@ -150,7 +150,9 @@ public class Home extends HttpServlet {
 				// get articles en cours d'enchere
 				case "openEncheres":
 				listeArticles.forEach((article, utilisateur) -> {
+					//System.out.println(article.getNomArticle() + " : " + article.getDateDebutEncheres() + " - " + article.getDateDebutEncheres().isBefore(now));
 					if (article.getDateDebutEncheres().isBefore(now) && article.getDateFinEncheres().isAfter(now)) {
+						//System.out.println(article.getNomArticle());
 						tempListeArticles.put(article, utilisateur); 
 					}
 			    });
@@ -195,7 +197,8 @@ public class Home extends HttpServlet {
 			    });
 				listeArticles = tempListeArticles;
 				break;				
-			}			
+			}
+			request.setAttribute("listeArticles", listeArticles);
 		}
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/Home.jsp");
