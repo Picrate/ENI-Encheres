@@ -97,16 +97,14 @@ public class ArticleManager {
 	 */
 	public Map<Article, Utilisateur> getAllArticlesMap () throws BusinessException {
 		Map<Article, Utilisateur> listArticles = new TreeMap<>();
-		
 		List <Article> listArticleTemp = new ArrayList<>();
 		listArticleTemp = this.articleDAO.getAllElements();
-		
 		for (Article article : listArticleTemp) {
-			System.out.println(article.getNomArticle());
+			//System.out.println(article.getNomArticle());
 			Utilisateur user = UtilisateurManager.getInstance().getUtilisateurById(article.getNoUtilisateur());
 			listArticles.put(article, user);
 		}
-		System.out.println("---");
+		//System.out.println("---");
 		return listArticles;
 	}
 	
@@ -123,6 +121,24 @@ public class ArticleManager {
 		listArticleTemp = this.articleDAO.getArticlesInCategorie(idCategorie);
 		for (Article article : listArticleTemp) {
 			Utilisateur user = UtilisateurManager.getInstance().getUtilisateurById(article.getNoUtilisateur());
+			listArticles.putIfAbsent(article, user);
+		}
+		return listArticles;
+	}
+	
+	/**
+	 * 
+	 * Get articles with enchere for one user
+	 * 
+	 * @return
+	 * @throws BusinessException
+	 */
+	public Map<Article, Utilisateur> getArticlesByUserEnchere (int idUser) throws BusinessException {
+		Map<Article, Utilisateur> listArticles = new TreeMap<>();
+		List <Article> listArticleTemp = null;
+		listArticleTemp = this.articleDAO.getUserArticlesEnchere(idUser);
+		for (Article article : listArticleTemp) {
+			Utilisateur user = UtilisateurManager.getInstance().getUtilisateurById(idUser);
 			listArticles.putIfAbsent(article, user);
 		}
 		return listArticles;

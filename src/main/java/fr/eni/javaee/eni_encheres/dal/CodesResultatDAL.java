@@ -55,14 +55,15 @@ public abstract class CodesResultatDAL {
 	/**
 	 * Articles 10100
 	 */
-	public static final int SELECT_ARTICLE_ECHEC=10100;
-	public static final int SELECT_ALL_ARTICLES_ECHEC=10101;
+	public static final int SELECT_ARTICLE_ECHEC = 10100;
+	public static final int SELECT_ALL_ARTICLES_ECHEC = 10101;
+	public static final int SELECT_USER_ARTICLES_ENCHERES_ECHEC = 10102;
 	
 	
 	/**
 	 * Categories 10200
 	 */
-	public static final int SELECT_ALL_CATEGORIES_ECHEC=10201;
+	public static final int SELECT_ALL_CATEGORIES_ECHEC = 10201;
 	
 	/**
 	 * Adresses 10300

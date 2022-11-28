@@ -77,6 +77,7 @@ public class Home extends HttpServlet {
 		 * 
 		 */
 		
+		ArticleManager articleManager = new ArticleManager();
 		Map<Article, Utilisateur> listeArticles = new TreeMap<>();
 		Map<Article, Utilisateur> tempListeArticles = new TreeMap<>();
 		tempListeArticles.clear();
@@ -91,12 +92,10 @@ public class Home extends HttpServlet {
 				try {
 					// all articles
 					if (selectedCategorieId == 0) {
-						ArticleManager articleManager = new ArticleManager();
 						listeArticles = articleManager.getAllArticlesMap();
 					} 
 					// articles in categorie
 					else {
-						ArticleManager articleManager = new ArticleManager();
 						listeArticles = articleManager.getArticlesbyCategorieMap(selectedCategorieId);
 					}
 					
@@ -111,9 +110,7 @@ public class Home extends HttpServlet {
 					    });
 						listeArticles = tempListeArticles;
 					}
-					
 					request.setAttribute("listeArticles", listeArticles);
-					
 				} catch (BusinessException e) {
 					e.printStackTrace();
 				}
@@ -124,7 +121,6 @@ public class Home extends HttpServlet {
 		// Si pas de post param
 		else {
 			try {
-				ArticleManager articleManager = new ArticleManager();
 				listeArticles = articleManager.getAllArticlesMap();
 				request.setAttribute("listeArticles", listeArticles);
 			} catch (BusinessException e) {
@@ -161,7 +157,17 @@ public class Home extends HttpServlet {
 				
 				// get articles encheris
 				case "currentEncheres":
-				
+				try {
+					listeArticles = articleManager.getArticlesByUserEnchere(currentUser.getNo_utilisateur());
+					listeArticles.forEach((article, utilisateur) -> {
+						if (article.getDateFinEncheres().isAfter(now)) {
+							tempListeArticles.put(article, utilisateur); 
+						}
+					});
+					listeArticles = tempListeArticles;
+				} catch (BusinessException e) {
+					e.printStackTrace();
+				}
 				break;
 				
 				// get articles remportés

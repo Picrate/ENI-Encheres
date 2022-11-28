@@ -28,6 +28,7 @@
 		<button type="submit" class="btn">Rechercher</button>
 		
 	</form>
+	
 	<%-- onclick="document.getElementById('user_filters').submit();" --%>
 	<c:if test="${connecte}">
 	<form action="${contextPath}" method="post" id="user_filters">

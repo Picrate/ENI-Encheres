@@ -32,9 +32,6 @@ pageEncoding="UTF-8"
 		
 		<!-- CSS -->
 		<link href="${contextPath}/assets/css/style.css" rel="stylesheet">
-		
-		
-
 	</head>
 
 	<body>
