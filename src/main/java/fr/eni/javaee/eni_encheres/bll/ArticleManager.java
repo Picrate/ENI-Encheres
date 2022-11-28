@@ -1,8 +1,11 @@
 package fr.eni.javaee.eni_encheres.bll;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bo.Article;
@@ -93,13 +96,17 @@ public class ArticleManager {
 	 * @throws BusinessException
 	 */
 	public Map<Article, Utilisateur> getAllArticlesMap () throws BusinessException {
-		Map<Article, Utilisateur> listArticles = new HashMap<>();
-		List <Article> listArticleTemp = null;
+		Map<Article, Utilisateur> listArticles = new TreeMap<>();
+		
+		List <Article> listArticleTemp = new ArrayList<>();
 		listArticleTemp = this.articleDAO.getAllElements();
+		
 		for (Article article : listArticleTemp) {
+			System.out.println(article.getNomArticle());
 			Utilisateur user = UtilisateurManager.getInstance().getUtilisateurById(article.getNoUtilisateur());
-			listArticles.putIfAbsent(article, user);
+			listArticles.put(article, user);
 		}
+		System.out.println("---");
 		return listArticles;
 	}
 	
@@ -111,7 +118,7 @@ public class ArticleManager {
 	 * @throws BusinessException
 	 */
 	public Map<Article, Utilisateur> getArticlesbyCategorieMap (int idCategorie) throws BusinessException {
-		Map<Article, Utilisateur> listArticles = new HashMap<>();
+		Map<Article, Utilisateur> listArticles = new TreeMap<>();
 		List <Article> listArticleTemp = null;
 		listArticleTemp = this.articleDAO.getArticlesInCategorie(idCategorie);
 		for (Article article : listArticleTemp) {

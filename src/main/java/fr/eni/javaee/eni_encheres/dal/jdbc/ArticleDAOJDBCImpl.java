@@ -8,9 +8,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bo.Article;
@@ -29,7 +33,7 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	private static String SELECT_ALL_ARTICLES = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS;";
 	private static String SELECT_ARTICLE_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_article = ?;";
 	private static String GET_ARTICLES_IN_CATEGORIE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_categorie = ?;";
-
+	private static Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
 	
 	@Override
 	public Article selectElementById(int id) throws BusinessException {
@@ -43,8 +47,8 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 			int idArticle = result.getInt("no_article");
 			String nomArticle = result.getString("nom_article");
 			String descriptionArticle = result.getString("description");
-			Date dateDebutEnchere = result.getDate("date_debut_encheres");
-			Date dateFinEnchere = result.getDate("date_fin_encheres");
+			Timestamp dateDebutEnchere = result.getTimestamp("date_debut_encheres", calendar);
+			Timestamp dateFinEnchere = result.getTimestamp("date_fin_encheres", calendar);
 			int prixInitialArticle = result.getInt("prix_initial");
 			int prixVenteArticle = result.getInt("prix_vente");
 			int userArticle = result.getInt("no_utilisateur");
@@ -74,8 +78,8 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 				int idArticle = resultSet.getInt("no_article");
 				String nomArticle = resultSet.getString("nom_article");
 				String descriptionArticle = resultSet.getString("description");
-				Date dateDebutEnchere = resultSet.getDate("date_debut_encheres");
-				Date dateFinEnchere = resultSet.getDate("date_fin_encheres");
+				Timestamp dateDebutEnchere = resultSet.getTimestamp("date_debut_encheres", calendar);
+				Timestamp dateFinEnchere = resultSet.getTimestamp("date_fin_encheres", calendar);
 				int prixInitialArticle = resultSet.getInt("prix_initial");
 				int prixVenteArticle = resultSet.getInt("prix_vente");
 				int userArticle = resultSet.getInt("no_utilisateur");
@@ -109,8 +113,8 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 				int idArticle = resultSet.getInt("no_article");
 				String nomArticle = resultSet.getString("nom_article");
 				String descriptionArticle = resultSet.getString("description");
-				Date dateDebutEnchere = resultSet.getDate("date_debut_encheres");
-				Date dateFinEnchere = resultSet.getDate("date_fin_encheres");
+				Timestamp dateDebutEnchere = resultSet.getTimestamp("date_debut_encheres", calendar);
+				Timestamp dateFinEnchere = resultSet.getTimestamp("date_fin_encheres", calendar);
 				int prixInitialArticle = resultSet.getInt("prix_initial");
 				int prixVenteArticle = resultSet.getInt("prix_vente");
 				int userArticle = resultSet.getInt("no_utilisateur");

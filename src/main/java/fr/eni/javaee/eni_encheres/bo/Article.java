@@ -4,13 +4,15 @@
 package fr.eni.javaee.eni_encheres.bo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * @author Orel
  *
  */
-public class Article implements Serializable {
+public class Article implements Serializable, Comparable<Article> {
 	/**
 	 * 
 	 */
@@ -18,8 +20,8 @@ public class Article implements Serializable {
 	int noArticle;
 	String nomArticle;
 	String description;
-	Date dateDebutEncheres;
-	Date dateFinEncheres;
+	LocalDateTime dateDebutEncheres;
+	LocalDateTime dateFinEncheres;
 	int miseAPrix;
 	int prixVente;
 	int noUtilisateur;
@@ -44,14 +46,14 @@ public class Article implements Serializable {
 	 * @param utilisateur
 	 * @param lieuRetrait
 	 */
-	public Article(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int miseAPrix, int prixVente, Boolean etatVente, Boolean etatRetrait,
+	public Article(int noArticle, String nomArticle, String description, Timestamp dateDebutEncheres,
+			Timestamp dateFinEncheres, int miseAPrix, int prixVente, Boolean etatVente, Boolean etatRetrait,
 			int utilisateurId) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
+		this.setDateDebutEncheres(dateDebutEncheres);
+		this.setDateFinEncheres(dateFinEncheres);
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
 		this.etatVente = etatVente;
@@ -73,13 +75,14 @@ public class Article implements Serializable {
 	 * @param noUtilisateur
 	 * @param noCategorie
 	 */
-	public Article(int noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int miseAPrix,
+	public Article(int noArticle, String nomArticle, String description, Timestamp dateDebutEncheres, Timestamp dateFinEncheres, int miseAPrix,
 			int prixVente, int noUtilisateur, int noCategorie) {
 		super();
+		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
+		this.setDateDebutEncheres(dateDebutEncheres);
+		this.setDateFinEncheres(dateFinEncheres);
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
 		this.noUtilisateur = noUtilisateur;
@@ -131,29 +134,29 @@ public class Article implements Serializable {
 	/**
 	 * @return the dateDebutEncheres
 	 */
-	public Date getDateDebutEncheres() {
+	public LocalDateTime getDateDebutEncheres() {
 		return dateDebutEncheres;
 	}
 
 	/**
 	 * @param dateDebutEncheres the dateDebutEncheres to set
 	 */
-	public void setDateDebutEncheres(Date dateDebutEncheres) {
-		this.dateDebutEncheres = dateDebutEncheres;
+	public void setDateDebutEncheres(Timestamp dateDebutEncheres) {
+		this.dateDebutEncheres = dateDebutEncheres.toLocalDateTime();
 	}
 
 	/**
 	 * @return the dateFinEncheres
 	 */
-	public Date getDateFinEncheres() {
+	public LocalDateTime getDateFinEncheres() {
 		return dateFinEncheres;
 	}
 
 	/**
 	 * @param dateFinEncheres the dateFinEncheres to set
 	 */
-	public void setDateFinEncheres(Date dateFinEncheres) {
-		this.dateFinEncheres = dateFinEncheres;
+	public void setDateFinEncheres(Timestamp dateFinEncheres) {
+		this.dateFinEncheres = dateFinEncheres.toLocalDateTime();
 	}
 
 	/**
@@ -247,6 +250,20 @@ public class Article implements Serializable {
 				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
 				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", etatRetrait=" + etatRetrait
 				+ ", utilisateur=" + noUtilisateur +"]";
+	} 
+
+	@Override
+	public int compareTo(Article o) {
+		int value = -2;
+		if (this.noArticle < o.getNoArticle()) {
+			value = -1;
+		} else if (this.noArticle == o.getNoArticle() ) {
+			value = 0;
+		} else {
+			value = 1;
+		}
+		//System.out.println(value + " - " + this.noArticle + " - " + o.getNoArticle());
+		return value;
 	}
 
 }

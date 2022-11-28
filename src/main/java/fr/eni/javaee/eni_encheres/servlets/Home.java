@@ -1,9 +1,10 @@
 package fr.eni.javaee.eni_encheres.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,7 +28,8 @@ import fr.eni.javaee.eni_encheres.BusinessException;
 @WebServlet("/home")
 public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private Utilisateur currentUser = null;
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -35,9 +37,12 @@ public class Home extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		/* 
+		 * 
 		 * get current user statut 
+		 * 
 		 */
 		// if session exist
+		boolean connectedUser = false;
 		if (request.getSession(false) != null) {
 			//System.out.println("session");
 			HttpSession session = request.getSession();
@@ -46,12 +51,16 @@ public class Home extends HttpServlet {
 				if ((boolean)session.getAttribute("connecte")) {
 					//System.out.println("Utilisateur connecté : " + session.getAttribute("connecte"));
 					//request.setAttribute("userConnected", session.getAttribute("connecte"));
+					connectedUser = true;
+					currentUser = (Utilisateur)session.getAttribute("utilisateurConnecte");
 				}
 			} 
 		}
 		
 		/* 
+		 * 
 		 * get liste categories 
+		 * 
 		 */
 		CategorieManager categorieManager = new CategorieManager();
 		try {
@@ -62,54 +71,46 @@ public class Home extends HttpServlet {
 		}
 		
 		
-		// Si categorie post param
+		/*
+		 * 
+		 * create liste articles 
+		 * 
+		 */
+		
+		Map<Article, Utilisateur> listeArticles = new TreeMap<>();
+		Map<Article, Utilisateur> tempListeArticles = new TreeMap<>();
+		tempListeArticles.clear();
+		
+		// Si search or 
 		if (request.getParameter("selectedCategorie") != null && request.getParameter("selectedCategorie") != "" && request.getParameter("selectedCategorie") != "0") {
+			//System.out.println(request.getParameter("selectedCategorie"));
 			try {
 				int selectedCategorieId = Integer.parseInt(request.getParameter("selectedCategorie"));
 				request.setAttribute("selectedCategorieId", selectedCategorieId);
 				
 				try {
-					List<Article> listeArticles = null;
-					List<Article> tempListeArticles = new ArrayList<>();
-					
 					// all articles
 					if (selectedCategorieId == 0) {
 						ArticleManager articleManager = new ArticleManager();
-						listeArticles = articleManager.getAllArticles();
+						listeArticles = articleManager.getAllArticlesMap();
 					} 
 					// articles in categorie
 					else {
 						ArticleManager articleManager = new ArticleManager();
-						listeArticles = articleManager.getArticlesbyCategorie(selectedCategorieId);
+						listeArticles = articleManager.getArticlesbyCategorieMap(selectedCategorieId);
 					}
 					
-					// get article with keyword
+					// articles with search
 					if (request.getParameter("searchPattern") != "" && request.getParameter("searchPattern") != null) {
-						String searchPattern = (String)request.getParameter("searchPattern").trim();
+						String searchPattern = (String)request.getParameter("searchPattern").trim().toLowerCase();
 						request.setAttribute("searchPattern", searchPattern);
-						int i = 0;
-						for (Article article : listeArticles) {
-							if (article.getNomArticle().contains(searchPattern) ) {
-								tempListeArticles.add(article);
-							}
-							i += 1;
-						}
+						listeArticles.forEach((article, utilisateur) -> {
+							if (article.getNomArticle().toLowerCase().contains(searchPattern) ) {
+								tempListeArticles.put(article, utilisateur); 
+							} 
+					    });
 						listeArticles = tempListeArticles;
 					}
-					
-					// 
-					if (request.getParameter("userFilter") != "" && request.getParameter("userFilter") != null) {
-						
-					}
-					// get articles en cours d'enchere
-					
-					
-					// get articles encheris
-					// get articles remportés
-					
-					// get article vendus
-					// get article ventes non débutées
-					// get article ventes en cours
 					
 					request.setAttribute("listeArticles", listeArticles);
 					
@@ -122,16 +123,73 @@ public class Home extends HttpServlet {
 		}
 		// Si pas de post param
 		else {
-			/*
-			 * get liste d'objets
-			 */	
 			try {
 				ArticleManager articleManager = new ArticleManager();
-				Map<Article, Utilisateur> listeArticle = articleManager.getAllArticlesMap();
-				request.setAttribute("listeArticles", listeArticle);
+				listeArticles = articleManager.getAllArticlesMap();
+				request.setAttribute("listeArticles", listeArticles);
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		/*
+		 * 
+		 * articles filters for connected user
+		 * 
+		 */
+		if (request.getParameter("userFilter") != "" && request.getParameter("userFilter") != null && connectedUser) {
+			tempListeArticles.clear();
+			String filterValue = request.getParameter("userFilter");
+			request.setAttribute("userFilterAttribute", filterValue);
+			
+			// Define now datetime
+			LocalDateTime now = LocalDateTime.now();
+			System.out.println(now);
+			
+			switch (filterValue) {
+				// get articles en cours d'enchere
+				case "openEncheres":
+				listeArticles.forEach((article, utilisateur) -> {
+					if (article.getDateDebutEncheres().isAfter(now) && article.getDateFinEncheres().isBefore(now)) {
+						tempListeArticles.put(article, utilisateur); 
+					}
+			    });
+				listeArticles = tempListeArticles;
+				break;
+				
+				// get articles encheris
+				case "currentEncheres":
+				
+				break;
+				
+				// get articles remportés
+				case "winEncheres":
+				break;
+				
+				// get article vendus
+				case "currentSells":
+				break;
+				
+				// get article ventes non débutées
+				case "notStartSells":
+				listeArticles.forEach((article, utilisateur) -> {
+					if (utilisateur.getNo_utilisateur() == currentUser.getNo_utilisateur() && article.getDateDebutEncheres().isAfter(now)) {
+						tempListeArticles.put(article, utilisateur); 
+					}
+			    });
+				listeArticles = tempListeArticles;
+				break;
+				
+				// get article ventes en cours
+				case "endingSells":
+				listeArticles.forEach((article, utilisateur) -> {
+					if (utilisateur.getNo_utilisateur() == currentUser.getNo_utilisateur() && article.getDateFinEncheres().isBefore(now)) {
+						tempListeArticles.put(article, utilisateur);
+					}
+			    });
+				listeArticles = tempListeArticles;
+				break;				
+			}			
 		}
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/Home.jsp");

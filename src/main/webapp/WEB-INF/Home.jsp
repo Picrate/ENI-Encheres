@@ -4,7 +4,7 @@
 
 <%-- Librairies --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%-- Config de la page --%>
 <%@ page 
@@ -70,10 +70,16 @@ pageEncoding="UTF-8"
 			        	<li class="card">
 				        	<img src="" alt="">
 							<div class="detail">
-								<h3><a href="<%=request.getContextPath()%>/objet?articleID=${keyValue.key.noArticle}">${keyValue.key.nomArticle}</a></h3>
-								<p class="price">Prix ${keyValue.key.miseAPrix} points</p>
-								<p class="end_date">${keyValue.key.dateFinEncheres}</p>
-								<p class="seller">${keyValue.value.pseudo}</p>
+								<h3>
+									<a class="article_link" href="${contextPath}/objet?articleID=${keyValue.key.noArticle}">
+									${keyValue.key.nomArticle}
+									</a>
+								</h3>
+								<p class="price">${keyValue.key.miseAPrix} points</p>
+								<%-- <p class="date">Début : ${keyValue.key.dateDebutEncheres}</p>--%>
+								<fmt:parseDate value="${keyValue.key.dateFinEncheres}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+								<p class="date end_date">Fin de l'enchère :<br><span><fmt:formatDate pattern="EEEEE dd MMMM 'à' HH'h'mm" value="${parsedDateTime}" type="both"/></span></p>
+								<p class="seller">Mis en vente par : <a href="${contextPath}/profil-utilisateur?userId=${keyValue.value.no_utilisateur}"><strong>${keyValue.value.pseudo}</strong></a></p>
 							</div>
 			            </li>
 			        	</c:forEach>
