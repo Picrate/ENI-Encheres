@@ -97,5 +97,14 @@ public class UtilisateurManager {
 	public void createNewUtilisateur(Utilisateur utilisateur) throws BusinessException{
 		this.utilisateurDAO.createElement(utilisateur);
 	}
+	
+	public boolean checkUserExists(String PseudoOrEmail) throws BusinessException {
+		boolean checkStatus = false;
+		Utilisateur checkedUtilisateur = this.getUtilisateurByPseudoOrEmail(PseudoOrEmail);
+		if (Objects.nonNull(checkedUtilisateur)) {
+			checkStatus = true;
+		}		
+		return checkStatus;
+	}
 
 }

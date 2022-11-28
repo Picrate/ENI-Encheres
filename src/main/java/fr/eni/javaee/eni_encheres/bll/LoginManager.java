@@ -95,7 +95,6 @@ public class LoginManager {
 		String userStoredPassword = UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(username)
 				.getPassword();
 		// Si la chaine n'est pas null
-
 		if (Objects.nonNull(userStoredPassword)) {
 			// On decode la chain de caractere en BASE64
 			byte[] binaryPassword = decodeBase64(userStoredPassword);

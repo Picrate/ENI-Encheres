@@ -35,7 +35,7 @@ public class CreerCompte extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		this.getServletContext().getRequestDispatcher("/WEB-INF/Compte.jsp").forward(request, response);
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class CreerCompte extends HttpServlet {
 					LoginManager.getInstance().getBase64Password(password), newAdresse);
 			UtilisateurManager.getInstance().createNewUtilisateur(newUtilisateur);
 
-			this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
+			this.getServletContext().getRequestDispatcher("/").forward(request, response);
 
 		} catch (BusinessException e) {
 			List<Integer> listeCodeErreurs = e.getListeCodesErreur();
