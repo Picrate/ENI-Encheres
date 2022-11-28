@@ -55,7 +55,7 @@ String pageAuthor = "POV - ENI";
 			 
 			<!-- COMPTE-->
 			<div id="connexion" class="row">
-				<form method="post">
+				<form method="post" action="creercompte">
 					<div class="col_2">
 						<fieldset>
 							<label for="pseudo">Pseudo :</label>
@@ -74,12 +74,12 @@ String pageAuthor = "POV - ENI";
 
 						<fieldset>
 							<label for="email">Email :</label>
-							<input type="email" name="email" required="required" maxlength="20">
+							<input type="email" name="email" required="required" maxlength="50">
 						</fieldset>
 
 						<fieldset>
 							<label for="telephone">Téléphone :</label>
-							<input type="tel" name="telephone" placeholder="01.02.03.04.05" maxlength="14" pattern="[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}$" title="11.22.33.44.55">
+							<input type="tel" name="telephone" placeholder="01.02.03.04.05" maxlength="14" pattern="[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}$" title="01.02.03.04.05">
 						</fieldset>
 
 						<fieldset>
@@ -104,7 +104,7 @@ String pageAuthor = "POV - ENI";
 
 						<fieldset>
 							<label for="password">Confirmation :</label>
-							<input type="password" name="password" required="required" maxlength="30">
+							<input type="password" name="cpassword" required="required" maxlength="30">
 						</fieldset>
 					</div>
 

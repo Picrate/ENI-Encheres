@@ -23,20 +23,20 @@ import fr.eni.javaee.eni_encheres.dal.UtilisateurDAO;
  */
 public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 
-	private static final String SELECT_USER_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?;";
-	private static final String SELECT_USER_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ?;";
-	private static final String SELECT_USER_BY_EMAIL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email LIKE ?;";
-	private static final String INSERT = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur ) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+	private static final String SELECT_USER_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, mot_de_passe, credit, administrateur, adresse_id FROM UTILISATEURS WHERE no_utilisateur = ?;";
+	private static final String SELECT_USER_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, mot_de_passe, credit, administrateur, adresse_id FROM UTILISATEURS WHERE pseudo LIKE ?;";
+	private static final String SELECT_USER_BY_EMAIL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, mot_de_passe, credit, administrateur, adresse_id FROM UTILISATEURS WHERE email LIKE ?;";
+	private static final String INSERT = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone, mot_de_passe, credit, administrateur, adresse_id ) VALUES (?,?,?,?,?,?,?,?,?);";
 	private static final String SELECT_ADRESSE_ID_BY_USER_ID = "SELECT adresse_id FROM UTILISATEURS WHERE no_utilisateur = ?;";
 
 	/*
 	 * INSERT = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone,
-	 * rue, code_postal, ville, mot_de_passe, credit, administrateur ) VALUES
-	 * (?,?,?,?,?,?,?,?,?,?,?);"
+	 * mot_de_passe, credit, administrateur ) VALUES
+	 * (?,?,?,?,?,?,?,?,?);"
 	 */
 	@Override
 	public void createElement(Utilisateur element) throws BusinessException {
-
+		
 		if (element == null) {
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
@@ -52,12 +52,10 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 			pstmt.setString(3, element.getPrenom());
 			pstmt.setString(4, element.getEmail());
 			pstmt.setString(5, element.getTelephone());
-			pstmt.setString(6, element.getAdresse().getRue());
-			pstmt.setInt(7, element.getAdresse().getCodePostal());
-			pstmt.setString(8, element.getAdresse().getVille());
-			pstmt.setString(9, element.getPassword());
-			pstmt.setInt(10, element.getCredit());
-			pstmt.setBoolean(11, element.isAdministrateur());
+			pstmt.setString(6, element.getPassword());
+			pstmt.setInt(7, element.getCredit());
+			pstmt.setBoolean(8, element.isAdministrateur());
+			pstmt.setInt(9, element.getAdresse().getId());
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
@@ -67,7 +65,6 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 			cnx.close();
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
 			throw businessException;

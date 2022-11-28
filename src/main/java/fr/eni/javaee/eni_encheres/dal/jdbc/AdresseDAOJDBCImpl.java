@@ -13,7 +13,7 @@ import fr.eni.javaee.eni_encheres.dal.DAO;
 
 public class AdresseDAOJDBCImpl implements DAO<Adresse> {
 
-	private static final String INSERT_ADRESSE = "INSERT INTO ADRESSES (nom, code_postal, ville)  VALUES (?,?,?);";
+	private static final String INSERT_ADRESSE = "INSERT INTO ADRESSES (rue, code_postal, ville)  VALUES (?,?,?);";
 	private static final String SELECT_ADRESSE_BY_ID = "SELECT id, rue, code_postal, ville FROM ADRESSES WHERE id = ?;";
 	private static final String UPDATE_ADRESSE = "UPDATE ADRESSES SET id=?, rue=?, code_postal=?, ville=? WHERE id = ?;";
 	
