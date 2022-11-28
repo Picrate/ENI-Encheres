@@ -1,11 +1,20 @@
-console.log('test');
+/*
+* Filters scripts
+*/
 var checkboxesArray = document.querySelectorAll('.categorie_checkboxes');
-console.log(checkboxesArray.lenght);
-var form = document.getElementById('categorie_filter');
+var form = document.getElementById('user_filters');
+
+// create click listener on radio filters
 checkboxesArray.forEach(element => {
 	element.addEventListener("click", evt => {
-		alert ("form submit");
 		form.submit();
-		console.log('test');
+	});
+});
+
+// remove filter
+var removeFilterButton = document.getElementById('remove_filter');
+removeFilterButton.addEventListener("click", evt => {
+	checkboxesArray.forEach(element => {
+		element.removeAttribute('checked');
 	});
 });

@@ -1,13 +1,22 @@
 "use strict";
 
-console.log('test');
+/*
+* Filters scripts
+*/
 var checkboxesArray = document.querySelectorAll('.categorie_checkboxes');
-console.log(checkboxesArray.lenght);
-var form = document.getElementById('categorie_filter');
+var form = document.getElementById('user_filters');
+
+// create click listener on radio filters
 checkboxesArray.forEach(function (element) {
   element.addEventListener("click", function (evt) {
-    alert("form submit");
     form.submit();
-    console.log('test');
+  });
+});
+
+// remove filter
+var removeFilterButton = document.getElementById('remove_filter');
+removeFilterButton.addEventListener("click", function (evt) {
+  checkboxesArray.forEach(function (element) {
+    element.removeAttribute('checked');
   });
 });

@@ -330,7 +330,6 @@ body > main > #error p {
   margin-bottom: 50px;
   font-size: 2.3rem;
   line-height: 1.1em;
-  /*  border: 2px solid black; */
 }
 @media (max-width: 575px) {
   body > main > #error p {
@@ -401,6 +400,12 @@ body > main #filter #user_filters fieldset {
 body > main #filter #user_filters label {
   max-width: none;
   vertical-align: middle;
+}
+body > main #filter #user_filters #remove_filter {
+  font-size: 1.7rem;
+  line-height: 1.1em;
+  cursor: pointer;
+  text-decoration: underline;
 }
 body > main #index {
   display: -ms-grid;
@@ -496,7 +501,6 @@ body > main #index .card .detail .seller {
 body > main #index .card .detail .seller > a {
   position: relative;
   z-index: 100;
-  text-transform: capitalize;
 }
 body > main #connexion,
 body > main #account {

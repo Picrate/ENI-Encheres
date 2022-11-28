@@ -110,7 +110,7 @@ body > main
 		margin-top: -20px;
 		p 
 			{
-			background-color: lightgrey; color: black; border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 50px; .t3();/*  border: 2px solid black; */ 
+			background-color: lightgrey; color: black; border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 50px; .t3();
 			@media (max-width: 575px) 	{ .t4(); }
 			} 
 		}
@@ -138,6 +138,7 @@ body > main
 			h4 { margin-bottom: 5px; }
 			fieldset { padding: 0; border: none; margin-bottom: 0; }
 			label { max-width: none; vertical-align: middle; }
+			#remove_filter { .t5(); cursor: pointer; text-decoration: underline;}
 			}
 		}
 
@@ -179,7 +180,7 @@ body > main
 				.seller 
 					{
 					.t5();
-					& > a { position: relative; z-index: 100; text-transform: capitalize; }
+					& > a { position: relative; z-index: 100; }
 					}
 					
 				}
