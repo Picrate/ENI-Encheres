@@ -40,12 +40,11 @@ public class LoginManager {
 	private LoginManager() {
 
 		try {
-			salt = new byte[256];
+			salt = new byte[2048];
 			masterKey = CryptoDatasManager.getInstance().getMasterKey();
 			seed = decodeBase64(CryptoDatasManager.getInstance().getSeed());
 			savedParams = decodeBase64(CryptoDatasManager.getInstance().getbase64Params());
 			rnd = new SecureRandom();
-			rnd.setSeed(seed);
 			rnd.nextBytes(salt);
 			new PBEParameterSpec(salt, 1000);
 			PBEKeySpec pks = new PBEKeySpec(bytesToChars(masterKey), salt, 1000);

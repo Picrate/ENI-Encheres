@@ -82,13 +82,13 @@ public class Adresse implements Serializable {
 		return id;
 	}
 
-	public void setId(int noAdresse) {
-		this.id = noAdresse;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override
 	public String toString() {
-		return "Adresse [rue=" + rue + ", codePostal=" + codePostal + ", ville=" + ville + "]";
+		return "Adresse [id="+id+", rue=" + rue + ", codePostal=" + codePostal + ", ville=" + ville + "]";
 	}
 
 }

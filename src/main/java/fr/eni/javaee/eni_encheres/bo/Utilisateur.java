@@ -29,27 +29,6 @@ public class Utilisateur implements Serializable{
 	}
 	
 	/**
-	 * Constructeur sans paramètres optionnels ni id.
-	 * L'Utilisateur n'est pas administrateur, ne possède aucun crédit et n'a pas de téléphone.
-	 * @param pseudo
-	 * @param nom
-	 * @param prenom
-	 * @param email
-	 * @param password
-	 * @param adresse
-	 */
-	public Utilisateur(String pseudo, String nom, String prenom, String email, String password, Adresse adresse) {
-		this.pseudo = pseudo;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.email = email;
-		this.password = password;
-		this.credit = 0;
-		this.telephone = null;
-		this.administrateur = false;
-	}
-
-	/**
 	 * Constructeur sans paramètres optionnels
 	 * L'Utilisateur n'est pas administrateur, ne possède aucun crédit.
 	 * @param pseudo
@@ -72,7 +51,7 @@ public class Utilisateur implements Serializable{
 	}
 	
 	/**
-	 * Constructeur sans adresse
+	 * Constructeur sans adresse pour les requetes de connexion
 	 * @param no_utilisateur
 	 * @param pseudo
 	 * @param nom
