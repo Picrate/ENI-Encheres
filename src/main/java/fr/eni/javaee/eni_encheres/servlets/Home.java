@@ -150,7 +150,7 @@ public class Home extends HttpServlet {
 				// get articles en cours d'enchere
 				case "openEncheres":
 				listeArticles.forEach((article, utilisateur) -> {
-					if (article.getDateDebutEncheres().isAfter(now) && article.getDateFinEncheres().isBefore(now)) {
+					if (article.getDateDebutEncheres().isBefore(now) && article.getDateFinEncheres().isAfter(now)) {
 						tempListeArticles.put(article, utilisateur); 
 					}
 			    });
@@ -168,6 +168,12 @@ public class Home extends HttpServlet {
 				
 				// get article vendus
 				case "currentSells":
+				listeArticles.forEach((article, utilisateur) -> {
+					if (utilisateur.getNo_utilisateur() == currentUser.getNo_utilisateur() && article.getDateDebutEncheres().isBefore(now) && article.getDateFinEncheres().isAfter(now)) {
+						tempListeArticles.put(article, utilisateur); 
+					}
+			    });
+				listeArticles = tempListeArticles;
 				break;
 				
 				// get article ventes non débutées
