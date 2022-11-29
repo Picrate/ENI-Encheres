@@ -238,8 +238,14 @@ body > main
 				{ 	
 				flex: 1 1 55%;
 				@media (max-width: 991px) 	{  flex: 1 1 100%; }
-				& > * { margin-bottom: 20px; .t4(); }
-				h1 { .t2();}
+				& > * 
+					{ 
+					margin-bottom: 20px; .t4(); 
+					&:last-child { margin-bottom: 0;}
+					}
+				h1 { .t2(); .bold();}
+				fieldset { display: flex;}
+				input[type=number] { .t2(); max-width: 100px; margin-right: 20px;}
 				}
 			}
 		}

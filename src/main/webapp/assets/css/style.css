@@ -652,9 +652,24 @@ body > main #objet > div.col_right > * {
   font-size: 2rem;
   line-height: 1.1em;
 }
+body > main #objet > div.col_right > *:last-child {
+  margin-bottom: 0;
+}
 body > main #objet > div.col_right h1 {
   font-size: 3.2rem;
   line-height: 1.1em;
+  font-weight: 700;
+}
+body > main #objet > div.col_right fieldset {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+body > main #objet > div.col_right input[type=number] {
+  font-size: 3.2rem;
+  line-height: 1.1em;
+  max-width: 100px;
+  margin-right: 20px;
 }
 body > main .col_2 {
   display: -ms-grid;

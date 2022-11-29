@@ -67,7 +67,7 @@ pageEncoding="UTF-8"
 				        	<img src="" alt="">
 							<div class="detail">
 								<h3>
-									<a class="article_link" href="${contextPath}/objet?articleID=${keyValue.key.noArticle}">
+									<a class="article_link" href="${contextPath}/article?articleId=${keyValue.key.noArticle}">
 									${keyValue.key.nomArticle}
 									</a>
 								</h3>

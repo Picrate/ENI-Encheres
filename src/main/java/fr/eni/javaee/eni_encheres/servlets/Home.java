@@ -50,7 +50,6 @@ public class Home extends HttpServlet {
 			if (session.getAttribute("connecte") != null) {
 				if ((boolean)session.getAttribute("connecte")) {
 					//System.out.println("Utilisateur connecté : " + session.getAttribute("connecte"));
-					//request.setAttribute("userConnected", session.getAttribute("connecte"));
 					connectedUser = true;
 					currentUser = (Utilisateur)session.getAttribute("utilisateurConnecte");
 				}
@@ -62,9 +61,8 @@ public class Home extends HttpServlet {
 		 * get liste categories 
 		 * 
 		 */
-		CategorieManager categorieManager = new CategorieManager();
 		try {
-			List<Categorie> listeCategories = categorieManager.getAllCategories();
+			List<Categorie> listeCategories = CategorieManager.getInstance().getAllCategories();
 			request.setAttribute("listeCategories", listeCategories);
 		} catch (BusinessException e) {
 			e.printStackTrace();
@@ -77,7 +75,7 @@ public class Home extends HttpServlet {
 		 * 
 		 */
 		
-		ArticleManager articleManager = new ArticleManager();
+		
 		Map<Article, Utilisateur> listeArticles = new TreeMap<>();
 		Map<Article, Utilisateur> tempListeArticles = new TreeMap<>();
 		tempListeArticles.clear();
@@ -92,11 +90,11 @@ public class Home extends HttpServlet {
 				try {
 					// all articles
 					if (selectedCategorieId == 0) {
-						listeArticles = articleManager.getAllArticlesMap();
+						listeArticles = ArticleManager.getInstance().getAllArticlesMap();
 					} 
 					// articles in categorie
 					else {
-						listeArticles = articleManager.getArticlesbyCategorieMap(selectedCategorieId);
+						listeArticles = ArticleManager.getInstance().getArticlesbyCategorieMap(selectedCategorieId);
 					}
 					
 					// articles with search
@@ -121,7 +119,7 @@ public class Home extends HttpServlet {
 		// Si pas de post param
 		else {
 			try {
-				listeArticles = articleManager.getAllArticlesMap();
+				listeArticles = ArticleManager.getInstance().getAllArticlesMap();
 				request.setAttribute("listeArticles", listeArticles);
 			} catch (BusinessException e) {
 				e.printStackTrace();
@@ -158,7 +156,7 @@ public class Home extends HttpServlet {
 				// get articles encheris
 				case "currentEncheres":
 				try {
-					listeArticles = articleManager.getArticlesByUserEnchere(currentUser.getNo_utilisateur());
+					listeArticles = ArticleManager.getInstance().getArticlesByUserEnchere(currentUser.getNo_utilisateur());
 					listeArticles.forEach((article, utilisateur) -> {
 						if (article.getDateFinEncheres().isAfter(now)) {
 							tempListeArticles.put(article, utilisateur); 
