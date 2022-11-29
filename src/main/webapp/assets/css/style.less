@@ -134,10 +134,20 @@ body > main
 		#user_filters
 			{
 			display: flex; justify-content: stretch; padding: 20px 0; border-top: none;
-			& > div { 	flex: 1 0 0; }
+			@media (max-width:991px) 	{  flex-direction: column;}
+			& > div 
+				{
+				flex: 1 0 0;
+				@media (max-width: 991px) 	{  flex: 1 1 100%; margin-bottom: 30px;}
+				}
+			
 			h4 { margin-bottom: 5px; }
-			fieldset { padding: 0; border: none; margin-bottom: 0; }
-			label { max-width: none; vertical-align: middle; }
+			fieldset { position: relative; padding: 0; border: none; margin-bottom: 0; white-space: nowrap; }
+			label 
+				{ 
+				max-width: none; vertical-align: middle; overflow: hidden; text-overflow: ellipsis; max-width: 80%;
+				@media (max-width: 575px) 	{  .t4(); }
+				}
 			#remove_filter { .t5(); cursor: pointer; text-decoration: underline;}
 			}
 		}
@@ -150,6 +160,7 @@ body > main
 			{
 			position: relative; border: 2px solid black; background-color: white; border-radius: 20px; padding: 30px 20px 30px 30px; box-sizing: border-box;
 			display: flex; flex-wrap: nowrap;
+			@media (max-width: 575px) 	{ flex-wrap: wrap; flex-direction: column; padding: 15px; }
 			&:before 
 				{
 				position: absolute; z-index: -1; top: 0; left: 0; content: ""; height: 100%; width: 100%; display: block; 
@@ -159,7 +170,11 @@ body > main
 				{
 				&:before {	transform: translate(15px, 15px);}	
 				}
-			img {  height: 150px; width: 150px; margin-right: 20px; border: 2px solid black; border-radius: 15px; background-color: lightgray;	}
+			img 
+				{
+				height: 150px; width: 150px; margin-right: 20px; border: 2px solid black; border-radius: 15px; background-color: lightgray;	
+				@media (max-width: 575px) 	{ width: 100%; margin-bottom: 15px; }
+				}
 			.detail 
 				{
 				h3 
@@ -174,7 +189,7 @@ body > main
 				.price {margin-bottom: 10px;}
 				.date 
 					{ 
-					.t5();
+					.t5(); margin-bottom: 4px;
 					span { text-transform: capitalize;}
 					}
 				.seller 

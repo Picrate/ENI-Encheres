@@ -384,22 +384,49 @@ body > main #filter #user_filters {
   padding: 20px 0;
   border-top: none;
 }
+@media (max-width: 991px) {
+  body > main #filter #user_filters {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
 body > main #filter #user_filters > div {
   -webkit-box-flex: 1;
       -ms-flex: 1 0 0px;
           flex: 1 0 0;
 }
+@media (max-width: 991px) {
+  body > main #filter #user_filters > div {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 100%;
+            flex: 1 1 100%;
+    margin-bottom: 30px;
+  }
+}
 body > main #filter #user_filters h4 {
   margin-bottom: 5px;
 }
 body > main #filter #user_filters fieldset {
+  position: relative;
   padding: 0;
   border: none;
   margin-bottom: 0;
+  white-space: nowrap;
 }
 body > main #filter #user_filters label {
   max-width: none;
   vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
+}
+@media (max-width: 575px) {
+  body > main #filter #user_filters label {
+    font-size: 2rem;
+    line-height: 1.1em;
+  }
 }
 body > main #filter #user_filters #remove_filter {
   font-size: 1.7rem;
@@ -435,6 +462,17 @@ body > main #index .card {
   -ms-flex-wrap: nowrap;
       flex-wrap: nowrap;
 }
+@media (max-width: 575px) {
+  body > main #index .card {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    padding: 15px;
+  }
+}
 body > main #index .card:before {
   position: absolute;
   z-index: -1;
@@ -464,6 +502,12 @@ body > main #index .card img {
   border-radius: 15px;
   background-color: lightgray;
 }
+@media (max-width: 575px) {
+  body > main #index .card img {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}
 body > main #index .card .detail h3 {
   display: block;
   font-size: 2.3rem;
@@ -490,6 +534,7 @@ body > main #index .card .detail .price {
 body > main #index .card .detail .date {
   font-size: 1.7rem;
   line-height: 1.1em;
+  margin-bottom: 4px;
 }
 body > main #index .card .detail .date span {
   text-transform: capitalize;

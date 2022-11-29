@@ -19,4 +19,5 @@ removeFilterButton.addEventListener("click", function (evt) {
   checkboxesArray.forEach(function (element) {
     element.removeAttribute('checked');
   });
+  form.submit();
 });
