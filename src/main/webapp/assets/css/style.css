@@ -428,8 +428,6 @@ body > main #filter #user_filters fieldset {
 body > main #filter #user_filters label {
   max-width: none;
   vertical-align: middle;
-  overflow: hidden;
-  text-overflow: ellipsis;
   max-width: 80%;
 }
 @media (max-width: 575px) {
@@ -665,11 +663,22 @@ body > main #objet > div.col_right fieldset {
   display: -ms-flexbox;
   display: flex;
 }
-body > main #objet > div.col_right input[type=number] {
+body > main #objet > div.col_right fieldset input[type=number] {
   font-size: 3.2rem;
   line-height: 1.1em;
-  max-width: 100px;
+  max-width: 200px;
   margin-right: 20px;
+}
+body > main #objet > div.col_right.form fieldset {
+  display: block;
+}
+body > main #objet > div.col_right.form fieldset label {
+  width: 100%;
+}
+body > main #objet > div.col_right.form fieldset input[type=text],
+body > main #objet > div.col_right.form fieldset input[type=datetime-local],
+body > main #objet > div.col_right.form fieldset textarea {
+  width: 100%;
 }
 body > main .col_2 {
   display: -ms-grid;
@@ -709,9 +718,14 @@ body > main form > * {
 body > main form > *:last-child {
   margin-bottom: 0;
 }
+body > main form .field_group {
+  background-color: lightgray;
+  padding: 20px;
+  border-radius: 20px;
+}
 body > main form label {
-  min-width: 180px;
   max-width: 180px;
+  min-width: 180px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
@@ -737,7 +751,10 @@ body > main form fieldset#checkbox_wrapper label {
 body > main form input[type=text],
 body > main form input[type=tel],
 body > main form input[type=email],
-body > main form input[type=password] {
+body > main form input[type=password],
+body > main form input[type=datetime-local],
+body > main form input[type=number],
+body > main form textarea {
   border: 2px solid black;
   border-radius: 20px;
   padding: 10px 20px;
@@ -750,7 +767,10 @@ body > main form input[type=password] {
   body > main form input[type=text],
   body > main form input[type=tel],
   body > main form input[type=email],
-  body > main form input[type=password] {
+  body > main form input[type=password],
+  body > main form input[type=datetime-local],
+  body > main form input[type=number],
+  body > main form textarea {
     width: 100%;
     max-width: none;
   }

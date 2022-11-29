@@ -35,12 +35,10 @@ public class ArticleServlet extends HttpServlet  {
 		try {
 			int articleId = Integer.parseInt(request.getParameter("articleId"));
 			try {
-				ArticleManager articleManager = new ArticleManager();
-				Article article = articleManager.getArticleByID(articleId);
+				Article article = ArticleManager.getInstance().getArticleByID(articleId);
 				request.setAttribute("selectedArticle", article);
 				
-				CategorieManager categorieManager = new CategorieManager();
-				Categorie categorie = categorieManager.getArticleCategorie(articleId);
+				Categorie categorie = CategorieManager.getInstance().getArticleCategorie(articleId);
 				request.setAttribute("selectedCategorie", categorie);
 				
 				Utilisateur utilisateur = UtilisateurManager.getInstance().getUtilisateurById(Integer.valueOf(article.getNoUtilisateur()));

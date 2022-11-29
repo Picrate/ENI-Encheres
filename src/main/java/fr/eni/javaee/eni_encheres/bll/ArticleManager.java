@@ -143,5 +143,20 @@ public class ArticleManager {
 		}
 		return listArticles;
 	}
+	
+	/**
+	 * Ajout d'un article au catalogue
+	 * @param newArticle
+	 * @return index du nouvel article dans le catalogue
+	 * @throws BLLException 
+	 */
+	public void addArticle(Article newArticle) throws BusinessException {
+		try {
+			//validerArticle(newArticle);
+			this.articleDAO.createElement(newArticle);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

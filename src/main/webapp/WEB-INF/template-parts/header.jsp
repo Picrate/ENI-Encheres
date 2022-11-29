@@ -1,5 +1,7 @@
 <%-- Librairies --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <header>
 	<div>
 		<h1><a href="<%=request.getContextPath()%>">ENI - Enchères</a></h1>
@@ -9,7 +11,8 @@
 			<ul>				
 				<c:choose>
 						<c:when test="${connecte}">
-							<li><a href="vendre-article.html">Vendre un article</a></li>
+							<li><a href="${contextPath}/ajouter-un-article">Vendre un article</a></li>
+							
 							<!--<li><a href="<%=request.getContextPath()%>/profil-utilisateur?userId=${utilisateurConnecte.no_utilisateur}">Mon Profil</a></li>  -->
 							<li><a href="
 							<c:url value="/profil-utilisateur">

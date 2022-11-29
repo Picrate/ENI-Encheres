@@ -46,19 +46,16 @@ public class Article implements Serializable, Comparable<Article> {
 	 * @param utilisateur
 	 * @param lieuRetrait
 	 */
-	public Article(int noArticle, String nomArticle, String description, Timestamp dateDebutEncheres,
-			Timestamp dateFinEncheres, int miseAPrix, int prixVente, Boolean etatVente, Boolean etatRetrait,
-			int utilisateurId) {
-		this.noArticle = noArticle;
+	public Article(String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix,
+			int prixVente, int noUtilisateur, int noCategorie) {
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.setDateDebutEncheres(dateDebutEncheres);
 		this.setDateFinEncheres(dateFinEncheres);
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
-		this.etatVente = etatVente;
-		this.etatRetrait = etatRetrait;
-		this.noUtilisateur = utilisateurId;
+		this.noUtilisateur = noUtilisateur;
+		this.noCategorie = noCategorie;
 	}
 	
 	
@@ -66,6 +63,7 @@ public class Article implements Serializable, Comparable<Article> {
 	
 
 	/**
+	 * @param noArticle
 	 * @param nomArticle
 	 * @param description
 	 * @param dateDebutEncheres
@@ -75,9 +73,8 @@ public class Article implements Serializable, Comparable<Article> {
 	 * @param noUtilisateur
 	 * @param noCategorie
 	 */
-	public Article(int noArticle, String nomArticle, String description, Timestamp dateDebutEncheres, Timestamp dateFinEncheres, int miseAPrix,
+	public Article(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix,
 			int prixVente, int noUtilisateur, int noCategorie) {
-		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -141,8 +138,8 @@ public class Article implements Serializable, Comparable<Article> {
 	/**
 	 * @param dateDebutEncheres the dateDebutEncheres to set
 	 */
-	public void setDateDebutEncheres(Timestamp dateDebutEncheres) {
-		this.dateDebutEncheres = dateDebutEncheres.toLocalDateTime();
+	public void setDateDebutEncheres(LocalDateTime dateDebutEncheres) {
+		this.dateDebutEncheres = dateDebutEncheres;
 	}
 
 	/**
@@ -155,8 +152,8 @@ public class Article implements Serializable, Comparable<Article> {
 	/**
 	 * @param dateFinEncheres the dateFinEncheres to set
 	 */
-	public void setDateFinEncheres(Timestamp dateFinEncheres) {
-		this.dateFinEncheres = dateFinEncheres.toLocalDateTime();
+	public void setDateFinEncheres(LocalDateTime dateFinEncheres) {
+		this.dateFinEncheres = dateFinEncheres;
 	}
 
 	/**

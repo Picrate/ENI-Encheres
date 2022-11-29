@@ -146,7 +146,7 @@ body > main
 			fieldset { position: relative; padding: 0; border: none; margin-bottom: 0; white-space: nowrap; }
 			label 
 				{ 
-				max-width: none; vertical-align: middle; overflow: hidden; text-overflow: ellipsis; max-width: 80%;
+				max-width: none; vertical-align: middle; max-width: 80%;
 				@media (max-width: 575px) 	{  .t4(); }
 				}
 			#remove_filter { .t5(); cursor: pointer; text-decoration: underline;}
@@ -244,8 +244,20 @@ body > main
 					&:last-child { margin-bottom: 0;}
 					}
 				h1 { .t2(); .bold();}
-				fieldset { display: flex;}
-				input[type=number] { .t2(); max-width: 100px; margin-right: 20px;}
+				fieldset 
+					{ 
+					display: flex;
+					input[type=number] { .t2(); max-width: 200px; margin-right: 20px;}
+					}
+				&.form
+					{
+					fieldset 
+						{
+						display: block;
+						label { width: 100%;}
+						input[type=text],input[type=datetime-local], textarea { width: 100%;}
+						}
+					}
 				}
 			}
 		}
@@ -274,9 +286,10 @@ body > main
 			margin-bottom: 15px; 
 			&:last-child { margin-bottom: 0;}
 			}
+		.field_group {	background-color: lightgray; padding: 20px; border-radius: 20px;}
 		label 	
 			{ 
-			min-width: 180px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-align: left;	
+			max-width: 180px; min-width: 180px; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-align: left;	
 			@media (max-width:575px) 	{ text-align: left;}
 			} 
 		fieldset 	
@@ -287,7 +300,10 @@ body > main
 		input[type=text],
 		input[type=tel],
 		input[type=email],
-		input[type=password]	
+		input[type=password],
+		input[type=datetime-local],
+		input[type=number],
+		textarea
 			{
 			border: 2px solid black; border-radius: 20px; padding: 10px 20px; .t4(); box-sizing: border-box;
 			@media (max-width: 575px) 	{ width: 100%; max-width: none;}

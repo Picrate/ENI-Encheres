@@ -30,7 +30,6 @@ public class ProfilUtilisateur extends HttpServlet {
 			Utilisateur utilisateur = UtilisateurManager.getInstance().getUtilisateurById(Integer.valueOf(userId));
 			request.setAttribute("utilisateur", utilisateur);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
