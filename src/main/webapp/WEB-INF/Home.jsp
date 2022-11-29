@@ -54,7 +54,7 @@ pageEncoding="UTF-8"
 			
 			<!-- ERROR -->
 	        <jsp:include page="/WEB-INF/template-parts/error.jsp">
-				<jsp:param value="" name="errorMessage"/>
+				<jsp:param value="${listeErreurs}" name="errorMessage"/>
 			</jsp:include>
 			
 			<c:choose> 

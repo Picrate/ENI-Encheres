@@ -214,6 +214,36 @@ body > main
 		text-align: center; padding-bottom: 50px;
 		}
 
+	#objet
+		{
+		display: flex; padding-bottom: 50px;
+		@media (max-width: 991px) 	{  flex-direction: column; }
+		& > div 
+			{
+			&.col_left 	
+				{
+				flex: 1 1 45%; padding-right: 50px;
+				@media (max-width: 991px) 	{  flex: 1 1 100%; padding-right: 0px; margin-bottom: 50px;}
+				@media (max-width: 575px) 	{  margin-bottom: 30px;}
+				img 
+					{
+					height: 450px; width: 100%; margin-right: 20px; border: 2px solid black; border-radius: 15px; background-color: lightgray;	
+					@media (max-width: 1699px) 	{  height: 320px; }
+					@media (max-width: 991px) 	{  height: 450px; }
+					@media (max-width: 767px) 	{  height: 400px; }
+					@media (max-width: 575px) 	{  height: 300px; }
+					}
+				}
+			&.col_right 
+				{ 	
+				flex: 1 1 55%;
+				@media (max-width: 991px) 	{  flex: 1 1 100%; }
+				& > * { margin-bottom: 20px; .t4(); }
+				h1 { .t2();}
+				}
+			}
+		}
+
 	.col_2 
 		{ 
 		display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px 50px; text-align: left; margin-bottom: 50px;
