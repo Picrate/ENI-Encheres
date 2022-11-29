@@ -138,7 +138,7 @@ public class ArticleManager {
 		List <Article> listArticleTemp = null;
 		listArticleTemp = this.articleDAO.getUserArticlesEnchere(idUser);
 		for (Article article : listArticleTemp) {
-			Utilisateur user = UtilisateurManager.getInstance().getUtilisateurById(idUser);
+			Utilisateur user = UtilisateurManager.getInstance().getUtilisateurById(article.getNoUtilisateur());
 			listArticles.putIfAbsent(article, user);
 		}
 		return listArticles;
