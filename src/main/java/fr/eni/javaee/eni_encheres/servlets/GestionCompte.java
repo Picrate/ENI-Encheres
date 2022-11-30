@@ -32,6 +32,10 @@ public class GestionCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Si on vient de l'URL /compte/supprimer, on supprime le compte utilisateur,
+	 * l'adresse, les enchères et les articles associés. Sinon on redirige sur la
+	 * page de compte par défaut.
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -42,18 +46,9 @@ public class GestionCompte extends HttpServlet {
 			Utilisateur currentUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
 
 			try {
+				UtilisateurManager.getInstance().deleteUtilisateur(currentUser);
+				response.sendRedirect(this.getServletContext().getContextPath() + "/deconnexion");
 
-				// Violation contrainte enchere
-				// TODO Implémenter l'enchere manager pour supprimer toutes les encheres d'un
-				// utilisateur
-				// TODO Implémenter la suppression des tous les articles d'un utilsateur pour
-				// suppression
-				int currentUserId = currentUser.getNo_utilisateur();
-				EnchereManager.getInstance().deleteEncheresByUserId(currentUserId);	
-				ArticleManager.getInstance().deleteAllArticlesByUserId(currentUserId);
-				UtilisateurManager.getInstance().deleteUtilisateur(currentUser);					
-						
-				response.sendRedirect(this.getServletContext().getContextPath()+"/deconnexion");
 			} catch (BusinessException e) {
 				BusinessException be = new BusinessException();
 				be.ajouterErreur(CodesResultatServlets.DELETE_USER_ERROR);
@@ -66,6 +61,9 @@ public class GestionCompte extends HttpServlet {
 	}
 
 	/**
+	 * Gestion de l'authentification - Validation concordance mots de passe
+	 * formulaire - validation utilsateur existe
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -86,63 +84,85 @@ public class GestionCompte extends HttpServlet {
 
 		try {
 
+			/*
+			 * Si on vient de l'URL /compte/creer
+			 */
 			if (request.getRequestURI().equalsIgnoreCase(this.getServletContext().getContextPath() + "/compte/creer")) {
+
 				Utilisateur newUtilisateur;
-				if (!LoginManager.getInstance().checkPasswordMatch(password, cpassword)) {
+
+				if (!LoginManager.getInstance().checkPasswordMatch(password, cpassword)) { // Si les mots de passe ne
+																							// correspondent pas
 					BusinessException be = new BusinessException();
 					be.ajouterErreur(CodesResultatServlets.PASSWORD_MISMATCH);
 					throw be;
-				}
-
-				if (LoginManager.getInstance().checkEmailExists(email)) {
+				} else if (LoginManager.getInstance().checkEmailExists(email)) { // Si l'email n'existe pas
 					BusinessException be = new BusinessException();
 					be.ajouterErreur(CodesResultatServlets.EMAIL_ALREADY_EXISTS);
 					throw be;
-				}
-				if (LoginManager.getInstance().checkPseudoExists(pseudo)) {
+				} else if (LoginManager.getInstance().checkPseudoExists(pseudo)) { // Si le pseudo n'existe pas
 					BusinessException be = new BusinessException();
 					be.ajouterErreur(CodesResultatServlets.PSEUDO_ALREADY_EXISTS);
 					throw be;
-				}
-				// On créé l'adresse
-				Adresse newAdresse = new Adresse(rue, Integer.valueOf(codePostal), ville);
-				AdresseManager.getInstance().createNewAdresse(newAdresse);
-				newUtilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone,
-						LoginManager.getInstance().getBase64Password(password), newAdresse);
-				UtilisateurManager.getInstance().createNewUtilisateur(newUtilisateur);
+				} else { // Le compte est valide
+					// On créé l'adresse
+					Adresse newAdresse = new Adresse(rue, Integer.valueOf(codePostal), ville);
+					AdresseManager.getInstance().createNewAdresse(newAdresse);
+					newUtilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone,
+							LoginManager.getInstance().getBase64Password(password), newAdresse);
+					UtilisateurManager.getInstance().createNewUtilisateur(newUtilisateur);
 
-				this.getServletContext().getRequestDispatcher("/").forward(request, response);
-				
-								
-			} else if (request.getRequestURI() // Si on modifie le compte utilisateur
+					// On redirige vers la page d'accueil
+					this.getServletContext().getRequestDispatcher("/").forward(request, response);
+
+				}
+
+				/*
+				 * Si on vient de l'URL /compte/modifier
+				 */
+			} else if (request.getRequestURI()
 					.equalsIgnoreCase(this.getServletContext().getContextPath() + "/compte/modifier")) {
-								
+
 				HttpSession session = request.getSession();
 				String newPassword = null;
 				Utilisateur currentUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
 				Adresse currentAdresse = currentUser.getAdresse();
 
+				/*
+				 * Si lemot de passe a été modifié
+				 */
 				if (password.length > 0) {
+					// On vérifie que les mots de passe correspondent dans le formulaire
 					if (!LoginManager.getInstance().checkPasswordMatch(password, cpassword)) {
 						BusinessException be = new BusinessException();
 						be.ajouterErreur(CodesResultatServlets.PASSWORD_MISMATCH);
 						throw be;
+						// On encode le nouveau mot de passe
 					} else {
 						newPassword = LoginManager.getInstance().getBase64Password(password);
-					}					
+						currentUser.setPassword(newPassword);
+					}
 
-					
-				} else {
-					newPassword = currentUser.getPassword();
+					/*
+					 * Mise à jour des inforamtions utilisateur + adresse
+					 */
+					currentAdresse.setRue(rue);
+					currentAdresse.setCodePostal(Integer.valueOf(codePostal));
+					currentAdresse.setVille(ville);
+					AdresseManager.getInstance().updateAdresse(currentAdresse);
+
+					currentUser.setPseudo(pseudo);
+					currentUser.setNom(nom);
+					currentUser.setPrenom(prenom);
+					currentUser.setEmail(email);
+					currentUser.setPassword(newPassword);
+					currentUser.setTelephone(telephone);
+					currentUser.setAdresse(currentAdresse);
+					UtilisateurManager.getInstance().updateUtilisateur(currentUser);
+
+					// Redirection vers la page d'accueil
+					this.getServletContext().getRequestDispatcher("/").forward(request, response);
 				}
-				
-				Adresse newAdresse = new Adresse(currentAdresse.getId(), rue, Integer.valueOf(codePostal), ville);
-				AdresseManager.getInstance().updateAdresse(newAdresse);
-				Utilisateur updatedUtilisateur = new Utilisateur(currentUser.getNo_utilisateur(), pseudo, nom, prenom, email, telephone, newPassword, currentUser.getCredit(), currentUser.isAdministrateur(), newAdresse);
-				UtilisateurManager.getInstance().updateUtilisateur(updatedUtilisateur);
-				
-				this.getServletContext().getRequestDispatcher("/").forward(request, response);
-				
 			}
 
 		} catch (BusinessException e) {
@@ -155,7 +175,5 @@ public class GestionCompte extends HttpServlet {
 				this.getServletContext().getRequestDispatcher("/WEB-INF/Compte.jsp").forward(request, response);
 			}
 		}
-
 	}
-
 }

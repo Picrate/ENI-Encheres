@@ -76,6 +76,7 @@ public class Connexion extends HttpServlet {
 		try {
 
 			if (request.getRequestURI().equalsIgnoreCase(this.getServletContext().getContextPath() + "/connexion")) {
+				
 				// Si identifiant ou mot de passe vide
 				if (identifiant.isBlank() || password.length == 0) {
 					BusinessException be = new BusinessException();
@@ -85,6 +86,7 @@ public class Connexion extends HttpServlet {
 
 				if (UtilisateurManager.getInstance().checkUserExists(identifiant)) {
 					boolean authStatus = LoginManager.getInstance().authenticateUser(identifiant, password);
+					
 					// si utilisateur authentifié avec succes
 					if (authStatus) {
 						// Déclaration Attributs Session
@@ -98,16 +100,18 @@ public class Connexion extends HttpServlet {
 						usernameOrPasswordNullException
 								.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
 						throw usernameOrPasswordNullException;
-
 					}
+				/*
+				 * l'utilisateur n'existe pas on lance une exception
+				 */
+				} else {
+					BusinessException usernameOrPasswordNullException = new BusinessException();
+					usernameOrPasswordNullException.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
+					throw usernameOrPasswordNullException;
 				}
-			} else {
-				BusinessException usernameOrPasswordNullException = new BusinessException();
-				usernameOrPasswordNullException.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
-				throw usernameOrPasswordNullException;
 			}
-
 		} catch (BusinessException e) {
+			e.printStackTrace();
 			List<Integer> listeCodeErreurs = e.getListeCodesErreur();
 			List<String> listeErreurs = new ArrayList<String>();
 			for (Integer codeErreur : listeCodeErreurs) {

@@ -56,7 +56,7 @@ String pageAuthor = "POV - ENI";
 			
 			<!-- CONNEXION FORM -->
 			<div id="connexion" class="row">
-				<form method="post">
+				<form method="post" action="connexion">
 					<fieldset>
 						<label for="identifiant">Identifiant :</label>
 						<input type="text" name="identifiant" id="" required="required">
@@ -73,7 +73,6 @@ String pageAuthor = "POV - ENI";
 					</fieldset>
 	
 					<input type="submit" value="Connexion" class="btn">
-					<a class="btn outline" href="compte.html">Créer un compte</a>
 				</form>
 			</div>
 			

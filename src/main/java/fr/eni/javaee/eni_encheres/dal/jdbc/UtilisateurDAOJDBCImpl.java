@@ -37,18 +37,12 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 	 * (?,?,?,?,?,?,?,?,?);"
 	 */
 	@Override
-	public void createElement(Utilisateur element) throws BusinessException {
-		
-
-		
+	public void createElement(Utilisateur element) throws BusinessException {		
 		if (element == null) {
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
 			throw businessException;
 		}
-		
-
-
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			PreparedStatement pstmt = null;
@@ -62,17 +56,16 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 			pstmt.setInt(7, element.getCredit());
 			pstmt.setBoolean(8, element.isAdministrateur());
 			pstmt.setInt(9, element.getAdresse().getId());
-			pstmt.setInt(10, element.getNo_utilisateur());
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
-				element.setNo_utilisateur(rs.getInt(1));
+				element.setNo_utilisateur(rs.getInt(1));				
 			}
-			
 			pstmt.close();
 			cnx.close();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
 			throw businessException;

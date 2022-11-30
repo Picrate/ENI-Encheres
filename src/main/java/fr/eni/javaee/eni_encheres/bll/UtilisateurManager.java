@@ -98,6 +98,12 @@ public class UtilisateurManager {
 		this.utilisateurDAO.createElement(utilisateur);
 	}
 	
+	/**
+	 * Vérifie si l'utilsateur Existe dans la base.
+	 * @param PseudoOrEmail l'utilsateur à rechercher
+	 * @return true si l'utilsateur existe / false sinon.
+	 * @throws BusinessException
+	 */
 	public boolean checkUserExists(String PseudoOrEmail) throws BusinessException {
 		boolean checkStatus = false;
 		Utilisateur checkedUtilisateur = this.getUtilisateurByPseudoOrEmail(PseudoOrEmail);
@@ -107,11 +113,20 @@ public class UtilisateurManager {
 		return checkStatus;
 	}
 	
+	/**
+	 * Suppression de l'utilisateur
+	 * @param utilisateur l'utilsateur à supprimer
+	 * @throws BusinessException
+	 */
 	public void deleteUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		this.utilisateurDAO.deleteElementById(utilisateur.getNo_utilisateur());
-		AdresseManager.getInstance().deleteAdresse(utilisateur.getAdresse());
 	}
 	
+	/**
+	 * Mise à jour des inforamtions de l'utilisateur.
+	 * @param utilisateur l'utilsateur à mettre à jour.
+	 * @throws BusinessException
+	 */
 	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		this.utilisateurDAO.updateElement(utilisateur);
 	}
