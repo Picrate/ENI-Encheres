@@ -9,6 +9,7 @@ import java.util.TreeMap;
 
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bo.Article;
+import fr.eni.javaee.eni_encheres.bo.Enchere;
 import fr.eni.javaee.eni_encheres.bo.Utilisateur;
 import fr.eni.javaee.eni_encheres.dal.ArticleDAO;
 import fr.eni.javaee.eni_encheres.dal.DAOFactory;
@@ -175,7 +176,6 @@ public class ArticleManager {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	/**
 	 * Delete article

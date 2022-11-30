@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class Enchere
  */
 @WebServlet("/Enchere")
-public class Enchere extends HttpServlet {
+public class Encheres extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**

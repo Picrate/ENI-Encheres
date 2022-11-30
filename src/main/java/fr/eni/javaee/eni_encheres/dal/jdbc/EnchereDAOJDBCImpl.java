@@ -2,6 +2,7 @@ package fr.eni.javaee.eni_encheres.dal.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,7 +13,7 @@ import fr.eni.javaee.eni_encheres.dal.ConnectionProvider;
 import fr.eni.javaee.eni_encheres.dal.EnchereDAO;
 
 public class EnchereDAOJDBCImpl implements EnchereDAO {
-
+	private static String BEST_ENCHERE_FOR_ONE_ARTICLE = "SELECT montant_enchere, no_utilisateur FROM ENCHERES WHERE montant_enchere = (SELECT max(montant_enchere) FROM ENCHERES WHERE no_article = ?);";
 	private static final String DELETE_BY_USER_ID = "DELETE FROM ENCHERES WHERE no_utilisateur = ?;";
 	
 	@Override
@@ -78,6 +79,28 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 			}
 		}
 		
+	}
+	
+	@Override
+	public Enchere bestEnchereForArticle(int idArticle) throws BusinessException {
+		Enchere enchere = null;
+		try (Connection connexion = ConnectionProvider.getConnection();) {
+			// Get user winner
+			PreparedStatement query = connexion.prepareStatement(BEST_ENCHERE_FOR_ONE_ARTICLE);
+			query.setInt(1, idArticle);
+			ResultSet result = query.executeQuery();
+			if(result.next()) {
+				int idUserWinner = result.getInt("no_utilisateur");
+				int montantEnchere = result.getInt("montant_enchere");
+				enchere = new Enchere (idUserWinner, idArticle, montantEnchere);
+			}				
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.DELETE_OBJET_ECHEC);
+			throw businessException;
+		}
+		return enchere;
 	}
 
 }

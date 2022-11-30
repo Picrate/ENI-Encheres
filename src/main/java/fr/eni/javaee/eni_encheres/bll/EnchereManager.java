@@ -1,8 +1,8 @@
 package fr.eni.javaee.eni_encheres.bll;
 
 import fr.eni.javaee.eni_encheres.BusinessException;
+import fr.eni.javaee.eni_encheres.bo.Enchere;
 import fr.eni.javaee.eni_encheres.dal.DAOFactory;
-import fr.eni.javaee.eni_encheres.dal.EnchereDAO;
 import fr.eni.javaee.eni_encheres.dal.EnchereDAO;
 
 public class EnchereManager {
@@ -26,5 +26,21 @@ public class EnchereManager {
 		this.dao.deleteEnchereByUtilisateurId(userId);
 	}
 	
+	/**
+	 * 
+	 * @param articleId
+	 * @return
+	 * @throws BusinessException
+	 */
+	public Enchere bestEnchereForArticle(int articleId) throws BusinessException {
+		Enchere enchere = null;
+		try {
+			//validerArticle(newArticle);
+			enchere = this.dao.bestEnchereForArticle(articleId);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		return enchere;
+	}
 	
 }

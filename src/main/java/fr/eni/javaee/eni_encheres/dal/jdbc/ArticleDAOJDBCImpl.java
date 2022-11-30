@@ -18,6 +18,7 @@ import java.util.TimeZone;
 
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bo.Article;
+import fr.eni.javaee.eni_encheres.bo.Enchere;
 import fr.eni.javaee.eni_encheres.dal.ArticleDAO;
 import fr.eni.javaee.eni_encheres.dal.CodesResultatDAL;
 import fr.eni.javaee.eni_encheres.dal.ConnectionProvider;
@@ -264,6 +265,8 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 		}
 		return listArticles;
 	}
+	
+	
 
 	@Override
 	public void updateElement(Article element) throws BusinessException {		
@@ -342,5 +345,7 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 			throw businessException;
 		}
 		return listArticles;
-	}	
+	}
+
+		
 }

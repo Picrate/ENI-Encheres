@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.javaee.eni_encheres.bo.Article;
 import fr.eni.javaee.eni_encheres.bo.Categorie;
+import fr.eni.javaee.eni_encheres.bo.Enchere;
 import fr.eni.javaee.eni_encheres.bo.Utilisateur;
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bll.ArticleManager;
 import fr.eni.javaee.eni_encheres.bll.CategorieManager;
+import fr.eni.javaee.eni_encheres.bll.EnchereManager;
 import fr.eni.javaee.eni_encheres.bll.UtilisateurManager;
 
 
@@ -47,10 +49,14 @@ public class ArticleServlet extends HttpServlet  {
 				Categorie categorie = CategorieManager.getInstance().getArticleCategorie(articleId);
 				request.setAttribute("selectedCategorie", categorie);
 				
-				Utilisateur utilisateur = UtilisateurManager.getInstance().getUtilisateurById(Integer.valueOf(article.getNoUtilisateur()));
+				Utilisateur utilisateur = UtilisateurManager.getInstance().getUtilisateurById(article.getNoUtilisateur());
 				request.setAttribute("seller", utilisateur);
 				
-				//int bestOffer = ArticleManager.getInstance().getArticleByID(articleId);
+				Enchere bestOffer = EnchereManager.getInstance().bestEnchereForArticle(articleId);
+				request.setAttribute("bestOffer", bestOffer.getMontantEnchere());
+				
+				Utilisateur buyer = UtilisateurManager.getInstance().getUtilisateurById(bestOffer.getNo_utilisateur());
+				request.setAttribute("buyerPseudo", buyer.getPseudo());
 				
 			} catch (BusinessException e) {
 				e.printStackTrace();
