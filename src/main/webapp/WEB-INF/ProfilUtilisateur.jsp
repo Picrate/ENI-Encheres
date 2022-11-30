@@ -80,6 +80,8 @@ String pageAuthor = "POV - ENI";
 
 					<p>Ville :</p>
 					<p><c:out value="${utilisateur.adresse.ville}" default="Inconnu" /></p>
+					
+					<c:if test="${utilisateurConnecte.no_utilisateur == userId}"><p>Crédits :</p><p><c:out value="${utilisateurConnecte.credit}" default="Inconnu" /></p></c:if>
 
 				</div>
 				<c:if test="${utilisateurConnecte.no_utilisateur == userId}"><a class="btn" href="compte/modifier"/>Modifier</a></c:if>
