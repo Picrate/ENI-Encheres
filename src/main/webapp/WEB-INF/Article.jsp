@@ -101,7 +101,7 @@ pageEncoding="UTF-8"
 							<form action="" method="post">
 								<strong>Proposition :</strong><br>
 								<fieldset>
-									<input type="number" value="${selectedArticle.miseAPrix + 1}">
+									<input name="enchere" type="number" value="${selectedArticle.miseAPrix + 1}">
 									<button type="submit" class="btn">Enchérir</button>
 								</fieldset>
 							</form>

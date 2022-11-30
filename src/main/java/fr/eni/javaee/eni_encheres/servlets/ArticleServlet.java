@@ -32,6 +32,12 @@ public class ArticleServlet extends HttpServlet  {
 		request.setCharacterEncoding("UTF-8");
 		//System.out.println(request.getParameter("articleId"));
 		
+		
+		if (request.getParameter("enchere") != null && request.getParameter("enchere") != "")
+			{
+			
+			}
+		
 		try {
 			int articleId = Integer.parseInt(request.getParameter("articleId"));
 			try {
@@ -43,6 +49,8 @@ public class ArticleServlet extends HttpServlet  {
 				
 				Utilisateur utilisateur = UtilisateurManager.getInstance().getUtilisateurById(Integer.valueOf(article.getNoUtilisateur()));
 				request.setAttribute("seller", utilisateur);
+				
+				//int bestOffer = ArticleManager.getInstance().getArticleByID(articleId);
 				
 			} catch (BusinessException e) {
 				e.printStackTrace();
