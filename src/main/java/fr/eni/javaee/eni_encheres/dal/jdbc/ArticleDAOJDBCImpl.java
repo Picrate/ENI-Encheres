@@ -35,7 +35,8 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	private static String GET_USER_ARTICLES_ENCHERES = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente, a.no_utilisateur, a.no_categorie FROM ARTICLES_VENDUS AS a INNER JOIN ENCHERES AS e ON e.no_article = a.no_article WHERE e.no_utilisateur = ?";
 	private static String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) VALUES (?,?,?,?,?,?,?,?)";
 	private static String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
-	private static final String DELETE_ALL_ARTICLES_BY_USER_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
+	private static String BEST_ENCHERE_FOR_ONE_ARTICLE = "SELECT montant_enchere, no_utilisateur FROM ENCHERES WHERE montant_enchere = (SELECT max(montant_enchere) FROM ENCHERES WHERE no_article = ?);";
+	private static String ENDED_SELLS = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE date_fin_encheres < GETDATE() AND no_utilisateur != ?;";
 	private static final String DELETE_ALL_ARTICLES_BY_USER_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
 
 	private static Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
@@ -216,9 +217,9 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	public void deleteElementById(int id) throws BusinessException {
 		try (Connection connexion = ConnectionProvider.getConnection();) {
 			System.out.println(id);
-			PreparedStatement preparedStatement = connexion.prepareStatement(DELETE_ARTICLE);
-			preparedStatement.setInt(1, id);
-			int row = preparedStatement.executeUpdate();  
+			PreparedStatement query = connexion.prepareStatement(DELETE_ARTICLE);
+			query.setInt(1, id);
+			int row = query.executeUpdate();  
 			System.out.println(row);
 						
 		} catch (Exception e) {
@@ -228,17 +229,48 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 			throw businessException;
 		}
 	}
-
+	
+	@Override
+	public List<Article> getUserWinArticle(int idUser) throws BusinessException {
+		List<Article> listArticles = new ArrayList<>();
+		if (idUser == 0) {
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.NULL_VALUE_IN_QUERY);
+			throw businessException;
+		}
+		
+		// Loop on article
+		List<Article> tempListArticles = getEndedSells(idUser);
+		for (Article article : tempListArticles) {
+			
+			try (Connection connexion = ConnectionProvider.getConnection();) {
+				// Get user winner
+				PreparedStatement query = connexion.prepareStatement(BEST_ENCHERE_FOR_ONE_ARTICLE);
+				query.setInt(1, article.getNoArticle());
+				ResultSet result = query.executeQuery();
+				if(result.next()) {
+					int idUserWinner = result.getInt("no_utilisateur");
+					// Add object to list 
+					if (idUserWinner == idUser) {
+						listArticles.add(article);
+					}
+				}				
+			} catch (Exception e) {
+				e.printStackTrace();
+				BusinessException businessException = new BusinessException();
+				businessException.ajouterErreur(CodesResultatDAL.DELETE_OBJET_ECHEC);
+				throw businessException;
+			}
+		}
+		return listArticles;
+	}
 
 	@Override
-	public void updateElement(Article element) throws BusinessException {
-		// TODO Auto-generated method stub
-		
+	public void updateElement(Article element) throws BusinessException {		
 	}
 
 	@Override
 	public Article selectElementBy(String nomAttribut, String valeurAttribut) throws BusinessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -271,7 +303,44 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 		
 	}
 
-	
+	@Override
+	public List<Article> getEndedSells(int idUser) throws BusinessException {
+		List<Article> listArticles = null;
+		
+		if (idUser == 0) {
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.NULL_VALUE_IN_QUERY);
+			throw businessException;
+		}
+		try (Connection connexion = ConnectionProvider.getConnection()) {
+			LocalDateTime now = LocalDateTime.now();
+			PreparedStatement query = null;
+			query = connexion.prepareStatement(ENDED_SELLS);
+			query.setInt(1, idUser);
+			ResultSet resultSet = query.executeQuery();  
+			listArticles = new ArrayList<>();
+			
+			while(resultSet.next()) { 
+				
+				int idArticle = resultSet.getInt("no_article");
+				String nomArticle = resultSet.getString("nom_article");
+				String descriptionArticle = resultSet.getString("description");
+				LocalDateTime dateDebutEnchere = resultSet.getTimestamp("date_debut_encheres", calendar).toLocalDateTime();
+				LocalDateTime dateFinEnchere = resultSet.getTimestamp("date_fin_encheres", calendar).toLocalDateTime();
+				int prixInitialArticle = resultSet.getInt("prix_initial");
+				int prixVenteArticle = resultSet.getInt("prix_vente");
+				int userArticle = resultSet.getInt("no_utilisateur");
+				int categorieArticle = resultSet.getInt("no_categorie");
+				Article article = new Article(idArticle, nomArticle, descriptionArticle, dateDebutEnchere, dateFinEnchere, prixInitialArticle, prixVenteArticle, userArticle, categorieArticle);
+				
+				listArticles.add(article);
+			}
 
-	
+		} catch (Exception e) {
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+			throw businessException;
+		}
+		return listArticles;
+	}	
 }

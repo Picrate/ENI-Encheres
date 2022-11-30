@@ -138,6 +138,8 @@ public class Home extends HttpServlet {
 			LocalDateTime now = LocalDateTime.now();
 			System.out.println(now);
 			
+		
+			
 			switch (filterValue) {
 				// get articles en cours d'enchere
 				case "openEncheres":
@@ -168,6 +170,14 @@ public class Home extends HttpServlet {
 				
 				// get articles remportés
 				case "winEncheres":
+				try {
+					listeArticles = ArticleManager.getInstance().getUserWinArticle(currentUser.getNo_utilisateur());
+					listeArticles.forEach((article, utilisateur) -> {
+						System.out.println("test" + article.getNoUtilisateur());
+					});
+				} catch (BusinessException e) {
+					e.printStackTrace();
+				}
 				break;
 				
 				// get article vendus

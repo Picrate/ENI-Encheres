@@ -104,7 +104,6 @@ public class ArticleManager {
 			Utilisateur user = UtilisateurManager.getInstance().getUtilisateurById(article.getNoUtilisateur());
 			listArticles.put(article, user);
 		}
-		//System.out.println("---");
 		return listArticles;
 	}
 	
@@ -145,6 +144,24 @@ public class ArticleManager {
 	}
 	
 	/**
+	 * Get win articles list
+	 * @param userId
+	 * @throws BusinessException
+	 */
+	public Map<Article, Utilisateur> getUserWinArticle(int userId) throws BusinessException {
+		System.out.println(userId);
+		Map<Article, Utilisateur> listArticles = new TreeMap<>();
+		List <Article> listArticleTemp = null;
+		listArticleTemp = this.articleDAO.getUserWinArticle(userId);
+		for (Article article : listArticleTemp) {
+			Utilisateur user = UtilisateurManager.getInstance().getUtilisateurById(article.getNoUtilisateur());
+			listArticles.putIfAbsent(article, user);
+		}
+		return listArticles;
+	}
+	
+	
+	/**
 	 * Ajout d'un article
 	 * @param newArticle
 	 * @return index du nouvel article dans le catalogue
@@ -168,7 +185,6 @@ public class ArticleManager {
 	 */
 	public void deleteArticle(int articleId) throws BusinessException {
 		try {
-			//validerArticle(newArticle);
 			this.articleDAO.deleteElementById(articleId);
 		} catch (BusinessException e) {
 			e.printStackTrace();
@@ -177,5 +193,4 @@ public class ArticleManager {
 	
 	public void deleteAllArticlesByUserId(int userId) throws BusinessException{
 	}
-
 }
