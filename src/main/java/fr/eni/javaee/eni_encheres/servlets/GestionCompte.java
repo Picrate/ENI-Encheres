@@ -46,6 +46,7 @@ public class GestionCompte extends HttpServlet {
 			Utilisateur currentUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
 
 			try {
+				EnchereManager.getInstance().deleteEncheresByUserId(currentUser.getNo_utilisateur());
 				UtilisateurManager.getInstance().deleteUtilisateur(currentUser);
 				response.sendRedirect(this.getServletContext().getContextPath() + "/deconnexion");
 
