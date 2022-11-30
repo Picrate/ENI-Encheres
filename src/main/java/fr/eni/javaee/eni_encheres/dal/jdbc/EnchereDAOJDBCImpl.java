@@ -89,7 +89,10 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 			PreparedStatement query = connexion.prepareStatement(BEST_ENCHERE_FOR_ONE_ARTICLE);
 			query.setInt(1, idArticle);
 			ResultSet result = query.executeQuery();
-			if(result.next()) {
+			//System.out.println("test3" + result.next());
+			if (result.next()) {
+				System.out.println("test4");
+				System.out.println("test2" + result.getInt("no_utilisateur"));
 				int idUserWinner = result.getInt("no_utilisateur");
 				int montantEnchere = result.getInt("montant_enchere");
 				enchere = new Enchere (idUserWinner, idArticle, montantEnchere);
@@ -100,6 +103,8 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 			businessException.ajouterErreur(CodesResultatDAL.DELETE_OBJET_ECHEC);
 			throw businessException;
 		}
+		
+		//System.out.println("test2" + enchere.getNo_article());
 		return enchere;
 	}
 

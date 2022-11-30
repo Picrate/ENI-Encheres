@@ -1,6 +1,7 @@
 package fr.eni.javaee.eni_encheres.servlets;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -53,11 +54,12 @@ public class ArticleServlet extends HttpServlet  {
 				request.setAttribute("seller", utilisateur);
 				
 				Enchere bestOffer = EnchereManager.getInstance().bestEnchereForArticle(articleId);
-				request.setAttribute("bestOffer", bestOffer.getMontantEnchere());
+				if (Objects.nonNull(bestOffer)) {
+					request.setAttribute("bestOffer", bestOffer.getMontantEnchere());
 				
-				Utilisateur buyer = UtilisateurManager.getInstance().getUtilisateurById(bestOffer.getNo_utilisateur());
-				request.setAttribute("buyerPseudo", buyer.getPseudo());
-				
+					Utilisateur buyer = UtilisateurManager.getInstance().getUtilisateurById(bestOffer.getNo_utilisateur());
+					request.setAttribute("buyerPseudo", buyer.getPseudo());
+				}				
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}

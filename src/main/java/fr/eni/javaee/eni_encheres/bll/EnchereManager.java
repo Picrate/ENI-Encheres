@@ -34,12 +34,7 @@ public class EnchereManager {
 	 */
 	public Enchere bestEnchereForArticle(int articleId) throws BusinessException {
 		Enchere enchere = null;
-		try {
-			//validerArticle(newArticle);
-			enchere = this.dao.bestEnchereForArticle(articleId);
-		} catch (BusinessException e) {
-			e.printStackTrace();
-		}
+		enchere = this.dao.bestEnchereForArticle(articleId);
 		return enchere;
 	}
 	
