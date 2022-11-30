@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import fr.eni.javaee.eni_encheres.BusinessException;
@@ -34,7 +35,9 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	private static String GET_USER_ARTICLES_ENCHERES = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente, a.no_utilisateur, a.no_categorie FROM ARTICLES_VENDUS AS a INNER JOIN ENCHERES AS e ON e.no_article = a.no_article WHERE e.no_utilisateur = ?";
 	private static String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) VALUES (?,?,?,?,?,?,?,?)";
 	private static String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
-	
+	private static final String DELETE_ALL_ARTICLES_BY_USER_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
+	private static final String DELETE_ALL_ARTICLES_BY_USER_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
+
 	private static Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
 	
 	@Override
@@ -237,6 +240,35 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	public Article selectElementBy(String nomAttribut, String valeurAttribut) throws BusinessException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void deleteAllArticlesByUserId(int userId) throws BusinessException {
+		if (Objects.isNull(userId)) {
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.NULL_ATTRIBUTE_IN_QUERY);
+			throw be;
+		} else {
+
+			try (Connection cnx = ConnectionProvider.getConnection()) {
+
+				PreparedStatement pstmt = null;
+
+				pstmt = cnx.prepareStatement(DELETE_ALL_ARTICLES_BY_USER_ID);
+				pstmt.setInt(1, userId);
+				pstmt.executeUpdate();
+				
+				pstmt.close();
+				cnx.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				BusinessException businessException = new BusinessException();
+				businessException.ajouterErreur(CodesResultatDAL.DELETE_OBJET_ECHEC);
+				throw businessException;
+			}
+		}
+		
 	}
 
 	

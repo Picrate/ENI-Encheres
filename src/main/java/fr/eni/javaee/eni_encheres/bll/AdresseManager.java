@@ -42,5 +42,13 @@ public class AdresseManager {
 	public void createNewAdresse(Adresse adresse) throws BusinessException {
 		this.adresseDAO.createElement(adresse);
 	}
+	
+	public void deleteAdresse(Adresse adresse) throws BusinessException {
+		this.adresseDAO.deleteElementById(adresse.getId());
+	}
+	
+	public void updateAdresse(Adresse adresse) throws BusinessException {
+		this.adresseDAO.updateElement(adresse);
+	}
 
 }

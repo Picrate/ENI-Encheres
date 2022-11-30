@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Objects;
 
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bo.Adresse;
@@ -15,8 +16,8 @@ public class AdresseDAOJDBCImpl implements DAO<Adresse> {
 
 	private static final String INSERT_ADRESSE = "INSERT INTO ADRESSES (rue, code_postal, ville)  VALUES (?,?,?);";
 	private static final String SELECT_ADRESSE_BY_ID = "SELECT id, rue, code_postal, ville FROM ADRESSES WHERE id = ?;";
-	private static final String UPDATE_ADRESSE = "UPDATE ADRESSES SET id=?, rue=?, code_postal=?, ville=? WHERE id = ?;";
-	
+	private static final String UPDATE_ADRESSE = "UPDATE ADRESSES SET rue=?, code_postal=?, ville=? WHERE id = ?;";
+	private static final String DELETE_ADRESSE = "DELETE FROM ADRESSES WHERE id = ?;";
 
 	@Override
 	public void createElement(Adresse element) throws BusinessException {
@@ -87,7 +88,7 @@ public class AdresseDAOJDBCImpl implements DAO<Adresse> {
 				switch (nomAttribut) {
 				case "id":
 					pstmt = cnx.prepareStatement(SELECT_ADRESSE_BY_ID);
-					pstmt.setString(1, valeurAttribut);
+					pstmt.setInt(1, Integer.valueOf(valeurAttribut));
 					break;
 				default:
 					BusinessException businessException = new BusinessException();
@@ -96,7 +97,7 @@ public class AdresseDAOJDBCImpl implements DAO<Adresse> {
 				}
 
 				ResultSet rs = pstmt.executeQuery();
-
+				
 				if (rs.next()) {
 					adresse = new Adresse(rs.getInt("id"), rs.getString("rue"),
 							rs.getInt("code_postal"), rs.getString("ville"));
@@ -151,7 +152,31 @@ public class AdresseDAOJDBCImpl implements DAO<Adresse> {
 
 	@Override
 	public void deleteElementById(int id) throws BusinessException {
-		// TODO Auto-generated method stub
+		// Check si les valeurs entrées en parametre sont null;
+		if (Objects.isNull(id)) {
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.NULL_ATTRIBUTE_IN_QUERY);
+			throw be;
+		} else {
+
+			try (Connection cnx = ConnectionProvider.getConnection()) {
+
+				PreparedStatement pstmt = null;
+
+				pstmt = cnx.prepareStatement(DELETE_ADRESSE);
+				pstmt.setInt(1, id);
+				pstmt.executeUpdate();
+				
+				pstmt.close();
+				cnx.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				BusinessException businessException = new BusinessException();
+				businessException.ajouterErreur(CodesResultatDAL.DELETE_OBJET_ECHEC);
+				throw businessException;
+			}
+		}
 
 	}
 

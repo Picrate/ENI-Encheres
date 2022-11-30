@@ -31,6 +31,7 @@ public class Adresse implements Serializable {
 	}
 	
 	public Adresse(int id, String rue, int codePostal, String ville) {
+		this.id = id;
 		this.rue = rue.toLowerCase();
 		this.codePostal = codePostal;
 		this.ville = ville.toUpperCase();

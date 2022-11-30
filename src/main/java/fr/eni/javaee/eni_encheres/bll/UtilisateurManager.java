@@ -106,5 +106,14 @@ public class UtilisateurManager {
 		}		
 		return checkStatus;
 	}
+	
+	public void deleteUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		this.utilisateurDAO.deleteElementById(utilisateur.getNo_utilisateur());
+		AdresseManager.getInstance().deleteAdresse(utilisateur.getAdresse());
+	}
+	
+	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		this.utilisateurDAO.updateElement(utilisateur);
+	}
 
 }

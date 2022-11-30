@@ -28,6 +28,8 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 	private static final String SELECT_USER_BY_EMAIL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, mot_de_passe, credit, administrateur, adresse_id FROM UTILISATEURS WHERE email LIKE ?;";
 	private static final String INSERT = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone, mot_de_passe, credit, administrateur, adresse_id ) VALUES (?,?,?,?,?,?,?,?,?);";
 	private static final String SELECT_ADRESSE_ID_BY_USER_ID = "SELECT adresse_id FROM UTILISATEURS WHERE no_utilisateur = ?;";
+	private static final String DELETE = "DELETE FROM UTILISATEURS WHERE no_utilisateur=?;";
+	private static final String UPDATE = "UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, mot_de_passe=?, credit=?, administrateur=?, adresse_id=? WHERE no_utilisateur=?;";
 
 	/*
 	 * INSERT = "INSERT INTO UTILISATEURS ( pseudo, nom, prenom, email, telephone,
@@ -37,11 +39,15 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 	@Override
 	public void createElement(Utilisateur element) throws BusinessException {
 		
+
+		
 		if (element == null) {
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
 			throw businessException;
 		}
+		
+
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
@@ -56,11 +62,13 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 			pstmt.setInt(7, element.getCredit());
 			pstmt.setBoolean(8, element.isAdministrateur());
 			pstmt.setInt(9, element.getAdresse().getId());
+			pstmt.setInt(10, element.getNo_utilisateur());
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
 				element.setNo_utilisateur(rs.getInt(1));
 			}
+			
 			pstmt.close();
 			cnx.close();
 
@@ -77,14 +85,69 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public void updateElement(Utilisateur element) {
-		// TODO Auto-generated method stub
+	public void updateElement(Utilisateur element) throws BusinessException {
+		
+		if (element == null) {
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.UPDATE_OBJET_ECHEC);
+			throw businessException;
+		}
+		
+		
+
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement pstmt = null;
+			pstmt = cnx.prepareStatement(UPDATE);
+			pstmt.setString(1, element.getPseudo());
+			pstmt.setString(2, element.getNom());
+			pstmt.setString(3, element.getPrenom());
+			pstmt.setString(4, element.getEmail());
+			pstmt.setString(5, element.getTelephone());
+			pstmt.setString(6, element.getPassword());
+			pstmt.setInt(7, element.getCredit());
+			pstmt.setBoolean(8, element.isAdministrateur());
+			pstmt.setInt(9, element.getAdresse().getId());
+			pstmt.setInt(10, element.getNo_utilisateur());
+			pstmt.executeUpdate();
+			pstmt.close();
+			cnx.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.UPDATE_OBJET_ECHEC);
+			throw businessException;
+		}
 
 	}
 
 	@Override
-	public void deleteElementById(int id) {
-		// TODO Auto-generated method stub
+	public void deleteElementById(int id) throws BusinessException{
+		if (Objects.isNull(id)) {
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.NULL_ATTRIBUTE_IN_QUERY);
+			throw be;
+		} else {
+
+			try (Connection cnx = ConnectionProvider.getConnection()) {
+
+				PreparedStatement pstmt = null;
+
+				pstmt = cnx.prepareStatement(DELETE);
+				pstmt.setInt(1, id);
+				pstmt.executeUpdate();
+				
+				pstmt.close();
+				cnx.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				BusinessException businessException = new BusinessException();
+				businessException.ajouterErreur(CodesResultatDAL.DELETE_OBJET_ECHEC);
+				throw businessException;
+			}
+		}
 
 	}
 

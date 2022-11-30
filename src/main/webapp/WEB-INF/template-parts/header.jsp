@@ -22,7 +22,7 @@
 							<li><a href="<c:url value="/deconnexion"/>">Se déconnecter</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="<c:url value="/connexion"/>">Connexion</a></li>
+							<li><a href="connexion">Connexion</a></li>
 							<li><a href="<c:url value="/compte"/>">Créer un compte</a><li>
 						</c:otherwise>
 					</c:choose>				

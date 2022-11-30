@@ -174,5 +174,8 @@ public class ArticleManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public void deleteAllArticlesByUserId(int userId) throws BusinessException{
+	}
 
 }

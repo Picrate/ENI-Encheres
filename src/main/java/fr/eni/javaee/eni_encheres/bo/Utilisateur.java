@@ -2,6 +2,7 @@
 package fr.eni.javaee.eni_encheres.bo;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Classe d'objet représentant un utilisateur
@@ -47,7 +48,7 @@ public class Utilisateur implements Serializable{
 		this.credit = 0;
 		this.telephone = telephone;
 		this.administrateur = false;
-		this.setAdresse(adresse);
+		this.adresse = adresse;
 	}
 	
 	/**
@@ -100,6 +101,7 @@ public class Utilisateur implements Serializable{
 		this.password = password;
 		this.credit = credit;
 		this.administrateur = administrateur;
+		this.adresse = adresse;
 	}
 
 	public int getNo_utilisateur() {
@@ -216,7 +218,7 @@ public class Utilisateur implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Utilisateur - [ no_utilisateur: "+this.no_utilisateur+",pseudo: "+this.pseudo+",nom: "+this.nom+",prenom: "+this.prenom+", email: "+this.email+",telephone: "+this.telephone+",rue: "+",code_postal: "+",ville: "+",password: "+this.password+",credit: "+this.credit+",administrateur:"+this.administrateur+" Adresse: "+adresse.toString()+"]";
+		return "Utilisateur - [ no_utilisateur: "+this.no_utilisateur+",pseudo: "+this.pseudo+",nom: "+this.nom+",prenom: "+this.prenom+", email: "+this.email+",telephone: "+this.telephone+",password: "+this.password+",credit: "+this.credit+",administrateur:"+this.administrateur+" Adresse: "+ (Objects.isNull(adresse) ? "VIDE" :adresse.toString())+"]";
 	}
 	
 	

@@ -35,6 +35,7 @@ public class Connexion extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		// Si on vient de l'URL /connexion On redirige Vers la page de connexion
+		
 		if (request.getRequestURI().equalsIgnoreCase(this.getServletContext().getContextPath() + "/connexion")) {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
 		} // Sinon Si on vient de l'URL /deconnexion On invalide la session et on
@@ -42,7 +43,8 @@ public class Connexion extends HttpServlet {
 		else if (request.getRequestURI().equalsIgnoreCase(this.getServletContext().getContextPath() + "/deconnexion")) {
 			HttpSession session = request.getSession();
 			session.invalidate();
-			this.getServletContext().getRequestDispatcher("/").forward(request, response);
+			response.sendRedirect(this.getServletContext().getContextPath());
+			
 		}
 
 	}
@@ -73,6 +75,9 @@ public class Connexion extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		try {
+			
+			if (request.getRequestURI().equalsIgnoreCase(this.getServletContext().getContextPath() + "/connexion")) {
+			
 			// Si identifiant ou mot de passe vide
 			if (identifiant.isBlank() || password.length == 0) {
 				BusinessException be = new BusinessException();
@@ -116,6 +121,7 @@ public class Connexion extends HttpServlet {
 				BusinessException usernameOrPasswordNullException = new BusinessException();
 				usernameOrPasswordNullException.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
 				throw usernameOrPasswordNullException;
+			}
 			}
 		} catch (BusinessException e) {
 			List<Integer> listeCodeErreurs = e.getListeCodesErreur();

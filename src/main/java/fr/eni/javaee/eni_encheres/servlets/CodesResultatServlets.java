@@ -30,7 +30,10 @@ public abstract class CodesResultatServlets {
 	 */
 	public static final int PASSWORD_MISMATCH=30203;
 	
-	
+	/**
+	 * Le pseudo existe déjà
+	 */
+	public static final int DELETE_USER_ERROR=30204;
 	
 	
 }

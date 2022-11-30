@@ -8,4 +8,5 @@ import fr.eni.javaee.eni_encheres.bo.Article;
 public interface ArticleDAO extends DAO<Article> {
 	public List<Article> getArticlesInCategorie(int idCategorie) throws BusinessException;
 	public List<Article> getUserArticlesEnchere(int idUser) throws BusinessException;
+	public void deleteAllArticlesByUserId(int userId) throws BusinessException;
 }

@@ -26,13 +26,14 @@ public class ProfilUtilisateur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String userId = request.getParameter("userId");
+		
 		try {
 			Utilisateur utilisateur = UtilisateurManager.getInstance().getUtilisateurById(Integer.valueOf(userId));
 			request.setAttribute("utilisateur", utilisateur);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		request.setAttribute("userId", userId);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/ProfilUtilisateur.jsp");
 		requestDispatcher.forward(request, response);
 	}

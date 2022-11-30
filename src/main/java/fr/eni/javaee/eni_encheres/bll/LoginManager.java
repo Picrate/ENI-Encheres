@@ -174,7 +174,7 @@ public class LoginManager {
 	 * @param password le mot de passe à crypter
 	 * @return le mot de passe crypté.
 	 */
-	public byte[] encryptPassword(char[] password) throws BusinessException {
+	private byte[] encryptPassword(char[] password) throws BusinessException {
 		byte[] bytesPassword = charsToBytes(password);
 		byte[] ciphertext = null;
 		try {
@@ -195,7 +195,7 @@ public class LoginManager {
 	 * @param password le mot de passe à décrypter
 	 * @return le mot de passe en clair.
 	 */
-	public char[] decryptPassword(byte[] password) throws BusinessException{
+	private char[] decryptPassword(byte[] password) throws BusinessException{
 		byte[] ciphertext = null;
 		try {
 			pbeCipher = Cipher.getInstance("PBEWithHmacSHA256AndAES_256");
@@ -209,6 +209,13 @@ public class LoginManager {
 
 		return bytesToChars(ciphertext);
 	}
+	
+	/**
+	 * Crypte le mot de passse et le retourne sous forme de chaine de caracteres ecodé en BASE64
+	 * @param password le mot de passe à crypter
+	 * @return La chaine de caractere représentant le mot de passe crypté encodé en BASE64
+	 * @throws BusinessException
+	 */
 	
 	public String getBase64Password(char[] password) throws BusinessException{
 		try {

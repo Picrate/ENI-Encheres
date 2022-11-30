@@ -10,7 +10,7 @@ ALTER TABLE ARTICLES_VENDUS DROP CONSTRAINT fk_articles_vendus_categories;
 GO
 ALTER TABLE ARTICLES_VENDUS DROP CONSTRAINT fk_encheres_utilisateur;
 GO
-ALTER TABLE UTILISATEURS DROP CONSTRAINT fk_utilsateur_adresse;
+ALTER TABLE UTILISATEURS DROP CONSTRAINT fk_utilisateur_adresse;
 GO
 
 -- delete table
@@ -58,7 +58,7 @@ CREATE TABLE UTILISATEURS (
     administrateur   bit NOT NULL,
     adresse_id       INT NOT NULL,
     CONSTRAINT pk_utilisateur PRIMARY KEY (no_utilisateur ASC),
-    CONSTRAINT fk_utilsateur_adresse FOREIGN KEY (adresse_id) REFERENCES ADRESSES (id)
+    CONSTRAINT fk_utilisateur_adresse FOREIGN KEY (adresse_id) REFERENCES ADRESSES (id)
 );
 
 CREATE TABLE ARTICLES_VENDUS (
@@ -73,8 +73,7 @@ CREATE TABLE ARTICLES_VENDUS (
     no_categorie                  INTEGER NOT NULL,
     CONSTRAINT pk_articles_vendus PRIMARY KEY (no_article ASC),
     CONSTRAINT fk_articles_vendus_categories FOREIGN KEY (no_categorie) REFERENCES CATEGORIES (no_categorie),
-    CONSTRAINT fk_encheres_utilisateur FOREIGN KEY (no_utilisateur) REFERENCES UTILISATEURS (no_utilisateur),
-    CONSTRAINT fk_ventes_utilisateur FOREIGN KEY (no_utilisateur) REFERENCES UTILISATEURS (no_utilisateur)
+    CONSTRAINT fk_ventes_utilisateur FOREIGN KEY (no_utilisateur) REFERENCES UTILISATEURS (no_utilisateur) ON DELETE CASCADE
 )
 
 CREATE TABLE ENCHERES (
@@ -83,7 +82,8 @@ CREATE TABLE ENCHERES (
     date_enchere     DATETIME2 NOT NULL,
 	montant_enchere  INTEGER NOT NULL,
 	CONSTRAINT pk_encheres PRIMARY KEY (no_utilisateur ASC, no_article ASC),
-    CONSTRAINT fk_encheres_articles_vendus FOREIGN KEY (no_article) REFERENCES ARTICLES_VENDUS (no_article)
+	CONSTRAINT fk_encheres_utilisateur FOREIGN KEY (no_utilisateur) REFERENCES UTILISATEURS (no_utilisateur),
+    CONSTRAINT fk_encheres_articles_vendus FOREIGN KEY (no_article) REFERENCES ARTICLES_VENDUS (no_article) ON DELETE CASCADE
 );
 
 USE ENCHERES
