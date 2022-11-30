@@ -118,7 +118,7 @@ pageEncoding="UTF-8"
 								</fieldset>
 							</c:when>
 							<c:otherwise>
-								<p><strong>Fin de l'enchère :</strong><br><fmt:formatDate pattern="EEEEE dd MMMM 'à' HH'h'mm" value="${parsedStartDateTime}" type="both"/></p>
+								<p><strong>Début de l'enchère :</strong><br><fmt:formatDate pattern="EEEEE dd MMMM 'à' HH'h'mm" value="${parsedStartDateTime}" type="both"/></p>
 								<input type="hidden" name="dateDebutEnchere" value="${parsedEndDateTime}" />
 							</c:otherwise>
 						</c:choose>	
