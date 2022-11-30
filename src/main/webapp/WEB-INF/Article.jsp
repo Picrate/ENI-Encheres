@@ -75,7 +75,7 @@ pageEncoding="UTF-8"
 					<p><strong>Mise à prix :</strong><br><c:out value="${selectedArticle.miseAPrix}" default="Aucune catégorie"/> points</p>
 					
 					<!-- MEILLEUR OFFRES -->
-					<p><strong>Meilleur offre :</strong><br><c:out value="${bestOffer} points par ${buyerPseudo}" default="Aucune offre"/></p>
+					<p><strong>Meilleure offre :</strong><br><c:out value="${bestOffer} points par ${buyerPseudo}" default="Aucune offre"/></p>
 					
 					<!-- FIN ENCHERE -->
 					<fmt:parseDate value="${selectedArticle.dateFinEncheres}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedEndDateTime" type="both" />
@@ -101,7 +101,7 @@ pageEncoding="UTF-8"
 							<form action="" method="post">
 								<strong>Proposition :</strong><br>
 								<fieldset>
-									<input name="enchere" type="number" value="${selectedArticle.miseAPrix + 1}">
+									<input name="enchere" type="number" value="${! empty bestOffer ? bestOffer + 1 : selectedArticle.miseAPrix + 1}">
 									<button type="submit" class="btn">Enchérir</button>
 								</fieldset>
 							</form>
