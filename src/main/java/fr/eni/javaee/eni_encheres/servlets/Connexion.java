@@ -35,7 +35,7 @@ public class Connexion extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		// Si on vient de l'URL /connexion On redirige Vers la page de connexion
-		
+
 		if (request.getRequestURI().equalsIgnoreCase(this.getServletContext().getContextPath() + "/connexion")) {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
 		} // Sinon Si on vient de l'URL /deconnexion On invalide la session et on
@@ -44,7 +44,7 @@ public class Connexion extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.invalidate();
 			response.sendRedirect(this.getServletContext().getContextPath());
-			
+
 		}
 
 	}
@@ -70,51 +70,35 @@ public class Connexion extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String identifiant = request.getParameter("identifiant");
 		char[] password = request.getParameter("password").toCharArray();
-		Cookie authCookie = null;
 
 		HttpSession session = request.getSession();
 
 		try {
-			
+
 			if (request.getRequestURI().equalsIgnoreCase(this.getServletContext().getContextPath() + "/connexion")) {
-			
-			// Si identifiant ou mot de passe vide
-			if (identifiant.isBlank() || password.length == 0) {
-				BusinessException be = new BusinessException();
-				be.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
-				throw be;
-			}
+				// Si identifiant ou mot de passe vide
+				if (identifiant.isBlank() || password.length == 0) {
+					BusinessException be = new BusinessException();
+					be.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
+					throw be;
+				}
 
-			if (UtilisateurManager.getInstance().checkUserExists(identifiant)) {
-				boolean authStatus = LoginManager.getInstance().authenticateUser(identifiant, password);
-				// si utilisateur authentifié avec succes
-				if (authStatus) {
-					// Déclaration Attributs Session
-					session.setAttribute("connecte", true);
-					session.setAttribute("utilisateurConnecte",
-							UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(identifiant));
-
-					// recherche cookie
-					if (cookieExists("authenticated", request)) {
-						authCookie = getCookie("authenticated", request);
-					}
-					if (authCookie != null) {
-						if (authCookie.getValue().equalsIgnoreCase("true")) {
-							response.sendRedirect(request.getContextPath() + "/home");
-						} else {
-							authCookie.setMaxAge(0); // Efface le cookie
-							response.addCookie(authCookie);
-							session.invalidate();
-							this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request,
-									response);
-						}
+				if (UtilisateurManager.getInstance().checkUserExists(identifiant)) {
+					boolean authStatus = LoginManager.getInstance().authenticateUser(identifiant, password);
+					// si utilisateur authentifié avec succes
+					if (authStatus) {
+						// Déclaration Attributs Session
+						session.setAttribute("connecte", true);
+						session.setAttribute("utilisateurConnecte",
+								UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(identifiant));
+						this.getServletContext().getRequestDispatcher("/WEB-INF/Home.jsp").forward(request, response);
 
 					} else {
-						authCookie = new Cookie("authenticated", "true");
-						authCookie.setHttpOnly(true);
-						authCookie.setMaxAge(604800); // 7 jours
-						response.addCookie(authCookie);
-						response.sendRedirect(request.getContextPath() + "/home");
+						BusinessException usernameOrPasswordNullException = new BusinessException();
+						usernameOrPasswordNullException
+								.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
+						throw usernameOrPasswordNullException;
+
 					}
 				}
 			} else {
@@ -122,7 +106,7 @@ public class Connexion extends HttpServlet {
 				usernameOrPasswordNullException.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
 				throw usernameOrPasswordNullException;
 			}
-			}
+
 		} catch (BusinessException e) {
 			List<Integer> listeCodeErreurs = e.getListeCodesErreur();
 			List<String> listeErreurs = new ArrayList<String>();
