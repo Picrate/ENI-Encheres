@@ -42,7 +42,7 @@ public class ArticleServlet extends HttpServlet  {
 				request.setAttribute("selectedCategorie", categorie);
 				
 				Utilisateur utilisateur = UtilisateurManager.getInstance().getUtilisateurById(Integer.valueOf(article.getNoUtilisateur()));
-				request.setAttribute("user", utilisateur);
+				request.setAttribute("seller", utilisateur);
 				
 			} catch (BusinessException e) {
 				e.printStackTrace();

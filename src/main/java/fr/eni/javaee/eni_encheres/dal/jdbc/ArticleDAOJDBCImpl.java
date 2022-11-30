@@ -33,7 +33,7 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	private static String GET_ARTICLES_IN_CATEGORIE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_categorie = ?;";
 	private static String GET_USER_ARTICLES_ENCHERES = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente, a.no_utilisateur, a.no_categorie FROM ARTICLES_VENDUS AS a INNER JOIN ENCHERES AS e ON e.no_article = a.no_article WHERE e.no_utilisateur = ?";
 	private static String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) VALUES (?,?,?,?,?,?,?,?)";
-
+	private static String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
 	
 	private static Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
 	
@@ -210,7 +210,20 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	}
 
 	@Override
-	public void deleteElementById(int id) throws BusinessException {		
+	public void deleteElementById(int id) throws BusinessException {
+		try (Connection connexion = ConnectionProvider.getConnection();) {
+			System.out.println(id);
+			PreparedStatement preparedStatement = connexion.prepareStatement(DELETE_ARTICLE);
+			preparedStatement.setInt(1, id);
+			int row = preparedStatement.executeUpdate();  
+			System.out.println(row);
+						
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.DELETE_OBJET_ECHEC);
+			throw businessException;
+		}
 	}
 
 

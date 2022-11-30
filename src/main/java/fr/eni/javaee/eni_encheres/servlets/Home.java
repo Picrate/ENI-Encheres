@@ -73,9 +73,7 @@ public class Home extends HttpServlet {
 		 * 
 		 * create liste articles 
 		 * 
-		 */
-		
-		
+		 */		
 		Map<Article, Utilisateur> listeArticles = new TreeMap<>();
 		Map<Article, Utilisateur> tempListeArticles = new TreeMap<>();
 		tempListeArticles.clear();

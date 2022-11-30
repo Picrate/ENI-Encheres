@@ -145,7 +145,7 @@ public class ArticleManager {
 	}
 	
 	/**
-	 * Ajout d'un article au catalogue
+	 * Ajout d'un article
 	 * @param newArticle
 	 * @return index du nouvel article dans le catalogue
 	 * @throws BLLException 
@@ -154,6 +154,22 @@ public class ArticleManager {
 		try {
 			//validerArticle(newArticle);
 			this.articleDAO.createElement(newArticle);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * Delete article
+	 * @param article
+	 * @return index du nouvel article dans le catalogue
+	 * @throws BLLException 
+	 */
+	public void deleteArticle(int articleId) throws BusinessException {
+		try {
+			//validerArticle(newArticle);
+			this.articleDAO.deleteElementById(articleId);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}

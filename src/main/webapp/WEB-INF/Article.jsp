@@ -17,7 +17,8 @@ pageEncoding="UTF-8"
 <c:set var="pageTitle" value="Détail vente" />
 <c:set var="pageAuthor" value="POV - ENI" />
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
+<c:set var="sellerId" value="${seller.no_utilisateur}" />
+<c:set var="currentUderId" value="${utilisateurConnecte.no_utilisateur}" />
 
 <!DOCTYPE html>
 <html>
@@ -71,7 +72,7 @@ pageEncoding="UTF-8"
 					<p><strong>Catégorie :</strong><br><c:out value="${selectedCategorie.libelle}" default="Aucune catégorie"/></p>
 
 					<!-- MISE À PRIX -->
-					<p><strong>Mise à prix :</strong><br><c:out value="${selectedArticle.miseAPrix}" default="Aucune catégorie"/></p>
+					<p><strong>Mise à prix :</strong><br><c:out value="${selectedArticle.miseAPrix}" default="Aucune catégorie"/> points</p>
 					
 					<!-- MEILLEUR OFFRES -->
 					<p><strong>Meilleur offre :</strong><br><c:out value="" default="Aucune offre"/></p>
@@ -83,21 +84,30 @@ pageEncoding="UTF-8"
 					<!-- VILLE -->
 					<p>
 						<strong>Retrait :</strong><br/>
-						<c:out value="${user.adresse.getRue()}" default="Aucune rue"/><br/>
-						<c:out value="${user.adresse.getCodePostal()}" default="Aucun code postal"/> 
-						<c:out value="${user.adresse.getVille()}" default="Aucune ville"/>
+						<c:out value="${seller.adresse.getRue()}" default="Aucune rue"/><br/>
+						<c:out value="${seller.adresse.getCodePostal()}" default="Aucun code postal"/>
+						<c:out value="${seller.adresse.getVille()}" default="Aucune ville"/>
 					</p>
 
-					<p><strong>Vendeur :</strong><br><c:out value="${user.pseudo}" default="Aucune offre"/></p>
-
-					<form action="" method="post">
-						<strong>Proposition :</strong><br>
-						<fieldset>
-							<input type="number" value="${selectedArticle.miseAPrix + 1}">
-							<button type="submit" class="btn">Enchérir</button>
-						</fieldset>
-					</form>
-					
+					<p><strong>Vendeur :</strong><br><c:out value="${seller.pseudo}" default="Aucun utilisateur"/></p>
+										
+					<c:choose> 
+			
+						<c:when test="${currentUderId == sellerId}"> 
+							<a class="btn" href="${contextPath}/ajouter-un-article?articleId=${selectedArticle.noArticle}">Modifier</a>
+						</c:when> 
+				
+			        	<c:otherwise> 
+							<form action="" method="post">
+								<strong>Proposition :</strong><br>
+								<fieldset>
+									<input type="number" value="${selectedArticle.miseAPrix + 1}">
+									<button type="submit" class="btn">Enchérir</button>
+								</fieldset>
+							</form>
+						</c:otherwise> 
+			        	
+			        </c:choose>
 
 				</div>
 			</div>

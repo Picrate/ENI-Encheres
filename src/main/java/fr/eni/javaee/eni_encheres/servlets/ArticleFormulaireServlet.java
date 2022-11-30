@@ -69,15 +69,37 @@ public class ArticleFormulaireServlet extends HttpServlet  {
 			e.printStackTrace();
 		}
 		
-		
+		System.out.println(request.getParameter("articleId"));
+		/* 
+		 * 
+		 * delete article
+		 * 
+		 */
+		if (request.getParameter("deleteId") != null && request.getParameter("deleteId") != "") {
+			try {
+				int articleId = Integer.parseInt(request.getParameter("deleteId"));
+				try {
+					ArticleManager.getInstance().deleteArticle(articleId);
+					response.sendRedirect("/ENI-Encheres/home");
+				} catch (BusinessException e) {
+					e.printStackTrace();
+				}
+				
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+			
+		}
 		// Modify article
-		if (request.getParameter("articleId") != null && request.getParameter("articleId") != "") {
-			//System.out.println(request.getParameter("articleId"));
+		else if (request.getParameter("articleId") != null && request.getParameter("articleId") != "") {
+			System.out.println("Modify");
 			try {
 				int articleId = Integer.parseInt(request.getParameter("articleId"));
 				try {
 					Article article = ArticleManager.getInstance().getArticleByID(articleId);
-					request.setAttribute("selectedArticle", article);
+					request.setAttribute("selectedArticle", article);	
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/ArticleFormulaire.jsp");
+					requestDispatcher.forward(request, response);
 				} catch (BusinessException e) {
 					e.printStackTrace();
 				}
@@ -88,47 +110,28 @@ public class ArticleFormulaireServlet extends HttpServlet  {
 		} 
 		// Create
 		else if (request.getParameter("nomArticle") != null && request.getParameter("nomArticle") != "") {
+			System.out.println("Create");
 			String nomArticle = request.getParameter("nomArticle");
 			String description = request.getParameter("description");
-			//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 			LocalDateTime dateDebutEnchere = LocalDateTime.parse(request.getParameter("dateDebutEnchere"));
 			LocalDateTime dateFinEnchere = LocalDateTime.parse(request.getParameter("dateFinEnchere"));
 			int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
-			int noUtilisateur =currentUser.getNo_utilisateur();
+			int noUtilisateur = currentUser.getNo_utilisateur();
 			int noCategorie = Integer.parseInt(request.getParameter("selectedCategorie"));
 			Article article = new Article(nomArticle, description, dateDebutEnchere, dateFinEnchere, miseAPrix, 0, noUtilisateur, noCategorie);	
 			try {
 				ArticleManager.getInstance().addArticle(article);
+				request.setAttribute("articleId", article.getNoArticle());	
+				response.sendRedirect("/ENI-Encheres/home");
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}
+		} else {
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/ArticleFormulaire.jsp");
+			requestDispatcher.forward(request, response);
 		}
 		
-		/*
-		try {
-			int articleId = Integer.parseInt(request.getParameter("articleId"));
-			try {
-				ArticleManager articleManager = new ArticleManager();
-				Article article = articleManager.getArticleByID(articleId);
-				request.setAttribute("selectedArticle", article);
-				
-				CategorieManager categorieManager = new CategorieManager();
-				Categorie categorie = categorieManager.getArticleCategorie(articleId);
-				request.setAttribute("selectedCategorie", categorie);
-				
-				Utilisateur utilisateur = UtilisateurManager.getInstance().getUtilisateurById(Integer.valueOf(article.getNoUtilisateur()));
-				request.setAttribute("user", utilisateur);
-				
-			} catch (BusinessException e) {
-				e.printStackTrace();
-			}
-			
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}*/
-		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/ArticleFormulaire.jsp");
-		requestDispatcher.forward(request, response);
+	
 	}
 
 	/**
