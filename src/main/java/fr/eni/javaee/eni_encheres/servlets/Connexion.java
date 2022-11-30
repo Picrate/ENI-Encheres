@@ -37,6 +37,7 @@ public class Connexion extends HttpServlet {
 		// Si on vient de l'URL /connexion On redirige Vers la page de connexion
 
 		if (request.getRequestURI().equalsIgnoreCase(this.getServletContext().getContextPath() + "/connexion")) {
+			HttpSession session = request.getSession(true);
 			this.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
 		} // Sinon Si on vient de l'URL /deconnexion On invalide la session et on
 			// redirirge vers l'accueil

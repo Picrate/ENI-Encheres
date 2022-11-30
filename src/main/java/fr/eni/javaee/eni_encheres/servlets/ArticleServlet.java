@@ -1,6 +1,8 @@
 package fr.eni.javaee.eni_encheres.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +16,7 @@ import fr.eni.javaee.eni_encheres.bo.Article;
 import fr.eni.javaee.eni_encheres.bo.Categorie;
 import fr.eni.javaee.eni_encheres.bo.Enchere;
 import fr.eni.javaee.eni_encheres.bo.Utilisateur;
+import fr.eni.javaee.eni_encheres.messages.LecteurMessage;
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bll.ArticleManager;
 import fr.eni.javaee.eni_encheres.bll.CategorieManager;
@@ -43,7 +46,7 @@ public class ArticleServlet extends HttpServlet  {
 		
 		try {
 			int articleId = Integer.parseInt(request.getParameter("articleId"));
-			try {
+
 				Article article = ArticleManager.getInstance().getArticleByID(articleId);
 				request.setAttribute("selectedArticle", article);
 				
@@ -60,15 +63,22 @@ public class ArticleServlet extends HttpServlet  {
 					Utilisateur buyer = UtilisateurManager.getInstance().getUtilisateurById(bestOffer.getNo_utilisateur());
 					request.setAttribute("buyerPseudo", buyer.getPseudo());
 				}				
-			} catch (BusinessException e) {
-				e.printStackTrace();
-			}
 			
-		} catch (NumberFormatException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatServlets.UNHANDLED_EXCEPTION);
+			List<Integer> listeCodeErreurs = be.getListeCodesErreur();
+			List<String> listeErreurs = new ArrayList<String>();
+			for (Integer codeErreur : listeCodeErreurs) {
+				listeErreurs.add(LecteurMessage.getMessageErreur(codeErreur));
+				request.setAttribute("listeErreurs", listeErreurs);
+			}
+		} finally {
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/Article.jsp");
+			requestDispatcher.forward(request, response);
 		}
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/Article.jsp");
-		requestDispatcher.forward(request, response);
+		
 	}
 
 	/**

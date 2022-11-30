@@ -5,8 +5,20 @@ import fr.eni.javaee.eni_encheres.bo.Utilisateur;
 
 public interface UtilisateurDAO extends DAO<Utilisateur> {
 
+	/**
+	 * Récupère un utilisateur à partir de son pseudo
+	 * @param pseudo le pseudo à rechercher
+	 * @return l'utilsateur
+	 * @throws BusinessException
+	 */
 	public Utilisateur getUtilisateurByPseudo(String pseudo) throws BusinessException;
 	
+	/**
+	 * Récupère un utilisateur à partir de son email
+	 * @param email l'email à rechercher
+	 * @return l'utilsateur
+	 * @throws BusinessException
+	 */
 	public Utilisateur getUtilisateurByMail(String email) throws BusinessException;
 	
 	/**

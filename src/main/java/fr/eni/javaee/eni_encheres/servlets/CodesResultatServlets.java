@@ -6,6 +6,10 @@ package fr.eni.javaee.eni_encheres.servlets;
 public abstract class CodesResultatServlets {
 	
 	// -> Erreurs Génériques Servlets : 30000
+	/**
+	 * Exception non gérée.
+	 */
+	public static final int UNHANDLED_EXCEPTION=30000;
 	
 	// -> Connexion : 30100
 	/**
@@ -35,5 +39,13 @@ public abstract class CodesResultatServlets {
 	 */
 	public static final int DELETE_USER_ERROR=30204;
 	
-	
+	// --> Encheres
+	/**
+	 * Le montant proposé est inférieur à la la dernière enchère
+	 */
+	public static final int OFFER_TOO_LOW=30301;
+	/*
+	 * Pas assez de crédit
+	 */
+	public static final int NOT_ENOUGH_CREDITS=30302;
 }

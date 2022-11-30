@@ -77,10 +77,7 @@ public class Enchere implements Serializable {
 		this.montantEnchere = montantEnchere;
 	}
 
-	@Override
-	public String toString() {
-		return "Enchere [dateEnchere=" + dateEnchere.format(DateTimeFormatter.ISO_DATE_TIME) + ", montantEnchere=" + montantEnchere + "]";
-	}
+			
 
 	public int getNo_utilisateur() {
 		return no_utilisateur;
@@ -97,5 +94,13 @@ public class Enchere implements Serializable {
 	public void setNo_article(int no_article) {
 		this.no_article = no_article;
 	}
+
+	@Override
+	public String toString() {
+		return "Enchere [dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere + ", no_utilisateur="
+				+ no_utilisateur + ", no_article=" + no_article + "]";
+	}
+
+
 
 }

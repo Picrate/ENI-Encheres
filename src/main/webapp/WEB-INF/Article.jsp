@@ -49,7 +49,7 @@ pageEncoding="UTF-8"
 			
 			<!-- ERROR -->
 	        <jsp:include page="/WEB-INF/template-parts/error.jsp">
-				<jsp:param value="${listeErreurs}" name="errorMessage"/>
+				<jsp:param value="${listeErreurs}" name="listeErreurs"/>
 			</jsp:include>
 			
 			
@@ -98,7 +98,7 @@ pageEncoding="UTF-8"
 						</c:when> 
 				
 			        	<c:otherwise> 
-							<form action="" method="post">
+							<form action="<c:url value = "encherir"><c:param name="articleId" value="${selectedArticle.noArticle}"/></c:url>" method="post">
 								<strong>Proposition :</strong><br>
 								<fieldset>
 									<input name="enchere" type="number" value="${! empty bestOffer ? bestOffer + 1 : selectedArticle.miseAPrix + 1}">

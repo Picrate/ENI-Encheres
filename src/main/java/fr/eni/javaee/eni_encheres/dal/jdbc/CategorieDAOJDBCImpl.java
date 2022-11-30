@@ -32,14 +32,16 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	
 	@Override
 	public Categorie selectElementById(int id) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		BusinessException businessException = new BusinessException();
+		businessException.ajouterErreur(CodesResultatDAL.UNIMPLEMENTED_REQUEST);
+		throw businessException;
 	}
 
 	@Override
 	public Categorie selectElementBy(String nomAttribut, String valeurAttribut) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		BusinessException businessException = new BusinessException();
+		businessException.ajouterErreur(CodesResultatDAL.UNIMPLEMENTED_REQUEST);
+		throw businessException;
 	}
 	
 	@Override
@@ -90,19 +92,25 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	
 	@Override
 	public void createElement(Categorie element) throws BusinessException {
-		// TODO Auto-generated method stub
+		BusinessException businessException = new BusinessException();
+		businessException.ajouterErreur(CodesResultatDAL.UNIMPLEMENTED_REQUEST);
+		throw businessException;
 		
 	}
 
 	@Override
 	public void updateElement(Categorie element) throws BusinessException {
-		// TODO Auto-generated method stub
+		BusinessException businessException = new BusinessException();
+		businessException.ajouterErreur(CodesResultatDAL.UNIMPLEMENTED_REQUEST);
+		throw businessException;
 		
 	}
 
 	@Override
 	public void deleteElementById(int id) throws BusinessException {
-		// TODO Auto-generated method stub
+		BusinessException businessException = new BusinessException();
+		businessException.ajouterErreur(CodesResultatDAL.UNIMPLEMENTED_REQUEST);
+		throw businessException;
 		
 	}
 }

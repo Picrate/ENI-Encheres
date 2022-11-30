@@ -145,9 +145,10 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public List<Utilisateur> getAllElements() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Utilisateur> getAllElements() throws BusinessException {
+		BusinessException businessException = new BusinessException();
+		businessException.ajouterErreur(CodesResultatDAL.UNIMPLEMENTED_REQUEST);
+		throw businessException;
 	}
 
 	@Override

@@ -5,6 +5,8 @@ package fr.eni.javaee.eni_encheres.bll;
  */
 public abstract class CodesResultatBLL {
 	
+	
+	
 	/**
 	 * Echec quand l'identifiant est null
 	 */
@@ -30,6 +32,8 @@ public abstract class CodesResultatBLL {
 	 */
 	public static final int DECRYPT_ERROR=20004;
 	
+	
+	
 	// -> Creation Compte 20100
 	/**
 	 * Le pseudo existe déjà
@@ -41,4 +45,10 @@ public abstract class CodesResultatBLL {
 	 */
 	public static final int EMAIL_ALREADY_EXISTS=20101;
 
+	
+	// --> Encheres 20200
+	/**
+	 * Valeur nulle dans les paramètres de fonction
+	 */
+	public static final int NULL_OR_BLANK_PARAMETER=20200;
 }

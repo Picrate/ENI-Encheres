@@ -2,6 +2,8 @@ package fr.eni.javaee.eni_encheres.bll;
 
 import java.util.Objects;
 
+import org.apache.jasper.tagplugins.jstl.Util;
+
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bo.Adresse;
 import fr.eni.javaee.eni_encheres.bo.Utilisateur;
@@ -128,6 +130,20 @@ public class UtilisateurManager {
 	 * @throws BusinessException
 	 */
 	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		this.utilisateurDAO.updateElement(utilisateur);
+	}
+	
+	public boolean checkSufficentsCredits(Utilisateur utilisateur, int amount) {
+		boolean checkStatus = false;
+		if (utilisateur.getCredit() >= amount)
+		{
+			checkStatus = true;
+		}
+		return checkStatus;
+	}
+	
+	public void removeCredits(Utilisateur utilisateur, int credits) throws BusinessException {
+		utilisateur.setCredit(utilisateur.getCredit()-credits);
 		this.utilisateurDAO.updateElement(utilisateur);
 	}
 

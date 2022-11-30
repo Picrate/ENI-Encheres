@@ -182,8 +182,9 @@ public class AdresseDAOJDBCImpl implements DAO<Adresse> {
 
 	@Override
 	public List<Adresse> getAllElements() throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		BusinessException businessException = new BusinessException();
+		businessException.ajouterErreur(CodesResultatDAL.UNIMPLEMENTED_REQUEST);
+		throw businessException;
 	}
 
 }
