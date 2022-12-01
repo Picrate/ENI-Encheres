@@ -139,10 +139,10 @@ public class GestionCompte extends HttpServlet {
 						be.ajouterErreur(CodesResultatServlets.PASSWORD_MISMATCH);
 						throw be;
 						// Si les mots de passe correspondent, On encode le nouveau mot de passe
-					} else {
-						newPassword = LoginManager.getInstance().getBase64Password(password);
-						currentUser.setPassword(newPassword);
-					}					
+					} 					
+				}else {
+					newPassword = LoginManager.getInstance().getBase64Password(password);
+					currentUser.setPassword(newPassword);
 				}
 					/*
 					 * Mise à jour des informations utilisateur + adresse
