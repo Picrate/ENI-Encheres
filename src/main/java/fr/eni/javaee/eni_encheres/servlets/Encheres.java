@@ -72,13 +72,12 @@ public class Encheres extends HttpServlet {
 			}
 			
 		} catch (BusinessException e) {
-			e.printStackTrace();
 			List<Integer> listeCodeErreurs = e.getListeCodesErreur();
 			List<String> listeErreurs = new ArrayList<String>();
 			for (Integer codeErreur : listeCodeErreurs) {
 				listeErreurs.add(LecteurMessage.getMessageErreur(codeErreur));
 				request.setAttribute("listeErreurs", listeErreurs);
-				this.getServletContext().getRequestDispatcher("/article").forward(request, response);;
+				this.getServletContext().getRequestDispatcher("/article").forward(request, response);
 				
 			}
 		}				
