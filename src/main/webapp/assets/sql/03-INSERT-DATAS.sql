@@ -12,11 +12,11 @@ INSERT INTO ADRESSES (rue, code_postal, ville)
 VALUES ('Rue Bidule',22000,'VILLE');
 -- Insert users
 INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur,adresse_id)
-VALUES ('patrice','ALLARY','patrice','patrice@patrice.fr','06.01.02.03.04','tYXhFzRSgWUzmYlh4Sus2A==',0,0,1);
+VALUES ('patrice','ALLARY','patrice','patrice@patrice.fr','06.01.02.03.04','tYXhFzRSgWUzmYlh4Sus2A==',200,0,1);
 INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur,adresse_id)
-VALUES ('vincent','FILY','Vincent','vincent@vincent.fr','06.01.02.03.04','tYXhFzRSgWUzmYlh4Sus2A==',0,0,2);
+VALUES ('vincent','FILY','Vincent','vincent@vincent.fr','06.01.02.03.04','tYXhFzRSgWUzmYlh4Sus2A==',200,0,2);
 INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur,adresse_id)
-VALUES ('aurelie','ROZIER','Aurélie','aurelie@aurelie.fr','06.01.02.03.04','tYXhFzRSgWUzmYlh4Sus2A==',0,0,3);
+VALUES ('aurelie','ROZIER','Aurélie','aurelie@aurelie.fr','06.01.02.03.04','tYXhFzRSgWUzmYlh4Sus2A==',200,0,3);
 -- Insert Categories
 INSERT INTO CATEGORIES (libelle) VALUES ('Maison');
 INSERT INTO CATEGORIES (libelle) VALUES ('Loisir');
