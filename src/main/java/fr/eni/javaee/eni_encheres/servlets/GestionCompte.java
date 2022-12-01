@@ -1,14 +1,10 @@
 package fr.eni.javaee.eni_encheres.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bll.AdresseManager;
-import fr.eni.javaee.eni_encheres.bll.ArticleManager;
 import fr.eni.javaee.eni_encheres.bll.EnchereManager;
 import fr.eni.javaee.eni_encheres.bll.LoginManager;
 import fr.eni.javaee.eni_encheres.bll.UserParametersManager;
@@ -114,12 +109,13 @@ public class GestionCompte extends HttpServlet {
 					Adresse newAdresse = new Adresse(rue, Integer.valueOf(codePostal), ville);
 					AdresseManager.getInstance().createNewAdresse(newAdresse);
 					// On crypte le mot de passe et on récupère les paramètres associés.
-					Map <String,String> passwordAndParameters = LoginManager.getInstance().getBase64Password(password);
-					
-							newUtilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone,
+					Map<String, String> passwordAndParameters = LoginManager.getInstance().getBase64Password(password);
+
+					newUtilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone,
 							passwordAndParameters.get(LoginManager.PASSWORD_KEY), newAdresse);
 					UtilisateurManager.getInstance().createNewUtilisateur(newUtilisateur);
-					UserParametersManager.getInstance().setUserParameters(new UserParameters(passwordAndParameters.get(LoginManager.PARAMS_KEY), newUtilisateur.getNo_utilisateur()));
+					UserParametersManager.getInstance().setUserParameters(new UserParameters(
+							passwordAndParameters.get(LoginManager.PARAMS_KEY), newUtilisateur.getNo_utilisateur()));
 
 					// On redirige vers la page d'accueil
 					this.getServletContext().getRequestDispatcher("/").forward(request, response);
@@ -146,28 +142,22 @@ public class GestionCompte extends HttpServlet {
 						be.ajouterErreur(CodesResultatServlets.PASSWORD_MISMATCH);
 						throw be;
 						// Si les mots de passe correspondent, On encode le nouveau mot de passe
-<<<<<<< HEAD
-					} 					
-				}else {
-					newPassword = LoginManager.getInstance().getBase64Password(password);
-					currentUser.setPassword(newPassword);
-=======
 					} else {
 						Map<String, String> passwordAndParams = new HashMap<>(2);
 						// On récupère le mot de passe crypté et les paramètres de décryptage.
 						passwordAndParams = LoginManager.getInstance().getBase64Password(password);
-						newPassword = passwordAndParams.get(LoginManager.PASSWORD_KEY);  
-						String params = passwordAndParams.get(LoginManager.PARAMS_KEY); 
+						newPassword = passwordAndParams.get(LoginManager.PASSWORD_KEY);
+						String params = passwordAndParams.get(LoginManager.PARAMS_KEY);
 						// On met à jour le mot de passe de l'utilsateur
 						currentUser.setPassword(newPassword);
 						// On récupère les anciens paramètres.
-						UserParameters parameters = UserParametersManager.getInstance().getUserParametersByUserId(currentUser.getNo_utilisateur());
+						UserParameters parameters = UserParametersManager.getInstance()
+								.getUserParametersByUserId(currentUser.getNo_utilisateur());
 						// On les remplace par les nouveaux.
 						parameters.setLoginParameters(params);
 						UserParametersManager.getInstance().updateUserParameters(parameters);
-					}					
->>>>>>> 08b70e3 (Refonte cryptage)
-				}
+					}
+
 					/*
 					 * Mise à jour des informations utilisateur + adresse
 					 */
@@ -187,20 +177,23 @@ public class GestionCompte extends HttpServlet {
 
 					// Redirection vers la page d'accueil
 					response.sendRedirect(this.getServletContext().getContextPath());
+				} else {
+					BusinessException be = new BusinessException();
+					be.ajouterErreur(CodesResultatServlets.USERNAME_OR_PASSWORD_INVALID);
+					throw be;
 				}
-			
+			}
+		} catch (
 
-		}catch(
-
-	BusinessException e)
-	{
-		e.printStackTrace();
-		List<Integer> listeCodeErreurs = e.getListeCodesErreur();
-		List<String> listeErreurs = new ArrayList<String>();
-		for (Integer codeErreur : listeCodeErreurs) {
-			listeErreurs.add(LecteurMessage.getMessageErreur(codeErreur));
-			request.setAttribute("listeErreurs", listeErreurs);
-			this.getServletContext().getRequestDispatcher("/WEB-INF/Compte.jsp").forward(request, response);
+		BusinessException e) {
+			e.printStackTrace();
+			List<Integer> listeCodeErreurs = e.getListeCodesErreur();
+			List<String> listeErreurs = new ArrayList<String>();
+			for (Integer codeErreur : listeCodeErreurs) {
+				listeErreurs.add(LecteurMessage.getMessageErreur(codeErreur));
+				request.setAttribute("listeErreurs", listeErreurs);
+				this.getServletContext().getRequestDispatcher("/WEB-INF/Compte.jsp").forward(request, response);
+			}
 		}
 	}
-}}
+}
