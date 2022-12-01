@@ -59,7 +59,7 @@ public class ArticleServlet extends HttpServlet  {
 				Enchere bestOffer = EnchereManager.getInstance().bestEnchereForArticle(articleId);
 				if (Objects.nonNull(bestOffer)) {
 					request.setAttribute("bestOffer", bestOffer.getMontantEnchere());
-				
+					System.out.println(bestOffer.getNo_utilisateur());
 					Utilisateur buyer = UtilisateurManager.getInstance().getUtilisateurById(bestOffer.getNo_utilisateur());
 					request.setAttribute("buyerPseudo", buyer.getPseudo());
 				}				

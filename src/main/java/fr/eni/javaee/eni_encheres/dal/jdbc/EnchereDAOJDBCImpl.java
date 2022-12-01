@@ -17,7 +17,7 @@ import fr.eni.javaee.eni_encheres.dal.ConnectionProvider;
 import fr.eni.javaee.eni_encheres.dal.EnchereDAO;
 
 public class EnchereDAOJDBCImpl implements EnchereDAO {
-	private static final String BEST_ENCHERE_FOR_ONE_ARTICLE = "SELECT montant_enchere, no_utilisateur FROM ENCHERES WHERE montant_enchere = (SELECT max(montant_enchere) FROM ENCHERES WHERE no_article = ?);";
+	private static final String BEST_ENCHERE_FOR_ONE_ARTICLE = "SELECT montant_enchere, no_utilisateur FROM ENCHERES WHERE montant_enchere = (SELECT max(montant_enchere) FROM ENCHERES WHERE no_article = ?) AND no_article = ?;";
 	private static final String DELETE_BY_USER_ID = "DELETE FROM ENCHERES WHERE no_utilisateur = ?;";
 	private final static String CREATE_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?,?,?,?);";
 	private static final String SELECT_ENCHERE = "SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM ENCHERES WHERE no_utilisateur = ? AND no_article = ?;";
@@ -147,10 +147,12 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 			// Get user winner
 			PreparedStatement query = connexion.prepareStatement(BEST_ENCHERE_FOR_ONE_ARTICLE);
 			query.setInt(1, idArticle);
+			query.setInt(2, idArticle);
 			ResultSet result = query.executeQuery();
 			//System.out.println("test3" + result.next());
 			if (result.next()) {
 				int idUserWinner = result.getInt("no_utilisateur");
+				System.out.println(idUserWinner);
 				int montantEnchere = result.getInt("montant_enchere");
 				enchere = new Enchere (idUserWinner, idArticle, montantEnchere);
 			}				
