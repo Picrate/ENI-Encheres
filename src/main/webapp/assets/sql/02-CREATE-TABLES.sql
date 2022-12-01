@@ -2,14 +2,14 @@ USE ENCHERES;
 GO
 
 -- remove contraint
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ENCHERES]') AND type in (N'U'))
 ALTER TABLE ENCHERES DROP CONSTRAINT fk_encheres_articles_vendus;
 GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ARTICLES_VENDUS]') AND type in (N'U'))
+ALTER TABLE ARTICLES_VENDUS DROP CONSTRAINT fk_articles_vendus_categories;
 ALTER TABLE ARTICLES_VENDUS DROP CONSTRAINT fk_ventes_utilisateur;
 GO
-ALTER TABLE ARTICLES_VENDUS DROP CONSTRAINT fk_articles_vendus_categories;
-GO
-ALTER TABLE ARTICLES_VENDUS DROP CONSTRAINT fk_encheres_utilisateur;
-GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UTILISATEURS]') AND type in (N'U'))
 ALTER TABLE UTILISATEURS DROP CONSTRAINT fk_utilisateur_adresse;
 GO
 
