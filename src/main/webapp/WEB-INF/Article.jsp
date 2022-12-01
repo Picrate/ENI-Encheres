@@ -111,7 +111,7 @@ pageEncoding="UTF-8"
 							<a class="btn" href="${contextPath}/ajouter-un-article?articleId=${selectedArticle.noArticle}">Modifier</a>
 						</c:when> 
 				
-			        	<c:otherwise> 
+			        	<c:otherwise>  
 			        		<c:if test="${connecte && ! endedSale}" >
 			        		<!-- ENCHERE -->
 							<form action="<c:url value = "encherir"><c:param name="articleId" value="${selectedArticle.noArticle}"/></c:url>" method="post">
