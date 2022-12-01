@@ -12,35 +12,27 @@ import fr.eni.javaee.eni_encheres.dal.DAOFactory;
  */
 public class CryptoDatasManager {
 
-	 private String seed;
-	 private String base64Params;
-	 private byte[] masterKey;
-	 
-	 private static CryptoDatasManager instance = null;
-	 
-	 private CryptoDatasManager() throws BusinessException {
-		 this.seed = DAOFactory.getCryptoDAO().getBase64Seed();
-		 this.masterKey = DAOFactory.getCryptoDAO().getMasterKey();
-		 this.base64Params = DAOFactory.getCryptoDAO().getBase64Params();
-	 }
-	 
-	 public static CryptoDatasManager getInstance() throws BusinessException {
-		 if(instance == null) {
-			 instance = new CryptoDatasManager();
-		 }
-		 return instance;
-	 }
+	private byte[] masterKey;
 
-	public String getSeed() {		
-		return seed;
+	private static CryptoDatasManager instance = null;
+
+	private CryptoDatasManager() throws BusinessException {
+		this.masterKey = DAOFactory.getCryptoDAO().getMasterKey();
 	}
 
+	public static CryptoDatasManager getInstance() throws BusinessException {
+		if (instance == null) {
+			instance = new CryptoDatasManager();
+		}
+		return instance;
+	}
+
+	/**
+	 * Récupère la masterKey
+	 * @return
+	 */
 	public byte[] getMasterKey() {
 		return masterKey;
-	}
-
-	public String getbase64Params() {
-		return base64Params;
 	}
 
 }

@@ -1,22 +1,26 @@
 USE ENCHERES
 GO
 --Insert CRYPTO
-INSERT INTO CRYPTO (masterKEY, seed, params)
-VALUES ('masterKEY','nZS1hrEMp2pwltGTwEWnuFJlk7uiDIjB5Lf5m/2Sgpr1G3ZT8jbj2PriYnzRoz9tDblCmLBZKMrsMOyJ8ehaaBWaxMDxPC5Kyt4CuHEK3NSPPfCE8eDNqTYgYg1HVkQpjY4NALFrLZ8qf/N5WQr5mcNZtspV3xpDogi54qNmxwAw9hhRiDOwejRR5LpZi4EhnZwhDI5s/onS70GZ0EApUDta3wwJffFC907B3uIKyp9rF4uOmc50psv7NLHpjiN1m/HWCt6wbrFH2xiKbkzYuCE9y+YFUfcb4xtkr+yS5v57sYRVrjnCnkP5DP6KvincWHUXA0Xh35W+V5ctqApOqg==' ,'MFkwOAYJKoZIhvcNAQUMMCsEFKNlki+1C3Bss6DGC8kRsfKX/GUeAgIQAAIBIDAMBggqhkiG9w0CCQUAMB0GCWCGSAFlAwQBKgQQIdihH4f+cOX/s4WUnD12cQ==');
+INSERT INTO CRYPTO (masterKEY)
+VALUES ('masterKEY');
 -- Insert adresses 
 INSERT INTO ADRESSES (rue, code_postal, ville)
-VALUES ('Rue Montgalet',75000,'PARIS');
+VALUES ('Rue Machin',41000,'BLOIS');
 INSERT INTO ADRESSES (rue, code_postal, ville)
-VALUES ('Rue Truc',22000,'BRETAGNE');
+VALUES ('Rue Truc',22000,'LANNION');
 INSERT INTO ADRESSES (rue, code_postal, ville)
-VALUES ('Rue Bidule',22000,'VILLE');
+VALUES ('Rue Bidule',49000,'ANGERS');
 -- Insert users
 INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur,adresse_id)
-VALUES ('patrice','ALLARY','patrice','patrice@patrice.fr','06.01.02.03.04','tYXhFzRSgWUzmYlh4Sus2A==',200,0,1);
+VALUES ('patrice','ALLARY','patrice','patrice@patrice.fr','06.01.02.03.04','GdCmPmJXwDavS7dqzaGeyA==',35,0,1);
 INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur,adresse_id)
-VALUES ('vincent','FILY','Vincent','vincent@vincent.fr','06.01.02.03.04','tYXhFzRSgWUzmYlh4Sus2A==',200,0,2);
+VALUES ('vincent','FILY','Vincent','vincent@vincent.fr','06.01.02.03.04','GdCmPmJXwDavS7dqzaGeyA==',35,0,2);
 INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,mot_de_passe,credit,administrateur,adresse_id)
-VALUES ('aurelie','ROZIER','Aurélie','aurelie@aurelie.fr','06.01.02.03.04','tYXhFzRSgWUzmYlh4Sus2A==',200,0,3);
+VALUES ('aurelie','ROZIER','Aurélie','aurelie@aurelie.fr','06.01.02.03.04','GdCmPmJXwDavS7dqzaGeyA==',35,0,3);
+-- Insert parametres utilsateurs (parametres de cryptage mot de passe)
+INSERT INTO USER_PARAMETERS (user_id, login_parameters) VALUES (1,'MFkwOAYJKoZIhvcNAQUMMCsEFJwpz4HBmVUHeF/mPfwGMxos487bAgIQAAIBIDAMBggqhkiG9w0CCQUAMB0GCWCGSAFlAwQBKgQQi2Kdq7Er0QPgwTG1hdsaqw==');
+INSERT INTO USER_PARAMETERS (user_id, login_parameters) VALUES (2,'MFkwOAYJKoZIhvcNAQUMMCsEFJwpz4HBmVUHeF/mPfwGMxos487bAgIQAAIBIDAMBggqhkiG9w0CCQUAMB0GCWCGSAFlAwQBKgQQi2Kdq7Er0QPgwTG1hdsaqw==');
+INSERT INTO USER_PARAMETERS (user_id, login_parameters) VALUES (3,'MFkwOAYJKoZIhvcNAQUMMCsEFJwpz4HBmVUHeF/mPfwGMxos487bAgIQAAIBIDAMBggqhkiG9w0CCQUAMB0GCWCGSAFlAwQBKgQQi2Kdq7Er0QPgwTG1hdsaqw==');
 -- Insert Categories
 INSERT INTO CATEGORIES (libelle) VALUES ('Maison');
 INSERT INTO CATEGORIES (libelle) VALUES ('Loisir');

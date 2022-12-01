@@ -12,6 +12,9 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UTILISATEURS]') AND type in (N'U'))
 ALTER TABLE UTILISATEURS DROP CONSTRAINT fk_utilisateur_adresse;
 GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[USER_PARAMETERS]') AND type in (N'U'))
+ALTER TABLE USER_PARAMETERS DROP CONSTRAINT fK_userparameters_utilisateurs;
+GO
 
 -- delete table
 DROP TABLE CRYPTO;
@@ -20,15 +23,14 @@ DROP TABLE CATEGORIES;
 DROP TABLE ENCHERES;
 DROP TABLE UTILISATEURS;
 DROP TABLE ARTICLES_VENDUS;
+DROP TABLE USER_PARAMETERS;
 GO
 
 USE ENCHERES;
 -- create table
 CREATE TABLE CRYPTO (
     id          INT  IDENTITY (1, 1) NOT NULL,
-    params      NVARCHAR (MAX) NOT NULL,
     masterKey   NVARCHAR (MAX) NOT NULL,
-    seed        NVARCHAR (MAX) NOT NULL,
     CONSTRAINT pk_crypto PRIMARY KEY (id ASC)
 );
 
@@ -84,4 +86,11 @@ CREATE TABLE ENCHERES (
 	CONSTRAINT pk_encheres PRIMARY KEY (no_utilisateur ASC, no_article ASC),
 	CONSTRAINT fk_encheres_utilisateur FOREIGN KEY (no_utilisateur) REFERENCES UTILISATEURS (no_utilisateur),
     CONSTRAINT fk_encheres_articles_vendus FOREIGN KEY (no_article) REFERENCES ARTICLES_VENDUS (no_article) ON DELETE CASCADE
+)
+
+CREATE TABLE USER_PARAMETERS (
+	user_id				INTEGER	NOT NULL,
+	login_parameters	VARCHAR(MAX) NOT NULL,
+	CONSTRAINT pk_user_parameters PRIMARY KEY (user_id ASC),
+	CONSTRAINT fk_userparameters_utilisateurs FOREIGN KEY (user_id) REFERENCES UTILISATEURS (no_utilisateur) ON DELETE CASCADE
 );
