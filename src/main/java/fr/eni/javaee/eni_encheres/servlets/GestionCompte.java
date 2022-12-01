@@ -133,30 +133,23 @@ public class GestionCompte extends HttpServlet {
 				 * Si le mot de passe a été modifié
 				 */
 				if (password.length > 0) {
-					System.out.println("Le mot de passe a été modifié");
-					
 					// On vérifie que les mots de passe correspondent dans le formulaire
 					if (!LoginManager.getInstance().checkPasswordMatch(password, cpassword)) {
 						BusinessException be = new BusinessException();
 						be.ajouterErreur(CodesResultatServlets.PASSWORD_MISMATCH);
 						throw be;
-						// On encode le nouveau mot de passe
-					} }else {
-						System.out.println("Le mot de passe n'a pas été modifié");
+						// Si les mots de passe correspondent, On encode le nouveau mot de passe
+					} else {
 						newPassword = LoginManager.getInstance().getBase64Password(password);
 						currentUser.setPassword(newPassword);
-					}
-				
-
+					}					
+				}
 					/*
 					 * Mise à jour des informations utilisateur + adresse
 					 */
-					System.out.println("Mise à jour des informations");
-					System.out.println("Ancienne adresse : "+currentAdresse);
 					currentAdresse.setRue(rue);
 					currentAdresse.setCodePostal(Integer.valueOf(codePostal));
 					currentAdresse.setVille(ville);
-					System.out.println("nouvelle adresse:"+currentAdresse);
 					AdresseManager.getInstance().updateAdresse(currentAdresse);
 
 					currentUser.setPseudo(pseudo);
