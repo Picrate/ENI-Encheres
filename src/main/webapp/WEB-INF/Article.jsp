@@ -100,6 +100,7 @@ pageEncoding="UTF-8"
 						</c:when> 
 				
 			        	<c:otherwise> 
+			        		<c:if test="${connecte}" >
 			        		<!-- ENCHERE -->
 							<form action="<c:url value = "encherir"><c:param name="articleId" value="${selectedArticle.noArticle}"/></c:url>" method="post">
 								<strong>Proposition :</strong><br>
@@ -108,6 +109,7 @@ pageEncoding="UTF-8"
 									<button type="submit" class="btn">Enchérir</button>
 								</fieldset>
 							</form>
+							</c:if>
 						</c:otherwise> 
 			        	
 			        </c:choose>
