@@ -29,6 +29,7 @@ import fr.eni.javaee.eni_encheres.BusinessException;
 public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Utilisateur currentUser = null;
+	private boolean connectedUser = false;
 	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,18 +39,17 @@ public class Home extends HttpServlet {
 		
 		/* 
 		 * 
-		 * get current user statut 
+		 * Get current user statut 
 		 * 
 		 */
+		
+		
 		// if session exist
-		boolean connectedUser = false;
 		if (request.getSession(false) != null) {
-			//System.out.println("session");
 			HttpSession session = request.getSession();
 			// if user connected
 			if (session.getAttribute("connecte") != null) {
 				if ((boolean)session.getAttribute("connecte")) {
-					//System.out.println("Utilisateur connecté : " + session.getAttribute("connecte"));
 					connectedUser = true;
 					currentUser = (Utilisateur)session.getAttribute("utilisateurConnecte");
 				}
@@ -58,7 +58,7 @@ public class Home extends HttpServlet {
 		
 		/* 
 		 * 
-		 * get liste categories 
+		 * Get liste categories 
 		 * 
 		 */
 		try {
@@ -71,16 +71,14 @@ public class Home extends HttpServlet {
 		
 		/*
 		 * 
-		 * create liste articles 
+		 * Create liste articles 
 		 * 
 		 */		
 		Map<Article, Utilisateur> listeArticles = new TreeMap<>();
 		Map<Article, Utilisateur> tempListeArticles = new TreeMap<>();
-		tempListeArticles.clear();
 		
 		// Si search or 
 		if (request.getParameter("selectedCategorie") != null && request.getParameter("selectedCategorie") != "" && request.getParameter("selectedCategorie") != "0") {
-			//System.out.println(request.getParameter("selectedCategorie"));
 			try {
 				int selectedCategorieId = Integer.parseInt(request.getParameter("selectedCategorie"));
 				request.setAttribute("selectedCategorieId", selectedCategorieId);
@@ -94,7 +92,6 @@ public class Home extends HttpServlet {
 					else {
 						listeArticles = ArticleManager.getInstance().getArticlesbyCategorieMap(selectedCategorieId);
 					}
-					
 					// articles with search
 					if (request.getParameter("searchPattern") != "" && request.getParameter("searchPattern") != null) {
 						String searchPattern = (String)request.getParameter("searchPattern").trim().toLowerCase();
@@ -108,9 +105,13 @@ public class Home extends HttpServlet {
 					}
 					request.setAttribute("listeArticles", listeArticles);
 				} catch (BusinessException e) {
+					BusinessException exception = new BusinessException();
+					exception.ajouterErreur(CodesResultatServlets.GET_ARTICLES_ERROR);
 					e.printStackTrace();
 				}
 			} catch (NumberFormatException e) {
+				BusinessException exception = new BusinessException();
+				exception.ajouterErreur(CodesResultatServlets.SELECTED_CATEGORIE_ERROR);
 				e.printStackTrace();
 			}
 		}
@@ -126,7 +127,7 @@ public class Home extends HttpServlet {
 		
 		/*
 		 * 
-		 * articles filters for connected user
+		 * Articles filters for connected user
 		 * 
 		 */
 		if (request.getParameter("userFilter") != "" && request.getParameter("userFilter") != null && connectedUser) {
@@ -136,15 +137,12 @@ public class Home extends HttpServlet {
 			
 			// Define now datetime
 			LocalDateTime now = LocalDateTime.now();
-			//System.out.println(now);
 			
 			switch (filterValue) {
 				// get articles en cours d'enchere
 				case "openEncheres":
 				listeArticles.forEach((article, utilisateur) -> {
-					//System.out.println(article.getNomArticle() + " : " + article.getDateDebutEncheres() + " - " + article.getDateDebutEncheres().isBefore(now));
 					if (article.getDateDebutEncheres().isBefore(now) && article.getDateFinEncheres().isAfter(now)) {
-						//System.out.println(article.getNomArticle());
 						tempListeArticles.put(article, utilisateur); 
 					}
 			    });
@@ -171,7 +169,6 @@ public class Home extends HttpServlet {
 				try {
 					listeArticles = ArticleManager.getInstance().getUserWinArticle(currentUser.getNo_utilisateur());
 					listeArticles.forEach((article, utilisateur) -> {
-						System.out.println("test" + article.getNoUtilisateur());
 					});
 				} catch (BusinessException e) {
 					e.printStackTrace();

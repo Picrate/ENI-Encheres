@@ -45,12 +45,10 @@ public class ArticleFormulaireServlet extends HttpServlet  {
 		// if session exist
 		boolean connectedUser = false;
 		if (request.getSession(false) != null) {
-			//System.out.println("session");
 			HttpSession session = request.getSession();
 			// if user connected
 			if (session.getAttribute("connecte") != null) {
 				if ((boolean)session.getAttribute("connecte")) {
-					//System.out.println("Utilisateur connecté : " + session.getAttribute("connecte"));
 					connectedUser = true;
 					currentUser = (Utilisateur)session.getAttribute("utilisateurConnecte");
 				}
@@ -69,7 +67,6 @@ public class ArticleFormulaireServlet extends HttpServlet  {
 			e.printStackTrace();
 		}
 		
-		System.out.println(request.getParameter("articleId"));
 		/* 
 		 * 
 		 * delete article
@@ -92,7 +89,6 @@ public class ArticleFormulaireServlet extends HttpServlet  {
 		}
 		// Modify article
 		else if (request.getParameter("articleId") != null && request.getParameter("articleId") != "") {
-			System.out.println("Modify");
 			try {
 				int articleId = Integer.parseInt(request.getParameter("articleId"));
 				try {
@@ -110,7 +106,6 @@ public class ArticleFormulaireServlet extends HttpServlet  {
 		} 
 		// Create
 		else if (request.getParameter("nomArticle") != null && request.getParameter("nomArticle") != "") {
-			System.out.println("Create");
 			String nomArticle = request.getParameter("nomArticle");
 			String description = request.getParameter("description");
 			LocalDateTime dateDebutEnchere = LocalDateTime.parse(request.getParameter("dateDebutEnchere"));
@@ -130,8 +125,6 @@ public class ArticleFormulaireServlet extends HttpServlet  {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/ArticleFormulaire.jsp");
 			requestDispatcher.forward(request, response);
 		}
-		
-	
 	}
 
 	/**

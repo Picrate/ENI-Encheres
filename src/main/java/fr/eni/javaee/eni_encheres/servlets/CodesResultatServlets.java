@@ -48,4 +48,8 @@ public abstract class CodesResultatServlets {
 	 * Pas assez de crédit
 	 */
 	public static final int NOT_ENOUGH_CREDITS=30302;
+	
+	// --> Home
+	public static final int SELECTED_CATEGORIE_ERROR=30401;
+	public static final int GET_ARTICLES_ERROR=30402;
 }
