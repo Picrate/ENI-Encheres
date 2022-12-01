@@ -128,28 +128,35 @@ public class GestionCompte extends HttpServlet {
 				String newPassword = null;
 				Utilisateur currentUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
 				Adresse currentAdresse = currentUser.getAdresse();
-
+				System.out.println(password.length);
 				/*
-				 * Si lemot de passe a été modifié
+				 * Si le mot de passe a été modifié
 				 */
 				if (password.length > 0) {
+					System.out.println("Le mot de passe a été modifié");
+					
 					// On vérifie que les mots de passe correspondent dans le formulaire
 					if (!LoginManager.getInstance().checkPasswordMatch(password, cpassword)) {
 						BusinessException be = new BusinessException();
 						be.ajouterErreur(CodesResultatServlets.PASSWORD_MISMATCH);
 						throw be;
 						// On encode le nouveau mot de passe
-					} else {
+					} }else {
+						System.out.println("Le mot de passe n'a pas été modifié");
 						newPassword = LoginManager.getInstance().getBase64Password(password);
 						currentUser.setPassword(newPassword);
 					}
+				
 
 					/*
-					 * Mise à jour des inforamtions utilisateur + adresse
+					 * Mise à jour des informations utilisateur + adresse
 					 */
+					System.out.println("Mise à jour des informations");
+					System.out.println("Ancienne adresse : "+currentAdresse);
 					currentAdresse.setRue(rue);
 					currentAdresse.setCodePostal(Integer.valueOf(codePostal));
 					currentAdresse.setVille(ville);
+					System.out.println("nouvelle adresse:"+currentAdresse);
 					AdresseManager.getInstance().updateAdresse(currentAdresse);
 
 					currentUser.setPseudo(pseudo);
@@ -162,19 +169,21 @@ public class GestionCompte extends HttpServlet {
 					UtilisateurManager.getInstance().updateUtilisateur(currentUser);
 
 					// Redirection vers la page d'accueil
-					this.getServletContext().getRequestDispatcher("/").forward(request, response);
+					response.sendRedirect(this.getServletContext().getContextPath());
 				}
-			}
+			
 
-		} catch (BusinessException e) {
-			e.printStackTrace();
-			List<Integer> listeCodeErreurs = e.getListeCodesErreur();
-			List<String> listeErreurs = new ArrayList<String>();
-			for (Integer codeErreur : listeCodeErreurs) {
-				listeErreurs.add(LecteurMessage.getMessageErreur(codeErreur));
-				request.setAttribute("listeErreurs", listeErreurs);
-				this.getServletContext().getRequestDispatcher("/WEB-INF/Compte.jsp").forward(request, response);
-			}
+		}catch(
+
+	BusinessException e)
+	{
+		e.printStackTrace();
+		List<Integer> listeCodeErreurs = e.getListeCodesErreur();
+		List<String> listeErreurs = new ArrayList<String>();
+		for (Integer codeErreur : listeCodeErreurs) {
+			listeErreurs.add(LecteurMessage.getMessageErreur(codeErreur));
+			request.setAttribute("listeErreurs", listeErreurs);
+			this.getServletContext().getRequestDispatcher("/WEB-INF/Compte.jsp").forward(request, response);
 		}
 	}
-}
+}}
