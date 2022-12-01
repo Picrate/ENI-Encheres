@@ -21,7 +21,7 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 	private static final String DELETE_BY_USER_ID = "DELETE FROM ENCHERES WHERE no_utilisateur = ?;";
 	private final static String CREATE_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?,?,?,?);";
 	private static final String SELECT_ENCHERE = "SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM ENCHERES WHERE no_utilisateur = ? AND no_article = ?;";
-	private static final String UPDATE_ENCHERE = "UPDATE ENCHERES SET date_enchere = ?, montant_enchere = ? WHERE no_utilisateur = ? AND no_article = ?;";
+	private static final String UPDATE_ENCHERE = "UPDATE ENCHERES SET date_enchere = ?, montant_enchere = ? WHERE no_utilisateur = ? AND no_article = ?;"; 
 	
 	private static Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
 	
