@@ -94,7 +94,7 @@ public class Connexion extends HttpServlet {
 						session.setAttribute("connecte", true);
 						session.setAttribute("utilisateurConnecte",
 								UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(identifiant));
-						this.getServletContext().getRequestDispatcher("/WEB-INF/Home.jsp").forward(request, response);
+						response.sendRedirect(this.getServletContext().getContextPath());
 
 					} else {
 						BusinessException usernameOrPasswordNullException = new BusinessException();
