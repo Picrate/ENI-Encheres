@@ -1,6 +1,3 @@
-<%-- Imports --%>
-<%-- <%@ page import="java.util.List" %> --%>
-
 <%-- Librairies --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -12,10 +9,8 @@ pageEncoding="UTF-8"
 %>
 
 <%-- Variable page --%>
-<%! 
-String pageTitle = "Profil";
-String pageAuthor = "POV - ENI";
-%>
+<c:set var="pageTitle" value="Profil" />
+<c:set var="pageAuthor" value="POV - ENI" />
 
 <!DOCTYPE html>
 <html>
@@ -24,15 +19,12 @@ String pageAuthor = "POV - ENI";
 		
 		<!-- HEAD -->
 		<jsp:include page="/WEB-INF/template-parts/head.jsp">
-			<jsp:param value="<%= pageTitle %>" name="pageTitle"/>
-			<jsp:param value="<%= pageAuthor %>" name="pageAuthor"/>
+			<jsp:param value="${pageTitle}" name="pageTitle"/>
+			<jsp:param value="${pageAuthor}" name="pageAuthor"/>
 		</jsp:include>
 		
 		<!-- CSS -->
-		<link href="<%=request.getContextPath()%>/assets/css/style.css" rel="stylesheet">
-	
-		<!-- JS -->
-		<!-- <script src="../js/script-dist.js"></script> -->
+		<link href="<c:url value="/assets/css/style.css"/>" rel="stylesheet">
 
 	</head>
 
@@ -45,7 +37,7 @@ String pageAuthor = "POV - ENI";
 		
 			<!-- HEADING -->
 			<jsp:include page="/WEB-INF/template-parts/heading.jsp">
-				<jsp:param value="<%= pageTitle %>" name="title"/>
+				<jsp:param value="${pageTitle}" name="title"/>
 			</jsp:include>
 			
 			<!-- ERROR -->
@@ -58,34 +50,38 @@ String pageAuthor = "POV - ENI";
 				<div class="col_2">
 
 					<p>Pseudo :</p>
-					<p>${utilisateur.pseudo}</p>
+					<p><c:out value="${utilisateur.pseudo}" default="Pseudo non renseigné" /></p>
 
 					<p>Nom :</p>
-					<p>${utilisateur.nom}</p>
+					<p><c:out value="${utilisateur.nom}" default="Nom non renseigné" /></p>
 
 					<p>Prénom :</p>
-					<p>${utilisateur.prenom}</p>
+					<p><c:out value="${utilisateur.prenom}" default="Prénom non renseigné" /></p>
 
 					<p>Email :</p>
-					<p>${utilisateur.email}</p>
+					<p><c:out value="${utilisateur.email}" default="Email non renseigné" /></p>
 
 					<p>Téléphone :</p>
-					<p>${utilisateur.telephone}</p>
+					<p><c:out value="${utilisateur.telephone}" default="Téléphone non renseigné" /></p>
 
 					<p>Rue :</p>
-					<p><c:out value="${utilisateur.adresse.rue}" default="Inconnu" /></p>
+					<p><c:out value="${utilisateur.adresse.rue}" default="Rue non renseignée" /></p>
 
 					<p>Code postal :</p>
-					<p><c:out value="${utilisateur.adresse.codePostal}" default="Inconnu" /></p>
+					<p><c:out value="${utilisateur.adresse.codePostal}" default="Code postal non renseigné" /></p>
 
 					<p>Ville :</p>
-					<p><c:out value="${utilisateur.adresse.ville}" default="Inconnu" /></p>
+					<p><c:out value="${utilisateur.adresse.ville}" default="Ville non renseignée" /></p>
 					
-					<c:if test="${utilisateurConnecte.no_utilisateur == userId}"><p>Crédits :</p><p><c:out value="${utilisateurConnecte.credit}" default="Inconnu" /></p></c:if>
+					<c:if test="${utilisateurConnecte.no_utilisateur == userId}">
+						<p>Crédits :</p><p><c:out value="${utilisateurConnecte.credit}" default="Crédits non renseignés" /></p>
+					</c:if>
 
 				</div>
-				<c:if test="${utilisateurConnecte.no_utilisateur == userId}"><a class="btn" href="compte/modifier"/>Modifier</a></c:if>
 				
+				<c:if test="${utilisateurConnecte.no_utilisateur == userId}">
+					<a class="btn" href="compte/modifier"/>Modifier</a>
+				</c:if>
 				
 			</div>
 			
@@ -93,7 +89,7 @@ String pageAuthor = "POV - ENI";
 		
 		 <!-- FOOTER -->
 	    <jsp:include page="/WEB-INF/template-parts/footer.jsp">
-	    	<jsp:param value="<%= pageAuthor %>" name="pageAuthor"/>
+	    	<jsp:param value="${pageAuthor}" name="pageAuthor"/>
 	    </jsp:include>
     
 

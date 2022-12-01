@@ -4,8 +4,10 @@
 <%-- Variables --%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}/" />
 
+<!-- FILTERS -->
 <div id="filter" class="row">
 	
+	<!-- SEARCH -->
 	<form id="search_filter" method="post" action="${contextPath}">
 		
 		<input type="text" name="searchPattern" value="${! empty searchPattern ? searchPattern : ''}" placeholder="Rechercher" list="products_list" >
@@ -29,8 +31,8 @@
 		
 	</form>
 	
-	<%-- onclick="document.getElementById('user_filters').submit();" --%>
 	<c:if test="${connecte}">
+	<!-- USER FILTERS -->
 	<form action="${contextPath}" method="post" id="user_filters">
 	
 		<div>
@@ -68,10 +70,11 @@
 				<label for="ventesTerminees">Mes ventes terminées</label>
 			</fieldset>
 		</div>
+		
 		<span id="remove_filter">Retirer les filtres</span>
+		
 	</form>
 	</c:if>
-	
 	
 </div>
 

@@ -18,7 +18,6 @@ pageEncoding="UTF-8"
 <c:set var="pageAuthor" value="POV - ENI" />
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-
 <!DOCTYPE html>
 <html>
 
@@ -31,7 +30,8 @@ pageEncoding="UTF-8"
 		</jsp:include>
 		
 		<!-- CSS -->
-		<link href="${contextPath}/assets/css/style.css" rel="stylesheet">
+		<link href="<c:url value="/assets/css/style.css"/>" rel="stylesheet">
+		
 	</head>
 
 	<body>
@@ -60,6 +60,7 @@ pageEncoding="UTF-8"
 			<c:choose> 
 			
 				<c:when test="${! empty listeArticles}"> 
+				
 					<!-- LISTE OBJETS -->
 					<ul id="index" class="row">
 						<c:forEach var="keyValue" items="${listeArticles}">
@@ -84,6 +85,8 @@ pageEncoding="UTF-8"
         		</c:when> 
 				
 	        	<c:otherwise> 
+	        	
+	        		<!-- AUCUN OBJET -->
 					<p class="row no_content">Aucun objet ne correspond à la recherche.</p>
 				</c:otherwise> 
 	        	

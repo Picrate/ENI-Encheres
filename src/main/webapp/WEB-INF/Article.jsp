@@ -32,7 +32,7 @@ pageEncoding="UTF-8"
 		</jsp:include>
 		
 		<!-- CSS -->
-		<link href="${contextPath}/assets/css/style.css" rel="stylesheet">
+		<link href="<c:url value="/assets/css/style.css"/>" rel="stylesheet">
 	</head>
 
 	<body>
@@ -88,16 +88,19 @@ pageEncoding="UTF-8"
 						<c:out value="${seller.adresse.getCodePostal()}" default="Aucun code postal"/>
 						<c:out value="${seller.adresse.getVille()}" default="Aucune ville"/>
 					</p>
-
+					
+					<!-- VENDEUR -->
 					<p><strong>Vendeur :</strong><br><c:out value="${seller.pseudo}" default="Aucun utilisateur"/></p>
 										
 					<c:choose> 
 			
 						<c:when test="${currentUderId == sellerId}"> 
+							<!-- MODIFIER -->
 							<a class="btn" href="${contextPath}/ajouter-un-article?articleId=${selectedArticle.noArticle}">Modifier</a>
 						</c:when> 
 				
 			        	<c:otherwise> 
+			        		<!-- ENCHERE -->
 							<form action="<c:url value = "encherir"><c:param name="articleId" value="${selectedArticle.noArticle}"/></c:url>" method="post">
 								<strong>Proposition :</strong><br>
 								<fieldset>
@@ -118,7 +121,6 @@ pageEncoding="UTF-8"
 	    <jsp:include page="/WEB-INF/template-parts/footer.jsp">
 	    	<jsp:param value="${pageAuthor}" name="pageAuthor"/>
 	    </jsp:include>
-    
 
 	</body>
 

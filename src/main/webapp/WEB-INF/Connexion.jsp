@@ -1,6 +1,3 @@
-<%-- Imports --%>
-<%-- <%@ page import="java.util.List" %> --%>
-
 <%-- Librairies --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -12,10 +9,8 @@ pageEncoding="UTF-8"
 %>
 
 <%-- Variable page --%>
-<%! 
-String pageTitle = "Connexion";
-String pageAuthor = "POV - ENI";
-%>
+<c:set var="pageTitle" value="Connexion" />
+<c:set var="pageAuthor" value="POV - ENI" />
 
 <!DOCTYPE html>
 <html>
@@ -24,15 +19,12 @@ String pageAuthor = "POV - ENI";
 		
 		<!-- HEAD -->
 		<jsp:include page="/WEB-INF/template-parts/head.jsp">
-			<jsp:param value="<%= pageTitle %>" name="pageTitle"/>
-			<jsp:param value="<%= pageAuthor %>" name="pageAuthor"/>
+			<jsp:param value="${pageTitle}" name="pageTitle"/>
+			<jsp:param value="${pageAuthor}" name="pageAuthor"/>
 		</jsp:include>
 		
 		<!-- CSS -->
-		<link href="<%=request.getContextPath()%>/assets/css/style.css" rel="stylesheet">
-	
-		<!-- JS -->
-		<!-- <script src="../js/script-dist.js"></script> -->
+		<link href="<c:url value="/assets/css/style.css"/>" rel="stylesheet">
 
 	</head>
 
@@ -45,7 +37,7 @@ String pageAuthor = "POV - ENI";
 		
 			<!-- HEADING -->
 			<jsp:include page="/WEB-INF/template-parts/heading.jsp">
-				<jsp:param value="<%= pageTitle %>" name="title"/>
+				<jsp:param value="${pageTitle}" name="title"/>
 			</jsp:include>
 			
 			
@@ -80,7 +72,7 @@ String pageAuthor = "POV - ENI";
 		
 		 <!-- FOOTER -->
 	    <jsp:include page="/WEB-INF/template-parts/footer.jsp">
-	    	<jsp:param value="<%= pageAuthor %>" name="pageAuthor"/>
+	    	<jsp:param value="${pageAuthor}" name="pageAuthor"/>
 	    </jsp:include>
     
 

@@ -4,7 +4,7 @@
 
 <%-- Librairies --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
- <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%-- Config de la page --%>
 <%@ page 
@@ -18,7 +18,6 @@ pageEncoding="UTF-8"
 <c:set var="pageAuthor" value="POV - ENI" />
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-
 <!DOCTYPE html>
 <html>
 
@@ -31,7 +30,7 @@ pageEncoding="UTF-8"
 		</jsp:include>
 		
 		<!-- CSS -->
-		<link href="${contextPath}/assets/css/style.css" rel="stylesheet">
+		<link href="<c:url value="/assets/css/style.css"/>" rel="stylesheet">
 	</head>
 
 	<body>
@@ -106,7 +105,6 @@ pageEncoding="UTF-8"
 								<input type="hidden" value="${selectedArticle.miseAPrix}" />
 							</c:otherwise>
 						</c:choose>	
-						
 						
 						<!-- DEBUT ENCHERE -->	
 						<fmt:parseDate value="${selectedArticle.dateDebutEncheres}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedStartDateTime" type="both" />
