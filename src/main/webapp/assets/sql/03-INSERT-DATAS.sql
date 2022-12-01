@@ -3,7 +3,7 @@ GO
 --Insert CRYPTO
 INSERT INTO CRYPTO (masterKEY, seed, params)
 VALUES ('masterKEY','nZS1hrEMp2pwltGTwEWnuFJlk7uiDIjB5Lf5m/2Sgpr1G3ZT8jbj2PriYnzRoz9tDblCmLBZKMrsMOyJ8ehaaBWaxMDxPC5Kyt4CuHEK3NSPPfCE8eDNqTYgYg1HVkQpjY4NALFrLZ8qf/N5WQr5mcNZtspV3xpDogi54qNmxwAw9hhRiDOwejRR5LpZi4EhnZwhDI5s/onS70GZ0EApUDta3wwJffFC907B3uIKyp9rF4uOmc50psv7NLHpjiN1m/HWCt6wbrFH2xiKbkzYuCE9y+YFUfcb4xtkr+yS5v57sYRVrjnCnkP5DP6KvincWHUXA0Xh35W+V5ctqApOqg==' ,'MFkwOAYJKoZIhvcNAQUMMCsEFKNlki+1C3Bss6DGC8kRsfKX/GUeAgIQAAIBIDAMBggqhkiG9w0CCQUAMB0GCWCGSAFlAwQBKgQQIdihH4f+cOX/s4WUnD12cQ==');
--- Insert adresses
+-- Insert adresses 
 INSERT INTO ADRESSES (rue, code_postal, ville)
 VALUES ('Rue Montgalet',75000,'PARIS');
 INSERT INTO ADRESSES (rue, code_postal, ville)
