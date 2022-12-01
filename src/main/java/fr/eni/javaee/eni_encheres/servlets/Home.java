@@ -136,9 +136,7 @@ public class Home extends HttpServlet {
 			
 			// Define now datetime
 			LocalDateTime now = LocalDateTime.now();
-			System.out.println(now);
-			
-		
+			//System.out.println(now);
 			
 			switch (filterValue) {
 				// get articles en cours d'enchere

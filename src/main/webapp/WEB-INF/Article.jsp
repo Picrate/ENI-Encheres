@@ -14,7 +14,18 @@ pageEncoding="UTF-8"
 %>
 
 <%-- Variables page --%>
-<c:set var="pageTitle" value="Détail vente" />
+<c:choose> 
+	<c:when test="${! endedSale}"> 
+		<c:set var="pageTitle" value="Détail vente" />
+	</c:when> 
+	<c:when test="${connecte && buyer.no_utilisateur == utilisateurConnecte.no_utilisateur}"> 
+		<c:set var="pageTitle" value="Vous avez remporté la vente" />
+	</c:when>
+	<c:otherwise>
+		<c:set var="pageTitle" value="La vente a été remportée par ${buyer.pseudo}" />
+	</c:otherwise> 
+</c:choose>	
+
 <c:set var="pageAuthor" value="POV - ENI" />
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="sellerId" value="${seller.no_utilisateur}" />
@@ -36,11 +47,12 @@ pageEncoding="UTF-8"
 	</head>
 
 	<body>
-	
+		
 		<!-- HEADER -->
 		<jsp:include page="/WEB-INF/template-parts/header.jsp"/>
 	
 		<main>
+			
 			<!-- HEADING -->
 			<jsp:include page="/WEB-INF/template-parts/heading.jsp">
 				<jsp:param value="${pageTitle}" name="title"/>
@@ -75,7 +87,7 @@ pageEncoding="UTF-8"
 					<p><strong>Mise à prix :</strong><br><c:out value="${selectedArticle.miseAPrix}" default="Aucune catégorie"/> points</p>
 					
 					<!-- MEILLEUR OFFRES -->
-					<p><strong>Meilleure offre :</strong><br><c:out value="${bestOffer} points par ${buyerPseudo}" default="Aucune offre"/></p>
+					<p><strong>Meilleure offre :</strong><br><c:out value="${bestOffer} points par ${buyer.pseudo}" default="Aucune offre"/></p>
 					
 					<!-- FIN ENCHERE -->
 					<fmt:parseDate value="${selectedArticle.dateFinEncheres}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedEndDateTime" type="both" />
@@ -100,7 +112,7 @@ pageEncoding="UTF-8"
 						</c:when> 
 				
 			        	<c:otherwise> 
-			        		<c:if test="${connecte}" >
+			        		<c:if test="${connecte && ! endedSale}" >
 			        		<!-- ENCHERE -->
 							<form action="<c:url value = "encherir"><c:param name="articleId" value="${selectedArticle.noArticle}"/></c:url>" method="post">
 								<strong>Proposition :</strong><br>
