@@ -37,6 +37,7 @@ INSERT INTO ARTICLES_VENDUS (nom_article,description,date_debut_encheres,date_fi
 VALUES ('Lampe','Fonctionne très bien','2022-11-09 20:30:00','2022-12-09 20:30:00',10,0,2,1);
 INSERT INTO ARTICLES_VENDUS (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie)
 VALUES ('Armoire','Un peu lourde','2022-12-03 20:30:00','2022-12-25 20:30:00',50,0,3,1);
+
 -- Insert enchère
 -- Objet : Vélo ; Vendeur : patrice ; Acheteur gagnant : vincent
 INSERT INTO ENCHERES (no_utilisateur,no_article,date_enchere,montant_enchere)
@@ -44,10 +45,13 @@ VALUES ('2','1','2022-10-10 18:30:00', 105);
 INSERT INTO ENCHERES (no_utilisateur,no_article,date_enchere,montant_enchere)
 VALUES ('3','1','2022-11-10 18:30:00', 85);
 
+-- Objet : Téléphone ; Vendeur : vincent 2;
 INSERT INTO ENCHERES (no_utilisateur,no_article,date_enchere,montant_enchere)
-VALUES ('2','5','2022-11-10 18:30:00', 25);
+VALUES ('1','5','2022-11-10 18:30:00', 25);
 INSERT INTO ENCHERES (no_utilisateur,no_article,date_enchere,montant_enchere)
 VALUES ('3','5','2022-11-10 18:30:00', 30);
+
+-- Objet : Armoire ; Vendeur : aurelie ;
 INSERT INTO ENCHERES (no_utilisateur,no_article,date_enchere,montant_enchere)
 VALUES ('2','7','2022-12-20 20:30:00', 55);
 INSERT INTO ENCHERES (no_utilisateur,no_article,date_enchere,montant_enchere)
