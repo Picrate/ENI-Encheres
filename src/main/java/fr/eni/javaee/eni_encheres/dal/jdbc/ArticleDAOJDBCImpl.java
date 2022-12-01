@@ -30,14 +30,14 @@ import fr.eni.javaee.eni_encheres.dal.ConnectionProvider;
  */
 public class ArticleDAOJDBCImpl implements ArticleDAO {
 
-	private static String SELECT_ALL_ARTICLES = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS;";
-	private static String SELECT_ARTICLE_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_article = ?;";
-	private static String GET_ARTICLES_IN_CATEGORIE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_categorie = ?;";
-	private static String GET_USER_ARTICLES_ENCHERES = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente, a.no_utilisateur, a.no_categorie FROM ARTICLES_VENDUS AS a INNER JOIN ENCHERES AS e ON e.no_article = a.no_article WHERE e.no_utilisateur = ?";
-	private static String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) VALUES (?,?,?,?,?,?,?,?)";
-	private static String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
-	private static String BEST_ENCHERE_FOR_ONE_ARTICLE = "SELECT montant_enchere, no_utilisateur FROM ENCHERES WHERE montant_enchere = (SELECT max(montant_enchere) FROM ENCHERES WHERE no_article = ?) AND no_utilisateur != ?;";
-	private static String ENDED_SELLS = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE date_fin_encheres < GETDATE() AND no_utilisateur != ?;";
+	private static final String SELECT_ALL_ARTICLES = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS;";
+	private static final String SELECT_ARTICLE_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_article = ?;";
+	private static final String GET_ARTICLES_IN_CATEGORIE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_categorie = ?;";
+	private static final String GET_USER_ARTICLES_ENCHERES = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, a.prix_initial, a.prix_vente, a.no_utilisateur, a.no_categorie FROM ARTICLES_VENDUS AS a INNER JOIN ENCHERES AS e ON e.no_article = a.no_article WHERE e.no_utilisateur = ?";
+	private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) VALUES (?,?,?,?,?,?,?,?)";
+	private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
+	private static final String BEST_ENCHERE_FOR_ONE_ARTICLE = "SELECT montant_enchere, no_utilisateur FROM ENCHERES WHERE montant_enchere = (SELECT max(montant_enchere) FROM ENCHERES WHERE no_article = ?) AND no_utilisateur != ?;";
+	private static final String ENDED_SELLS = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE date_fin_encheres < GETDATE() AND no_utilisateur != ?;";
 	private static final String DELETE_ALL_ARTICLES_BY_USER_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
 
 	private static Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
@@ -68,7 +68,6 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 			businessException.ajouterErreur(CodesResultatDAL.SELECT_ARTICLE_ECHEC);
 			throw businessException;
 		}
-		
 		return article;
 	}	
 	
@@ -217,7 +216,6 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	@Override
 	public void deleteElementById(int id) throws BusinessException {
 		try (Connection connexion = ConnectionProvider.getConnection();) {
-			System.out.println(id);
 			PreparedStatement query = connexion.prepareStatement(DELETE_ARTICLE);
 			query.setInt(1, id);
 			int row = query.executeUpdate();  
@@ -230,18 +228,9 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 			throw businessException;
 		}
 	}
-	
-	
-	
-	
 
 	@Override
 	public void updateElement(Article element) throws BusinessException {		
-	}
-
-	@Override
-	public Article selectElementBy(String nomAttribut, String valeurAttribut) throws BusinessException {
-		return null;
 	}
 
 	@Override
@@ -270,7 +259,6 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 				throw businessException;
 			}
 		}
-		
 	}
 	
 	@Override
@@ -349,5 +337,8 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 		return listArticles;
 	}
 
-		
+	@Override
+	public Article selectElementBy(String nomAttribut, String valeurAttribut) throws BusinessException {
+		return null;
+	}
 }

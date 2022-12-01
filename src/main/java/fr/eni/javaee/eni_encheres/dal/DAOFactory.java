@@ -7,6 +7,7 @@ import fr.eni.javaee.eni_encheres.dal.jdbc.ArticleDAOJDBCImpl;
 import fr.eni.javaee.eni_encheres.dal.jdbc.CategorieDAOJDBCImpl;
 import fr.eni.javaee.eni_encheres.dal.jdbc.CryptoDAOJDBCImpl;
 import fr.eni.javaee.eni_encheres.dal.jdbc.EnchereDAOJDBCImpl;
+import fr.eni.javaee.eni_encheres.dal.jdbc.UserParametersDAOJDBCImpl;
 import fr.eni.javaee.eni_encheres.dal.jdbc.UtilisateurDAOJDBCImpl;
 
 public abstract class DAOFactory {
@@ -33,6 +34,10 @@ public abstract class DAOFactory {
 	
 	public static EnchereDAO getEnchereDAO() {
 		return new EnchereDAOJDBCImpl();
+	}
+	
+	public static UserParametersDAO getUserParametersDAO() {
+		return new UserParametersDAOJDBCImpl();
 	}
 	
 }

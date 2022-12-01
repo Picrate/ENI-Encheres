@@ -6,6 +6,8 @@ package fr.eni.javaee.eni_encheres.bll;
 import java.security.AlgorithmParameters;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.crypto.Cipher;
@@ -16,6 +18,7 @@ import javax.crypto.spec.PBEParameterSpec;
 
 import fr.eni.javaee.eni_encheres.BusinessException;
 import fr.eni.javaee.eni_encheres.bo.Utilisateur;
+import fr.eni.javaee.eni_encheres.dal.DAOFactory;
 
 /**
  * Classe de gestion de l'authentification d'un utilisateur.
@@ -25,35 +28,32 @@ import fr.eni.javaee.eni_encheres.bo.Utilisateur;
  */
 public class LoginManager {
 
+	private final static String CRYPT_ALGORITHM = "PBEWithHmacSHA256AndAES_256";
+	public final static String PASSWORD_KEY = "password";
+	public final static String PARAMS_KEY = "params";
+	
 	private static LoginManager instance = null;
 
 	private static SecretKey secretKey;
 	private static byte[] masterKey = null;
-	private static byte[] seed = null;
-	private static byte[] savedParams = null;
-	private static byte[] salt = new byte[256];
+	private static byte[] salt;
 	private static Cipher pbeCipher;
 	private static SecureRandom rnd;
 	private static SecretKeyFactory secretKeyFactory;
 	AlgorithmParameters algParams;
+	
 
 	private LoginManager() {
-
+		
 		try {
 			salt = new byte[2048];
 			masterKey = CryptoDatasManager.getInstance().getMasterKey();
-			seed = decodeBase64(CryptoDatasManager.getInstance().getSeed());
-			savedParams = decodeBase64(CryptoDatasManager.getInstance().getbase64Params());
 			rnd = new SecureRandom();
 			rnd.nextBytes(salt);
-			new PBEParameterSpec(salt, 1000);
 			PBEKeySpec pks = new PBEKeySpec(bytesToChars(masterKey), salt, 1000);
-			algParams = AlgorithmParameters.getInstance("PBEWithHmacSHA256AndAES_256");
-			algParams.init(savedParams);
-			secretKeyFactory = SecretKeyFactory.getInstance("PBEWithHmacSHA256AndAES_256");
+			secretKeyFactory = SecretKeyFactory.getInstance(CRYPT_ALGORITHM);
 			secretKey = secretKeyFactory.generateSecret(pks);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -66,6 +66,8 @@ public class LoginManager {
 	public static LoginManager getInstance() {
 		if (instance == null) {
 			instance = new LoginManager();
+		} else {
+			rnd.nextBytes(salt);
 		}
 		return instance;
 	}
@@ -91,15 +93,18 @@ public class LoginManager {
 			throw businessException;
 		}
 		// On récupère le mot de passe stocké en base
-
-		String userStoredPassword = UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(username)
-				.getPassword();
+		try {
+		
+		Utilisateur user = UtilisateurManager.getInstance().getUtilisateurByPseudoOrEmail(username);
+		String userStoredPassword = user.getPassword();
 		// Si la chaine n'est pas null
 		if (Objects.nonNull(userStoredPassword)) {
 			// On decode la chain de caractere en BASE64
 			byte[] binaryPassword = decodeBase64(userStoredPassword);
-			// On décrypte la chaine.
-			char[] charateredPassword = this.decryptPassword(binaryPassword);
+			// On récupère les paramètres de cryptage utilisé ultérieurement
+			String base64UserAlgParams = this.getLoginParameters(user.getNo_utilisateur());
+			// On décrypte lle mot de passe en fournissant les parametres.
+			char[] charateredPassword = this.decryptPassword(binaryPassword, decodeBase64(base64UserAlgParams) );
 			// Si les Mot de passes correspondent authenticate = true
 			if (this.checkPasswordMatch(password, charateredPassword)) {
 				authenticate = true;
@@ -107,6 +112,12 @@ public class LoginManager {
 		} else {
 			BusinessException be = new BusinessException();
 			be.ajouterErreur(CodesResultatBLL.REQUESTED_USER_IS_NULL);
+			throw be;
+		}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatBLL.CRYPT_ERROR);
 			throw be;
 		}
 
@@ -174,20 +185,27 @@ public class LoginManager {
 	 * @param password le mot de passe à crypter
 	 * @return le mot de passe crypté.
 	 */
-	private byte[] encryptPassword(char[] password) throws BusinessException {
+	private Map<String,byte[]> encryptPassword(char[] password) throws BusinessException {
 		byte[] bytesPassword = charsToBytes(password);
 		byte[] ciphertext = null;
+		byte[] encodedParams;
+		Map<String, byte[]> result = new HashMap<>(2);
 		try {
-			pbeCipher = Cipher.getInstance("PBEWithHmacSHA256AndAES_256");
-			pbeCipher.init(Cipher.ENCRYPT_MODE, secretKey, algParams);
+			pbeCipher = Cipher.getInstance(CRYPT_ALGORITHM);
+			pbeCipher.init(Cipher.ENCRYPT_MODE, secretKey);
 			ciphertext = pbeCipher.doFinal(bytesPassword);
-
+			AlgorithmParameters params = pbeCipher.getParameters();
+			encodedParams = params.getEncoded();
+			result.put(PASSWORD_KEY, ciphertext);
+			result.put(PARAMS_KEY, encodedParams);
+			
 		} catch (Exception e) {
 			BusinessException be = new BusinessException();
 			be.ajouterErreur(CodesResultatBLL.CRYPT_ERROR);
 			e.printStackTrace();
+			throw be;
 		}
-		return ciphertext;
+		return result;
 	}
 
 	/**
@@ -195,19 +213,34 @@ public class LoginManager {
 	 * @param password le mot de passe à décrypter
 	 * @return le mot de passe en clair.
 	 */
-	private char[] decryptPassword(byte[] password) throws BusinessException{
+	private char[] decryptPassword(byte[] password, byte[] algUserParams) throws BusinessException{
 		byte[] ciphertext = null;
 		try {
-			pbeCipher = Cipher.getInstance("PBEWithHmacSHA256AndAES_256");
-			pbeCipher.init(Cipher.DECRYPT_MODE, secretKey, algParams);
+			AlgorithmParameters params = AlgorithmParameters.getInstance(CRYPT_ALGORITHM);
+			params.init(algUserParams);
+			pbeCipher = Cipher.getInstance(CRYPT_ALGORITHM);
+			pbeCipher.init(Cipher.DECRYPT_MODE, secretKey, params);
 			ciphertext = pbeCipher.doFinal(password);
 		} catch (Exception e) {
 			BusinessException be = new BusinessException();
 			be.ajouterErreur(CodesResultatBLL.DECRYPT_ERROR);
 			e.printStackTrace();
+			throw be;
 		}
-
 		return bytesToChars(ciphertext);
+	}
+	
+	private String getLoginParameters(int userId) throws BusinessException {
+		
+		String userLoginParams = DAOFactory.getUserParametersDAO().selectElementById(userId).loginParameters;
+		if (Objects.isNull(userLoginParams)) {
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatBLL.DECRYPT_ERROR);
+			be.printStackTrace();
+			throw be;
+		} else {
+			return userLoginParams;
+		}
 	}
 	
 	/**
@@ -217,9 +250,19 @@ public class LoginManager {
 	 * @throws BusinessException
 	 */
 	
-	public String getBase64Password(char[] password) throws BusinessException{
+	public Map<String, String> getBase64Password(char[] password) throws BusinessException{
+		
+		
+		
 		try {
-			return encodeBase64(this.encryptPassword(password));
+			Map<String, byte[]> cryptedResult = new HashMap<>(2);
+			Map<String, String> base64Result = new HashMap<>(2);
+			cryptedResult = this.encryptPassword(password);
+			String base64Password = encodeBase64(cryptedResult.get(PASSWORD_KEY));
+			String base64Params = encodeBase64(cryptedResult.get(PARAMS_KEY));
+			base64Result.put(PASSWORD_KEY, base64Password);
+			base64Result.put(PARAMS_KEY, base64Params);
+			return base64Result;
 		} catch (BusinessException e) {
 			BusinessException be = new BusinessException();
 			be.ajouterErreur(CodesResultatBLL.CRYPT_ERROR);

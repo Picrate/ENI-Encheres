@@ -112,7 +112,6 @@ public class Connexion extends HttpServlet {
 				}
 			}
 		} catch (BusinessException e) {
-			e.printStackTrace();
 			List<Integer> listeCodeErreurs = e.getListeCodesErreur();
 			List<String> listeErreurs = new ArrayList<String>();
 			for (Integer codeErreur : listeCodeErreurs) {
