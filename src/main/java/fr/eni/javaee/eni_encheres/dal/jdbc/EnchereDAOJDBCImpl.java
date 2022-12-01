@@ -149,10 +149,8 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 			query.setInt(1, idArticle);
 			query.setInt(2, idArticle);
 			ResultSet result = query.executeQuery();
-			//System.out.println("test3" + result.next());
 			if (result.next()) {
 				int idUserWinner = result.getInt("no_utilisateur");
-				System.out.println(idUserWinner);
 				int montantEnchere = result.getInt("montant_enchere");
 				enchere = new Enchere (idUserWinner, idArticle, montantEnchere);
 			}				
